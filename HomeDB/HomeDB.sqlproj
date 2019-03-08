@@ -61,6 +61,8 @@
     <Folder Include="HomeApp\" />
     <Folder Include="HomeApp\Tables\" />
     <Folder Include="Security\" />
+    <Folder Include="Users\" />
+    <Folder Include="Users\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Template.sql" />
@@ -68,8 +70,12 @@
     <Build Include="HomeApp\Tables\Roles.sql" />
     <Build Include="HomeApp\Tables\CreateModifyLog.sql" />
     <Build Include="Security\HomeApp.sql" />
+    <Build Include="HomeApp\Tables\Schemas.sql" />
+    <Build Include="Users\Tables\UserSchemas.sql" />
+    <Build Include="Security\Users.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TouchMeToProjectHomeApp.scmp" />
+    <None Include="AgainToProject.scmp" />
   </ItemGroup>
 </Project>
