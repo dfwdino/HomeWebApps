@@ -1,0 +1,81 @@
+﻿@model IEnumerable<HomeApps.Mile>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Deleted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AutoID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GasDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalGallons)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalMilesDriven)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EngineRunTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Station.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateModifyLog.CreateModifyID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deleted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AutoID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GasDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalGallons)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalMilesDriven)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EngineRunTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Station.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateModifyLog.CreateModifyID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MilesID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MilesID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MilesID })
+        </td>
+    </tr>
+}
+
+</table>

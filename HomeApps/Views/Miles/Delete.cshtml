@@ -1,0 +1,96 @@
+﻿@model HomeApps.Mile
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Mile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Deleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AutoID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AutoID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GasDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GasDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalGallons)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalGallons)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalMilesDriven)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalMilesDriven)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EngineRunTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EngineRunTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Station.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Station.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateModifyLog.CreateModifyID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateModifyLog.CreateModifyID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

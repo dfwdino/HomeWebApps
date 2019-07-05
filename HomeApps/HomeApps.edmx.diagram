@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3459340ba5ab4c808502fa776a150efc" Name="Diagram1">
+        <EntityTypeShape EntityType="HomeAppsModel.Auto" Width="1.5" PointX="3" PointY="4.875" />
+        <EntityTypeShape EntityType="HomeAppsModel.Mile" Width="1.5" PointX="5.25" PointY="11.5" />
+        <EntityTypeShape EntityType="HomeAppsModel.Station" Width="1.5" PointX="3" PointY="15.625" />
+        <EntityTypeShape EntityType="HomeAppsModel.CreateModifyLog" Width="1.5" PointX="0.75" PointY="6.5" />
+        <EntityTypeShape EntityType="HomeAppsModel.Role" Width="1.5" PointX="3" PointY="8.625" />
+        <EntityTypeShape EntityType="HomeAppsModel.Schema" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="HomeAppsModel.User" Width="1.5" PointX="5.25" PointY="7.125" />
+        <EntityTypeShape EntityType="HomeAppsModel.UserSchema" Width="1.5" PointX="7.5" PointY="7.5" />
+        <AssociationConnector Association="HomeAppsModel.FK_Auto_CreateModifyLog" />
+        <AssociationConnector Association="HomeAppsModel.FK_Auto_Users" />
+        <AssociationConnector Association="HomeAppsModel.FK_Miles_Auto" />
+        <AssociationConnector Association="HomeAppsModel.FK_Miles_CreateModifyLog" />
+        <AssociationConnector Association="HomeAppsModel.FK_Stations_CreateModifyLog" />
+        <AssociationConnector Association="HomeAppsModel.FK_Roles_CreateModifyLog" />
+        <AssociationConnector Association="HomeAppsModel.FK_Users_CreateModifyLog" />
+        <AssociationConnector Association="HomeAppsModel.FK_Users_Roles" />
+        <AssociationConnector Association="HomeAppsModel.FK_UserSchemas_CreateModifyLog1" />
+        <AssociationConnector Association="HomeAppsModel.FK_UserSchemas_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

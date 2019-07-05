@@ -1,0 +1,90 @@
+﻿@model HomeApps.Mile
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Mile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Deleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AutoID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AutoID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GasDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GasDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalGallons)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalGallons)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalMilesDriven)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalMilesDriven)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EngineRunTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EngineRunTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Station.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Station.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateModifyLog.CreateModifyID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateModifyLog.CreateModifyID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MilesID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,50 @@
+﻿@model HomeApps.Auto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Auto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Deleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AutoName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AutoName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateModifyLog.CreateModifyID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateModifyLog.CreateModifyID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AutoID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

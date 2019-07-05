@@ -1,0 +1,667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HomeAppsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Auto">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" Nullable="false" />
+          <Property Name="AutoName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Miles">
+          <Key>
+            <PropertyRef Name="MilesID" />
+          </Key>
+          <Property Name="MilesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" Nullable="false" />
+          <Property Name="AutoID" Type="int" Nullable="false" />
+          <Property Name="GasDate" Type="date" Nullable="false" />
+          <Property Name="TotalGallons" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="TotalMilesDriven" Type="decimal" Precision="11" Scale="1" Nullable="false" />
+          <Property Name="EngineRunTime" Type="time" Precision="7" />
+          <Property Name="StationID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stations">
+          <Key>
+            <PropertyRef Name="StationID" />
+          </Key>
+          <Property Name="StationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CreateModifyLog">
+          <Key>
+            <PropertyRef Name="CreateModifyID" />
+          </Key>
+          <Property Name="CreateModifyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="date" Nullable="false" />
+          <Property Name="ModifyOn" Type="date" />
+          <Property Name="ModifyBy" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Schemas">
+          <Key>
+            <PropertyRef Name="SchemaID" />
+          </Key>
+          <Property Name="SchemaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" Nullable="false" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateModifyID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="UserSchemas">
+          <Key>
+            <PropertyRef Name="UserSchemaID" />
+          </Key>
+          <Property Name="UserSchemaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" Nullable="false" />
+          <Property Name="UsersID" Type="int" Nullable="false" />
+          <Property Name="SchemaID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Auto_CreateModifyLog">
+          <End Role="CreateModifyLog" Type="Self.CreateModifyLog" Multiplicity="1" />
+          <End Role="Auto" Type="Self.Auto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="Auto">
+              <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auto_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Auto" Type="Self.Auto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Auto">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Miles_Auto">
+          <End Role="Stations" Type="Self.Stations" Multiplicity="1" />
+          <End Role="Miles" Type="Self.Miles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stations">
+              <PropertyRef Name="StationID" />
+            </Principal>
+            <Dependent Role="Miles">
+              <PropertyRef Name="StationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Miles_CreateModifyLog">
+          <End Role="CreateModifyLog" Type="Self.CreateModifyLog" Multiplicity="1" />
+          <End Role="Miles" Type="Self.Miles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="Miles">
+              <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_CreateModifyLog">
+          <End Role="CreateModifyLog" Type="Self.CreateModifyLog" Multiplicity="1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stations_CreateModifyLog">
+          <End Role="CreateModifyLog" Type="Self.CreateModifyLog" Multiplicity="1" />
+          <End Role="Stations" Type="Self.Stations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="Stations">
+              <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_CreateModifyLog">
+          <End Role="CreateModifyLog" Type="Self.CreateModifyLog" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="CreateModifyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSchemas_CreateModifyLog1">
+          <End Role="Schemas" Type="Self.Schemas" Multiplicity="1" />
+          <End Role="UserSchemas" Type="Self.UserSchemas" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Schemas">
+              <PropertyRef Name="SchemaID" />
+            </Principal>
+            <Dependent Role="UserSchemas">
+              <PropertyRef Name="UserSchemaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSchemas_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserSchemas" Type="Self.UserSchemas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserSchemas">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HomeAppsModelStoreContainer">
+          <EntitySet Name="Auto" EntityType="Self.Auto" Schema="Gas" store:Type="Tables" />
+          <EntitySet Name="Miles" EntityType="Self.Miles" Schema="Gas" store:Type="Tables" />
+          <EntitySet Name="Stations" EntityType="Self.Stations" Schema="Gas" store:Type="Tables" />
+          <EntitySet Name="CreateModifyLog" EntityType="Self.CreateModifyLog" Schema="HomeApp" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="HomeApp" store:Type="Tables" />
+          <EntitySet Name="Schemas" EntityType="Self.Schemas" Schema="HomeApp" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="HomeApp" store:Type="Tables" />
+          <EntitySet Name="UserSchemas" EntityType="Self.UserSchemas" Schema="Users" store:Type="Tables" />
+          <AssociationSet Name="FK_Auto_CreateModifyLog" Association="Self.FK_Auto_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
+            <End Role="Auto" EntitySet="Auto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auto_Users" Association="Self.FK_Auto_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Auto" EntitySet="Auto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miles_Auto" Association="Self.FK_Miles_Auto">
+            <End Role="Stations" EntitySet="Stations" />
+            <End Role="Miles" EntitySet="Miles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miles_CreateModifyLog" Association="Self.FK_Miles_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
+            <End Role="Miles" EntitySet="Miles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_CreateModifyLog" Association="Self.FK_Roles_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stations_CreateModifyLog" Association="Self.FK_Stations_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
+            <End Role="Stations" EntitySet="Stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_CreateModifyLog" Association="Self.FK_Users_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSchemas_CreateModifyLog1" Association="Self.FK_UserSchemas_CreateModifyLog1">
+            <End Role="Schemas" EntitySet="Schemas" />
+            <End Role="UserSchemas" EntitySet="UserSchemas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSchemas_Users" Association="Self.FK_UserSchemas_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserSchemas" EntitySet="UserSchemas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HomeAppsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HomeAppsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Autoes" EntityType="HomeAppsModel.Auto" />
+          <EntitySet Name="Miles" EntityType="HomeAppsModel.Mile" />
+          <EntitySet Name="Stations" EntityType="HomeAppsModel.Station" />
+          <EntitySet Name="CreateModifyLogs" EntityType="HomeAppsModel.CreateModifyLog" />
+          <EntitySet Name="Roles" EntityType="HomeAppsModel.Role" />
+          <EntitySet Name="Schemas" EntityType="HomeAppsModel.Schema" />
+          <EntitySet Name="Users" EntityType="HomeAppsModel.User" />
+          <EntitySet Name="UserSchemas" EntityType="HomeAppsModel.UserSchema" />
+          <AssociationSet Name="FK_Auto_CreateModifyLog" Association="HomeAppsModel.FK_Auto_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLogs" />
+            <End Role="Auto" EntitySet="Autoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auto_Users" Association="HomeAppsModel.FK_Auto_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Auto" EntitySet="Autoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miles_Auto" Association="HomeAppsModel.FK_Miles_Auto">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="Mile" EntitySet="Miles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miles_CreateModifyLog" Association="HomeAppsModel.FK_Miles_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLogs" />
+            <End Role="Mile" EntitySet="Miles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stations_CreateModifyLog" Association="HomeAppsModel.FK_Stations_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLogs" />
+            <End Role="Station" EntitySet="Stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_CreateModifyLog" Association="HomeAppsModel.FK_Roles_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLogs" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_CreateModifyLog" Association="HomeAppsModel.FK_Users_CreateModifyLog">
+            <End Role="CreateModifyLog" EntitySet="CreateModifyLogs" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="HomeAppsModel.FK_Users_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSchemas_CreateModifyLog1" Association="HomeAppsModel.FK_UserSchemas_CreateModifyLog1">
+            <End Role="Schema" EntitySet="Schemas" />
+            <End Role="UserSchema" EntitySet="UserSchemas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSchemas_Users" Association="HomeAppsModel.FK_UserSchemas_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserSchema" EntitySet="UserSchemas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Auto">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" Nullable="false" />
+          <Property Name="AutoName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Auto_CreateModifyLog" FromRole="Auto" ToRole="CreateModifyLog" />
+          <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_Auto_Users" FromRole="Auto" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Mile">
+          <Key>
+            <PropertyRef Name="MilesID" />
+          </Key>
+          <Property Name="MilesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" Nullable="false" />
+          <Property Name="AutoID" Type="Int32" Nullable="false" />
+          <Property Name="GasDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TotalGallons" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="TotalMilesDriven" Type="Decimal" Nullable="false" Precision="11" Scale="1" />
+          <Property Name="EngineRunTime" Type="Time" Precision="7" />
+          <Property Name="StationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Station" Relationship="HomeAppsModel.FK_Miles_Auto" FromRole="Mile" ToRole="Station" />
+          <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Miles_CreateModifyLog" FromRole="Mile" ToRole="CreateModifyLog" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="StationID" />
+          </Key>
+          <Property Name="StationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Miles" Relationship="HomeAppsModel.FK_Miles_Auto" FromRole="Station" ToRole="Mile" />
+          <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Stations_CreateModifyLog" FromRole="Station" ToRole="CreateModifyLog" />
+        </EntityType>
+        <EntityType Name="CreateModifyLog">
+          <Key>
+            <PropertyRef Name="CreateModifyID" />
+          </Key>
+          <Property Name="CreateModifyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ModifyOn" Type="DateTime" Precision="0" />
+          <Property Name="ModifyBy" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Autoes" Relationship="HomeAppsModel.FK_Auto_CreateModifyLog" FromRole="CreateModifyLog" ToRole="Auto" />
+          <NavigationProperty Name="Miles" Relationship="HomeAppsModel.FK_Miles_CreateModifyLog" FromRole="CreateModifyLog" ToRole="Mile" />
+          <NavigationProperty Name="Stations" Relationship="HomeAppsModel.FK_Stations_CreateModifyLog" FromRole="CreateModifyLog" ToRole="Station" />
+          <NavigationProperty Name="Roles" Relationship="HomeAppsModel.FK_Roles_CreateModifyLog" FromRole="CreateModifyLog" ToRole="Role" />
+          <NavigationProperty Name="Users" Relationship="HomeAppsModel.FK_Users_CreateModifyLog" FromRole="CreateModifyLog" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Roles_CreateModifyLog" FromRole="Role" ToRole="CreateModifyLog" />
+          <NavigationProperty Name="Users" Relationship="HomeAppsModel.FK_Users_Roles" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Schema">
+          <Key>
+            <PropertyRef Name="SchemaID" />
+          </Key>
+          <Property Name="SchemaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" Nullable="false" />
+          <Property Name="SchemaName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserSchema" Relationship="HomeAppsModel.FK_UserSchemas_CreateModifyLog1" FromRole="Schema" ToRole="UserSchema" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateModifyID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Autoes" Relationship="HomeAppsModel.FK_Auto_Users" FromRole="User" ToRole="Auto" />
+          <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Users_CreateModifyLog" FromRole="User" ToRole="CreateModifyLog" />
+          <NavigationProperty Name="Role" Relationship="HomeAppsModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UserSchemas" Relationship="HomeAppsModel.FK_UserSchemas_Users" FromRole="User" ToRole="UserSchema" />
+          <Property Name="UserName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserSchema">
+          <Key>
+            <PropertyRef Name="UserSchemaID" />
+          </Key>
+          <Property Name="UserSchemaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" Nullable="false" />
+          <Property Name="UsersID" Type="Int32" Nullable="false" />
+          <Property Name="SchemaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Schema" Relationship="HomeAppsModel.FK_UserSchemas_CreateModifyLog1" FromRole="UserSchema" ToRole="Schema" />
+          <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_UserSchemas_Users" FromRole="UserSchema" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Auto_CreateModifyLog">
+          <End Type="HomeAppsModel.CreateModifyLog" Role="CreateModifyLog" Multiplicity="1" />
+          <End Type="HomeAppsModel.Auto" Role="Auto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="Auto">
+              <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auto_Users">
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeAppsModel.Auto" Role="Auto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Auto">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Miles_Auto">
+          <End Type="HomeAppsModel.Station" Role="Station" Multiplicity="1" />
+          <End Type="HomeAppsModel.Mile" Role="Mile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="StationID" />
+            </Principal>
+            <Dependent Role="Mile">
+              <PropertyRef Name="StationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Miles_CreateModifyLog">
+          <End Type="HomeAppsModel.CreateModifyLog" Role="CreateModifyLog" Multiplicity="1" />
+          <End Type="HomeAppsModel.Mile" Role="Mile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="Mile">
+              <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stations_CreateModifyLog">
+          <End Type="HomeAppsModel.CreateModifyLog" Role="CreateModifyLog" Multiplicity="1" />
+          <End Type="HomeAppsModel.Station" Role="Station" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="Station">
+              <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_CreateModifyLog">
+          <End Type="HomeAppsModel.CreateModifyLog" Role="CreateModifyLog" Multiplicity="1" />
+          <End Type="HomeAppsModel.Role" Role="Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="Role">
+              <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_CreateModifyLog">
+          <End Type="HomeAppsModel.CreateModifyLog" Role="CreateModifyLog" Multiplicity="1" />
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreateModifyLog">
+              <PropertyRef Name="CreateModifyID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="CreateModifyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Type="HomeAppsModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSchemas_CreateModifyLog1">
+          <End Type="HomeAppsModel.Schema" Role="Schema" Multiplicity="1" />
+          <End Type="HomeAppsModel.UserSchema" Role="UserSchema" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Schema">
+              <PropertyRef Name="SchemaID" />
+            </Principal>
+            <Dependent Role="UserSchema">
+              <PropertyRef Name="UserSchemaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSchemas_Users">
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeAppsModel.UserSchema" Role="UserSchema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserSchema">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HomeAppsModelStoreContainer" CdmEntityContainer="HomeAppsEntities">
+          <EntitySetMapping Name="Autoes">
+            <EntityTypeMapping TypeName="HomeAppsModel.Auto">
+              <MappingFragment StoreEntitySet="Auto">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AutoName" ColumnName="AutoName" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Miles">
+            <EntityTypeMapping TypeName="HomeAppsModel.Mile">
+              <MappingFragment StoreEntitySet="Miles">
+                <ScalarProperty Name="StationID" ColumnName="StationID" />
+                <ScalarProperty Name="EngineRunTime" ColumnName="EngineRunTime" />
+                <ScalarProperty Name="TotalMilesDriven" ColumnName="TotalMilesDriven" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="TotalGallons" ColumnName="TotalGallons" />
+                <ScalarProperty Name="GasDate" ColumnName="GasDate" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="MilesID" ColumnName="MilesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stations">
+            <EntityTypeMapping TypeName="HomeAppsModel.Station">
+              <MappingFragment StoreEntitySet="Stations">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="StationID" ColumnName="StationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CreateModifyLogs">
+            <EntityTypeMapping TypeName="HomeAppsModel.CreateModifyLog">
+              <MappingFragment StoreEntitySet="CreateModifyLog">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyOn" ColumnName="ModifyOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreateModifyID" ColumnName="CreateModifyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="HomeAppsModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schemas">
+            <EntityTypeMapping TypeName="HomeAppsModel.Schema">
+              <MappingFragment StoreEntitySet="Schemas">
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="SchemaID" ColumnName="SchemaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HomeAppsModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="CreateModifyID" ColumnName="CreateModifyID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSchemas">
+            <EntityTypeMapping TypeName="HomeAppsModel.UserSchema">
+              <MappingFragment StoreEntitySet="UserSchemas">
+                <ScalarProperty Name="SchemaID" ColumnName="SchemaID" />
+                <ScalarProperty Name="UsersID" ColumnName="UsersID" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="UserSchemaID" ColumnName="UserSchemaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
