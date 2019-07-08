@@ -63,6 +63,8 @@
     <Folder Include="Security\" />
     <Folder Include="Users\" />
     <Folder Include="Users\Tables\" />
+    <Folder Include="Gas\" />
+    <Folder Include="Gas\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Template.sql" />
@@ -73,6 +75,11 @@
     <Build Include="HomeApp\Tables\Schemas.sql" />
     <Build Include="Users\Tables\UserSchemas.sql" />
     <Build Include="Security\Users.sql" />
+    <Build Include="Users\Tables\UserRoles.sql" />
+    <Build Include="Gas\Tables\Miles.sql" />
+    <Build Include="Gas\Tables\Stations.sql" />
+    <Build Include="Gas\Tables\Auto.sql" />
+    <Build Include="Security\Gas.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TouchMeToProjectHomeApp.scmp" />
