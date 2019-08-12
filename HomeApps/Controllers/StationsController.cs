@@ -1,60 +1,84 @@
-﻿using HomeApps.Infrastructure;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using HomeApps;
 
 namespace HomeApps.Controllers
 {
-    [Access]
-    public class AutosController : Controller
+    public class StationsController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
         private User user;
 
-        // GET: Autoes
+        // GET: Stations
         public ActionResult Index()
         {
-            user = ((User)this.Session["_CurrentUser"]);
-
-            var autoes = db.Autos.Where(m => m.UserID == user.UserID);
-            return View(autoes.ToList());
+            var stations = db.Stations.Include(s => s.CreateModifyLog);
+            return View(stations.ToList());
         }
 
-        // GET: Autoes/Details/5
-        public ActionResult Details(int? id)
+        [HttpPost]
+        public JsonResult CreateWebStation(string station)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Auto auto = db.Autos.Find(id);
-            if (auto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(auto);
-        }
-
-        // GET: Autoes/Create
-        public ActionResult Create()
-        {
+            Station newstation = new Station() { Name = station };
 
             if (user == null)
             {
                 user = ((User)this.Session["_CurrentUser"]);
             }
 
+            if(user == null)
+            {
+                return Json("User is not logged in");
+            }
+
+            CreateModifyLog cml = new CreateModifyLog();
+            cml.CreatedBy = user.UserID;
+            cml.CreatedOn = DateTime.Now;
+
+            db.CreateModifyLogs.Add(cml);
+            db.SaveChanges();
+            newstation.CreateModifyLog = cml;
+
+            db.Stations.Add(newstation);
+            db.SaveChanges();
+
+            return Json(newstation.StationID);
+        }
+
+        // GET: Stations/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Station station = db.Stations.Find(id);
+            if (station == null)
+            {
+                return HttpNotFound();
+            }
+            return View(station);
+        }
+
+        // GET: Stations/Create
+        public ActionResult Create()
+        {
+            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID");
             return View();
         }
 
-        // POST: Autoes/Create
+        // POST: Stations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AutoID,Deleted,ModfiyID,AutoName,UserID")] Auto auto)
+        public ActionResult Create([Bind(Include = "StationID,Deleted,ModfiyID,Name")] Station station)
         {
             if (ModelState.IsValid)
             {
@@ -69,76 +93,72 @@ namespace HomeApps.Controllers
 
                 db.CreateModifyLogs.Add(cml);
                 db.SaveChanges();
-                auto.CreateModifyLog = cml;
-                                
-                auto.UserID = user.UserID;
-                db.Autos.Add(auto);
+                station.CreateModifyLog = cml;
+
+                db.Stations.Add(station);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", auto.ModfiyID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName", auto.UserID);
-            return View(auto);
+            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", station.ModfiyID);
+            return View(station);
         }
 
-        // GET: Autoes/Edit/5
+        // GET: Stations/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Auto auto = db.Autos.Find(id);
-            if (auto == null)
+            Station station = db.Stations.Find(id);
+            if (station == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", auto.ModfiyID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName", auto.UserID);
-            return View(auto);
+            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", station.ModfiyID);
+            return View(station);
         }
 
-        // POST: Autoes/Edit/5
+        // POST: Stations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AutoID,Deleted,ModfiyID,AutoName,UserID")] Auto auto)
+        public ActionResult Edit([Bind(Include = "StationID,Deleted,ModfiyID,Name")] Station station)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(auto).State = EntityState.Modified;
+                db.Entry(station).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", auto.ModfiyID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName", auto.UserID);
-            return View(auto);
+            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", station.ModfiyID);
+            return View(station);
         }
 
-        // GET: Autoes/Delete/5
+        // GET: Stations/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Auto auto = db.Autos.Find(id);
-            if (auto == null)
+            Station station = db.Stations.Find(id);
+            if (station == null)
             {
                 return HttpNotFound();
             }
-            return View(auto);
+            return View(station);
         }
 
-        // POST: Autoes/Delete/5
+        // POST: Stations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Auto auto = db.Autos.Find(id);
-            db.Autos.Remove(auto);
+            Station station = db.Stations.Find(id);
+            db.Stations.Remove(station);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

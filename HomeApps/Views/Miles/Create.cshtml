@@ -1,47 +1,25 @@
-﻿@model HomeApps.Mile
+﻿@model HomeApps.Models.MilesAddModel
 
 @{
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    @Html.HiddenFor(model => model.AutoID, new { htmlAttributes = new { @class = "form-control" } })
+
     <div class="form-horizontal">
         <h4>Mile</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Deleted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Deleted)
-                    @Html.ValidationMessageFor(model => model.Deleted, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ModfiyID, "ModfiyID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ModfiyID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ModfiyID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AutoID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AutoID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AutoID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GasDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.GasDate, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.GasDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.GasDate, "", new { @class = "text-danger" })
@@ -49,53 +27,165 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TotalGallons, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TotalGallons, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalGallons, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TotalGallons, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
                 @Html.ValidationMessageFor(model => model.TotalGallons, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
                 @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TotalMilesDriven, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TotalMilesDriven, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalMilesDriven, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TotalMilesDriven, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
                 @Html.ValidationMessageFor(model => model.TotalMilesDriven, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EngineRunTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EngineRunTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EngineRunTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.EngineRunTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EngineRunTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EngineRunTime, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StationID, "StationID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <span class="col-md-1"> @Html.LabelFor(model => model.StationID, "Station", htmlAttributes: new { @class = "control-label" }) - <span onclick='AddStation()'>Add new Station</span></span>
             <div class="col-md-10">
                 @Html.DropDownList("StationID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.StationID, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.TextBox("StationName")
+                </div>
+            </div>*@
+    </div>
+
+    <input type="submit" value="Add" class="btn-default" />
+}
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div onclick='CloseStationAdd()' class="close">&times;</div>
+        <div style="padding-top:10px">
+            @Html.Label("New Station: ")
+            @Html.TextBox("NewStationName")
+            <br />
+            <input type="button" value="Add Miles" id="AddMiles" class="btn-default" />
         </div>
     </div>
-}
+
+</div>
+
+<br />
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+<script>
+    function AddStation() {
+        $('#myModal').show()
+        }
+    function CloseStationAdd() {
+        $('#myModal').hide()
+    }
+
+    $('#AddMiles').click(function (e) {
+
+    // prevent the default event behaviour
+        e.preventDefault();
+        var name = $("#NewStationName").val();
+        var AddURL = '@Url.Action("CreateWebStation","Stations")'
+
+        console.log(name);
+
+    $.ajax({
+        url: 'http://localhost:59091' + AddURL,
+        type: "POST",
+        data: JSON.stringify({ 'station': name}),
+        dataType: "json",
+        traditional: true,
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+
+            var stationID = Number(data);
+
+            if (stationID != "NaN") {
+                $('#myModal').hide()
+                $("#StationID").append(
+                                $('<option/>', {
+                                    value: data,
+                                    text: name
+                                }));
+                    alert('New Station Added')
+                } else {
+                    alert("Error occurs on the Database level! " + data);
+                }
+            },
+        error: function () {
+                alert("An error has occured!!!");
+            }
+        });
+});
+
+
+</script>
+
+<style>
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 300px !important; /* Could be more or less, depending on screen size */
+        height: 175px;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+
+
+

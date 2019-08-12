@@ -2,9 +2,10 @@
 
 @{
     ViewBag.Title = "Index";
+    User sessionuser = this.Session["_CurrentUser"] as User;
 }
 
-<h2>Index</h2>
+<h2>Miles for @sessionuser.FirstName)</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")

@@ -17,7 +17,7 @@ namespace HomeApps
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Autoes = new HashSet<Auto>();
+            this.Autos = new HashSet<Auto>();
             this.UserSchemas = new HashSet<UserSchema>();
         }
     
@@ -31,7 +31,7 @@ namespace HomeApps
         public string UserName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Auto> Autoes { get; set; }
+        public virtual ICollection<Auto> Autos { get; set; }
         public virtual CreateModifyLog CreateModifyLog { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

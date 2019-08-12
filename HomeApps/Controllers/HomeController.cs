@@ -5,6 +5,7 @@ namespace HomeApps.Controllers
 {
     public class HomeController : Controller
     {
+        private HomeAppsEntities db = new HomeAppsEntities();
         public ActionResult Index()
         {
             return View();
@@ -19,14 +20,16 @@ namespace HomeApps.Controllers
         public ActionResult Login(HomeApps.User user)
         {
 
-            HomeAppsEntities homeAppsEntities = new HomeAppsEntities();
-
-            int foundUser = homeAppsEntities.Users.Where(m => m.UserName == user.UserName && m.Password == user.Password).ToList().Count();
-
-            if (foundUser.Equals(0))
+            User foundUser = db.Users.Where(m => m.UserName == user.UserName && m.Password == user.Password).FirstOrDefault();
+        
+            if (foundUser == null)
             {
                 ModelState.AddModelError("UserName", "User is not found with type of info.");
                 return View(user);
+            }
+            else
+            {
+                this.Session["_CurrentUser"] = foundUser;
             }
 
             return RedirectToAction("AppList");

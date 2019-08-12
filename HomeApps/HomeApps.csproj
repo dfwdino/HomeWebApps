@@ -174,6 +174,7 @@
     <Compile Include="Controllers\AutosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MilesController.cs" />
+    <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="CreateModifyLog.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
@@ -195,9 +196,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HomeApps.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Access.cs" />
     <Compile Include="Mile.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MilesAddModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
@@ -246,6 +249,11 @@
     <Content Include="Views\Autos\Index.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\Stations\Create.cshtml" />
+    <Content Include="Views\Stations\Delete.cshtml" />
+    <Content Include="Views\Stations\Details.cshtml" />
+    <Content Include="Views\Stations\Edit.cshtml" />
+    <Content Include="Views\Stations\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -255,7 +263,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

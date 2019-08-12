@@ -266,7 +266,7 @@
     <edmx:ConceptualModels>
       <Schema Namespace="HomeAppsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="HomeAppsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Autoes" EntityType="HomeAppsModel.Auto" />
+          <EntitySet Name="Autos" EntityType="HomeAppsModel.Auto" />
           <EntitySet Name="Miles" EntityType="HomeAppsModel.Mile" />
           <EntitySet Name="Stations" EntityType="HomeAppsModel.Station" />
           <EntitySet Name="CreateModifyLogs" EntityType="HomeAppsModel.CreateModifyLog" />
@@ -276,11 +276,11 @@
           <EntitySet Name="UserSchemas" EntityType="HomeAppsModel.UserSchema" />
           <AssociationSet Name="FK_Auto_CreateModifyLog" Association="HomeAppsModel.FK_Auto_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLogs" />
-            <End Role="Auto" EntitySet="Autoes" />
+            <End Role="Auto" EntitySet="Autos" />
           </AssociationSet>
           <AssociationSet Name="FK_Auto_Users" Association="HomeAppsModel.FK_Auto_Users">
             <End Role="User" EntitySet="Users" />
-            <End Role="Auto" EntitySet="Autoes" />
+            <End Role="Auto" EntitySet="Autos" />
           </AssociationSet>
           <AssociationSet Name="FK_Miles_Auto" Association="HomeAppsModel.FK_Miles_Auto">
             <End Role="Station" EntitySet="Stations" />
@@ -365,7 +365,7 @@
           <Property Name="ModifyOn" Type="DateTime" Precision="0" />
           <Property Name="ModifyBy" Type="Int32" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Autoes" Relationship="HomeAppsModel.FK_Auto_CreateModifyLog" FromRole="CreateModifyLog" ToRole="Auto" />
+          <NavigationProperty Name="Autos" Relationship="HomeAppsModel.FK_Auto_CreateModifyLog" FromRole="CreateModifyLog" ToRole="Auto" />
           <NavigationProperty Name="Miles" Relationship="HomeAppsModel.FK_Miles_CreateModifyLog" FromRole="CreateModifyLog" ToRole="Mile" />
           <NavigationProperty Name="Stations" Relationship="HomeAppsModel.FK_Stations_CreateModifyLog" FromRole="CreateModifyLog" ToRole="Station" />
           <NavigationProperty Name="Roles" Relationship="HomeAppsModel.FK_Roles_CreateModifyLog" FromRole="CreateModifyLog" ToRole="Role" />
@@ -403,7 +403,7 @@
           <Property Name="CreateModifyID" Type="Int32" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Autoes" Relationship="HomeAppsModel.FK_Auto_Users" FromRole="User" ToRole="Auto" />
+          <NavigationProperty Name="Autos" Relationship="HomeAppsModel.FK_Auto_Users" FromRole="User" ToRole="Auto" />
           <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Users_CreateModifyLog" FromRole="User" ToRole="CreateModifyLog" />
           <NavigationProperty Name="Role" Relationship="HomeAppsModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="UserSchemas" Relationship="HomeAppsModel.FK_UserSchemas_Users" FromRole="User" ToRole="UserSchema" />
@@ -547,7 +547,7 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HomeAppsModelStoreContainer" CdmEntityContainer="HomeAppsEntities">
-          <EntitySetMapping Name="Autoes">
+          <EntitySetMapping Name="Autos">
             <EntityTypeMapping TypeName="HomeAppsModel.Auto">
               <MappingFragment StoreEntitySet="Auto">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />

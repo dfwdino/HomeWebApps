@@ -4,11 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome To Our House Web Apps</title>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
 </head>
-<body>
+<body class="body-content">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">Our House</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,23 +21,23 @@
 
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                @*<li class="nav-item active">
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
+                </li>*@
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Gas</a>
-                    @Html.ActionLink("Gas","Index","Gas",null,new { @class = "nal-item" })
+                    @*<a class="nav-link" href="#">Gas</a>*@
+                    @Html.ActionLink("Gas","Index","Autos",null,new { @class = "nav-link" })
                 </li>
             
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            @*<form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            </form>*@
         </div>
     </nav>
 
-    <div class="container body-content">
+    <div class="container body-content" id="RenderBody">
         @RenderBody()
         <hr />
         <footer>
@@ -41,7 +45,15 @@
         </footer>
     </div>
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+
 </body>
 </html>
+
+<style>
+    body{
+       padding-top:0px !important;
+    }
+    #RenderBody{
+        padding-top:15px;
+    }
+</style>

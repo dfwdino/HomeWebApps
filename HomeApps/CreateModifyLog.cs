@@ -17,7 +17,7 @@ namespace HomeApps
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CreateModifyLog()
         {
-            this.Autoes = new HashSet<Auto>();
+            this.Autos = new HashSet<Auto>();
             this.Miles = new HashSet<Mile>();
             this.Stations = new HashSet<Station>();
             this.Roles = new HashSet<Role>();
@@ -32,7 +32,7 @@ namespace HomeApps
         public bool Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Auto> Autoes { get; set; }
+        public virtual ICollection<Auto> Autos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mile> Miles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

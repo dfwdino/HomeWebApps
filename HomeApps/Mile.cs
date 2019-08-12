@@ -19,9 +19,9 @@ namespace HomeApps
         public int ModfiyID { get; set; }
         public int AutoID { get; set; }
         public System.DateTime GasDate { get; set; }
-        public decimal TotalGallons { get; set; }
-        public decimal TotalPrice { get; set; }
-        public decimal TotalMilesDriven { get; set; }
+        public Nullable<decimal> TotalGallons { get; set; }
+        public Nullable<decimal> TotalPrice { get; set; }
+        public Nullable<decimal> TotalMilesDriven { get; set; }
         public Nullable<System.TimeSpan> EngineRunTime { get; set; }
         public int StationID { get; set; }
     

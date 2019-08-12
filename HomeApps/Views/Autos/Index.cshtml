@@ -2,26 +2,18 @@
 
 @{
     ViewBag.Title = "Index";
+    User sessionuser = this.Session["_CurrentUser"] as User;
 }
 
-<h2>Index</h2>
+<h2>Autos for @sessionuser.FirstName</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Deleted)
-        </th>
-        <th>
+       <th>
             @Html.DisplayNameFor(model => model.AutoName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateModifyLog.CreateModifyID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.FirstName)
         </th>
         <th></th>
     </tr>
@@ -29,21 +21,12 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Deleted)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.AutoName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreateModifyLog.CreateModifyID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.FirstName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AutoID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AutoID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AutoID })
+            @Html.ActionLink("Add Miles", "Create","Miles", new { id = item.AutoID },null) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.AutoID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.AutoID })
         </td>
     </tr>
 }

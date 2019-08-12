@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -10,9 +11,9 @@ namespace HomeApps.Controllers
         private HomeAppsEntities db = new HomeAppsEntities();
 
         // GET: Miles
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var miles = db.Miles.Include(m => m.Station).Include(m => m.CreateModifyLog);
+            var miles = db.Miles.Where(m => m.AutoID == id).Include(m => m.Station).Include(m => m.CreateModifyLog);
             return View(miles.ToList());
         }
 
@@ -32,11 +33,12 @@ namespace HomeApps.Controllers
         }
 
         // GET: Miles/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
+            
             ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name");
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID");
-            return View();
+            return View(new Models.MilesAddModel() {AutoID = id,GasDate = DateTime.Now});
         }
 
         // POST: Miles/Create

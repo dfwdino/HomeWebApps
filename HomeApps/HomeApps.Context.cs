@@ -25,7 +25,7 @@ namespace HomeApps
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Auto> Autoes { get; set; }
+        public virtual DbSet<Auto> Autos { get; set; }
         public virtual DbSet<Mile> Miles { get; set; }
         public virtual DbSet<Station> Stations { get; set; }
         public virtual DbSet<CreateModifyLog> CreateModifyLogs { get; set; }
