@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web.Mvc;
 
 namespace HomeApps.Controllers
@@ -13,7 +14,7 @@ namespace HomeApps.Controllers
         // GET: Miles
         public ActionResult Index(int id)
         {
-            var miles = db.Miles.Where(m => m.AutoID == id).Include(m => m.Station).Include(m => m.CreateModifyLog);
+            var miles = db.Miles.Where(m => m.AutoID == id).Include(m => m.Station);
             return View(miles.ToList());
         }
 
@@ -46,14 +47,30 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MilesID,Deleted,ModfiyID,AutoID,GasDate,TotalGallons,TotalPrice,TotalMilesDriven,EngineRunTime,StationID")] Mile mile)
+        public ActionResult Create(Models.MilesAddModel mile)
         {
             if (ModelState.IsValid)
             {
-                db.Miles.Add(mile);
+                Mile tempmile = new Mile();
+                foreach (PropertyInfo property in mile.GetType().GetProperties())
+                {
+                    if (!property.CanRead || (property.GetIndexParameters().Length > 0))
+                        continue;
+
+                    PropertyInfo propertyinfo = tempmile.GetType().GetProperty(property.Name);
+                    if ((propertyinfo != null) && (propertyinfo.CanWrite))
+                        propertyinfo.SetValue(tempmile, property.GetValue(mile, null), null);
+                }
+
+                tempmile.CreateModifyLog = CreateModLog();
+                //tempmile.Station = db.Stations.Where(m => m.StationID == tempmile.StationID).First();
+                db.Miles.Add(tempmile);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new { id = tempmile.AutoID});
             }
+
+           
+
 
             ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID);
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", mile.ModfiyID);
@@ -129,5 +146,20 @@ namespace HomeApps.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        protected CreateModifyLog CreateModLog()
+        {  
+            User user = ((User)this.Session["_CurrentUser"]);
+         
+            CreateModifyLog cml = new CreateModifyLog();
+            cml.CreatedBy = user.UserID;
+            cml.CreatedOn = DateTime.Now;
+
+            db.CreateModifyLogs.Add(cml);
+            db.SaveChanges();
+           return cml;
+        }
+
     }
 }
