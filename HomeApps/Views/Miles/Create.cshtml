@@ -29,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TotalGallons, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalGallons, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
+                @Html.EditorFor(model => model.TotalGallons, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.001" } })
                 @Html.ValidationMessageFor(model => model.TotalGallons, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -73,7 +73,7 @@
             @Html.Label("New Station: ")
             @Html.TextBox("NewStationName")
             <br />
-            <input type="button" value="Add Miles" id="AddMiles" class="btn-default" />
+            <input type="button" value="Add Station" style="width:100%;align-content:center" id="AddStation" class="btn-default" />
         </div>
     </div>
 
@@ -144,7 +144,7 @@
         top: 0;
         width: 100%; /* Full width */
         height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
+        overflow: auto; /* Enable scroll if needed */ 
         background-color: rgb(0,0,0); /* Fallback color */
         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     }
@@ -155,8 +155,8 @@
         margin: 15% auto; /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
-        width: 300px !important; /* Could be more or less, depending on screen size */
-        height: 175px;
+        width: 375px !important; /* Could be more or less, depending on screen size */
+        height: 150px;
     }
 
     /* The Close Button */
