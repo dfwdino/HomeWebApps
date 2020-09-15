@@ -37,9 +37,9 @@ namespace HomeApps.Controllers
         public ActionResult Create(int id)
         {
             
-            ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name");
+            ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name").Append(new SelectListItem() {Text = "Select Station", Selected = true,Value="0" });
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID");
-            ViewBag.GasTypeID = new SelectList(db.Types, "GasTypeID", "TypeName");
+            ViewBag.GasTypeID = new SelectList(db.Types, "GasTypeID", "TypeName").Append(new SelectListItem() { Text = "Select Gas Type", Selected = true, Value = "0" });
             return View(new Models.MilesAddModel() {AutoID = id,GasDate = DateTime.Now});
         }
 
@@ -73,9 +73,9 @@ namespace HomeApps.Controllers
            
 
 
-            ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID);
+            ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID).Append(new SelectListItem() { Text = "Select Station", Value = "0" });
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", mile.ModfiyID);
-            ViewBag.GasTypeID = new SelectList(db.CreateModifyLogs, "GasTypeID", "TypeName", mile.GasTypeID);
+            ViewBag.GasTypeID = new SelectList(db.CreateModifyLogs, "GasTypeID", "TypeName", mile.GasTypeID).Append(new SelectListItem() { Text = "Select Gas Type", Value = "0" }); ;
             
             return View(mile);
         }
@@ -111,7 +111,7 @@ namespace HomeApps.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID);
+            ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID).Append(new SelectListItem() { Text = "Select Station", Selected = true, Value = "0" });
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", mile.ModfiyID);
             return View(mile);
         }
