@@ -38,5 +38,11 @@ namespace HomeApps.Models
 
         public virtual Station Station { get; set; }
 
+        [Required]
+        [DisplayName("Gas Type")]
+        public int GasTypeID { get; set; }
+        public virtual Type Type { get; set; }
+    
+
     }
 }

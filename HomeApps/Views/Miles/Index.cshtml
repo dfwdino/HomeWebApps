@@ -30,7 +30,7 @@ else
     <h2>Miles for @sessionuser.FirstName - @Model.First().AutoID</h2>
 
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create New", "Create", new { id = Model.First().AutoID }) - @Html.ActionLink("Back to Auto List", "Index", "Autos")
     </p>
     <table class="table">
         <tr class="Header">

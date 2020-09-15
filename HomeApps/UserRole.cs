@@ -12,23 +12,14 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class Auto
+    public partial class UserRole
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Auto()
-        {
-            this.Miles = new HashSet<Mile>();
-        }
-    
-        public int AutoID { get; set; }
+        public int UserRoleID { get; set; }
         public bool Deleted { get; set; }
         public int ModfiyID { get; set; }
-        public string AutoName { get; set; }
-        public int UserID { get; set; }
+        public int UsersID { get; set; }
+        public int RoleID { get; set; }
     
-        public virtual CreateModifyLog CreateModifyLog { get; set; }
         public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Mile> Miles { get; set; }
     }
 }

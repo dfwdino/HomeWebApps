@@ -145,6 +145,7 @@
     <Content Include="HomeApps.edmx.diagram">
       <DependentUpon>HomeApps.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -212,7 +213,13 @@
     <Compile Include="Station.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
+    <Compile Include="Type.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="UserSchema.cs">

@@ -39,6 +39,7 @@ namespace HomeApps.Controllers
             
             ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name");
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID");
+            ViewBag.GasTypeID = new SelectList(db.Types, "GasTypeID", "TypeName");
             return View(new Models.MilesAddModel() {AutoID = id,GasDate = DateTime.Now});
         }
 
@@ -74,6 +75,8 @@ namespace HomeApps.Controllers
 
             ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID);
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", mile.ModfiyID);
+            ViewBag.GasTypeID = new SelectList(db.CreateModifyLogs, "GasTypeID", "TypeName", mile.GasTypeID);
+            
             return View(mile);
         }
 
@@ -91,6 +94,7 @@ namespace HomeApps.Controllers
             }
             ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID);
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", mile.ModfiyID);
+            ViewBag.GasTypeID = new SelectList(db.CreateModifyLogs, "GasTypeID", "TypeName", mile.GasTypeID);
             return View(mile);
         }
 

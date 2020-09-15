@@ -5,7 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HomeAppsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Auto">
+        <EntityType Name="Autos">
           <Key>
             <PropertyRef Name="AutoID" />
           </Key>
@@ -29,6 +29,7 @@
           <Property Name="TotalMilesDriven" Type="decimal" Precision="11" Scale="1" Nullable="false" />
           <Property Name="EngineRunTime" Type="time" Precision="7" />
           <Property Name="StationID" Type="int" Nullable="false" />
+          <Property Name="GasTypeID" Type="int" />
         </EntityType>
         <EntityType Name="Stations">
           <Key>
@@ -38,6 +39,15 @@
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="ModfiyID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Types">
+          <Key>
+            <PropertyRef Name="GasTypeID" />
+          </Key>
+          <Property Name="GasTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="CreateModifyLog">
           <Key>
@@ -81,6 +91,16 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="25" />
         </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" Nullable="false" />
+          <Property Name="UsersID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserSchemas">
           <Key>
             <PropertyRef Name="UserSchemaID" />
@@ -93,37 +113,37 @@
         </EntityType>
         <Association Name="FK_Auto_CreateModifyLog">
           <End Role="CreateModifyLog" Type="Self.CreateModifyLog" Multiplicity="1" />
-          <End Role="Auto" Type="Self.Auto" Multiplicity="*" />
+          <End Role="Autos" Type="Self.Autos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CreateModifyLog">
               <PropertyRef Name="CreateModifyID" />
             </Principal>
-            <Dependent Role="Auto">
+            <Dependent Role="Autos">
               <PropertyRef Name="ModfiyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Auto_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Auto" Type="Self.Auto" Multiplicity="*" />
+          <End Role="Autos" Type="Self.Autos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="Auto">
+            <Dependent Role="Autos">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Miles_Auto">
-          <End Role="Stations" Type="Self.Stations" Multiplicity="1" />
+          <End Role="Autos" Type="Self.Autos" Multiplicity="1" />
           <End Role="Miles" Type="Self.Miles" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Stations">
-              <PropertyRef Name="StationID" />
+            <Principal Role="Autos">
+              <PropertyRef Name="AutoID" />
             </Principal>
             <Dependent Role="Miles">
-              <PropertyRef Name="StationID" />
+              <PropertyRef Name="AutoID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -136,6 +156,30 @@
             </Principal>
             <Dependent Role="Miles">
               <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Miles_Stations">
+          <End Role="Stations" Type="Self.Stations" Multiplicity="1" />
+          <End Role="Miles" Type="Self.Miles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stations">
+              <PropertyRef Name="StationID" />
+            </Principal>
+            <Dependent Role="Miles">
+              <PropertyRef Name="StationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Miles_Types">
+          <End Role="Types" Type="Self.Types" Multiplicity="0..1" />
+          <End Role="Miles" Type="Self.Miles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="GasTypeID" />
+            </Principal>
+            <Dependent Role="Miles">
+              <PropertyRef Name="GasTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -160,6 +204,18 @@
             </Principal>
             <Dependent Role="Stations">
               <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="UsersID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -212,28 +268,38 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HomeAppsModelStoreContainer">
-          <EntitySet Name="Auto" EntityType="Self.Auto" Schema="Gas" store:Type="Tables" />
+          <EntitySet Name="Autos" EntityType="Self.Autos" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Miles" EntityType="Self.Miles" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Stations" EntityType="Self.Stations" Schema="Gas" store:Type="Tables" />
+          <EntitySet Name="Types" EntityType="Self.Types" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="CreateModifyLog" EntityType="Self.CreateModifyLog" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Schemas" EntityType="Self.Schemas" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="HomeApp" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UserSchemas" EntityType="Self.UserSchemas" Schema="Users" store:Type="Tables" />
           <AssociationSet Name="FK_Auto_CreateModifyLog" Association="Self.FK_Auto_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
-            <End Role="Auto" EntitySet="Auto" />
+            <End Role="Autos" EntitySet="Autos" />
           </AssociationSet>
           <AssociationSet Name="FK_Auto_Users" Association="Self.FK_Auto_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="Auto" EntitySet="Auto" />
+            <End Role="Autos" EntitySet="Autos" />
           </AssociationSet>
           <AssociationSet Name="FK_Miles_Auto" Association="Self.FK_Miles_Auto">
-            <End Role="Stations" EntitySet="Stations" />
+            <End Role="Autos" EntitySet="Autos" />
             <End Role="Miles" EntitySet="Miles" />
           </AssociationSet>
           <AssociationSet Name="FK_Miles_CreateModifyLog" Association="Self.FK_Miles_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
+            <End Role="Miles" EntitySet="Miles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miles_Stations" Association="Self.FK_Miles_Stations">
+            <End Role="Stations" EntitySet="Stations" />
+            <End Role="Miles" EntitySet="Miles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miles_Types" Association="Self.FK_Miles_Types">
+            <End Role="Types" EntitySet="Types" />
             <End Role="Miles" EntitySet="Miles" />
           </AssociationSet>
           <AssociationSet Name="FK_Roles_CreateModifyLog" Association="Self.FK_Roles_CreateModifyLog">
@@ -243,6 +309,10 @@
           <AssociationSet Name="FK_Stations_CreateModifyLog" Association="Self.FK_Stations_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
             <End Role="Stations" EntitySet="Stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Users" Association="Self.FK_UserRoles_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_CreateModifyLog" Association="Self.FK_Users_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
@@ -269,10 +339,12 @@
           <EntitySet Name="Autos" EntityType="HomeAppsModel.Auto" />
           <EntitySet Name="Miles" EntityType="HomeAppsModel.Mile" />
           <EntitySet Name="Stations" EntityType="HomeAppsModel.Station" />
+          <EntitySet Name="Types" EntityType="HomeAppsModel.Type" />
           <EntitySet Name="CreateModifyLogs" EntityType="HomeAppsModel.CreateModifyLog" />
           <EntitySet Name="Roles" EntityType="HomeAppsModel.Role" />
           <EntitySet Name="Schemas" EntityType="HomeAppsModel.Schema" />
           <EntitySet Name="Users" EntityType="HomeAppsModel.User" />
+          <EntitySet Name="UserRoles" EntityType="HomeAppsModel.UserRole" />
           <EntitySet Name="UserSchemas" EntityType="HomeAppsModel.UserSchema" />
           <AssociationSet Name="FK_Auto_CreateModifyLog" Association="HomeAppsModel.FK_Auto_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLogs" />
@@ -283,11 +355,19 @@
             <End Role="Auto" EntitySet="Autos" />
           </AssociationSet>
           <AssociationSet Name="FK_Miles_Auto" Association="HomeAppsModel.FK_Miles_Auto">
-            <End Role="Station" EntitySet="Stations" />
+            <End Role="Auto" EntitySet="Autos" />
             <End Role="Mile" EntitySet="Miles" />
           </AssociationSet>
           <AssociationSet Name="FK_Miles_CreateModifyLog" Association="HomeAppsModel.FK_Miles_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLogs" />
+            <End Role="Mile" EntitySet="Miles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miles_Stations" Association="HomeAppsModel.FK_Miles_Stations">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="Mile" EntitySet="Miles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miles_Types" Association="HomeAppsModel.FK_Miles_Types">
+            <End Role="Type" EntitySet="Types" />
             <End Role="Mile" EntitySet="Miles" />
           </AssociationSet>
           <AssociationSet Name="FK_Stations_CreateModifyLog" Association="HomeAppsModel.FK_Stations_CreateModifyLog">
@@ -310,6 +390,10 @@
             <End Role="Schema" EntitySet="Schemas" />
             <End Role="UserSchema" EntitySet="UserSchemas" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Users" Association="HomeAppsModel.FK_UserRoles_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserSchemas_Users" Association="HomeAppsModel.FK_UserSchemas_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="UserSchema" EntitySet="UserSchemas" />
@@ -326,6 +410,7 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Auto_CreateModifyLog" FromRole="Auto" ToRole="CreateModifyLog" />
           <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_Auto_Users" FromRole="Auto" ToRole="User" />
+          <NavigationProperty Name="Miles" Relationship="HomeAppsModel.FK_Miles_Auto" FromRole="Auto" ToRole="Mile" />
         </EntityType>
         <EntityType Name="Mile">
           <Key>
@@ -341,8 +426,11 @@
           <Property Name="TotalMilesDriven" Type="Decimal" Nullable="false" Precision="11" Scale="1" />
           <Property Name="EngineRunTime" Type="Time" Precision="7" />
           <Property Name="StationID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Station" Relationship="HomeAppsModel.FK_Miles_Auto" FromRole="Mile" ToRole="Station" />
+          <Property Name="GasTypeID" Type="Int32" />
+          <NavigationProperty Name="Auto" Relationship="HomeAppsModel.FK_Miles_Auto" FromRole="Mile" ToRole="Auto" />
           <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Miles_CreateModifyLog" FromRole="Mile" ToRole="CreateModifyLog" />
+          <NavigationProperty Name="Station" Relationship="HomeAppsModel.FK_Miles_Stations" FromRole="Mile" ToRole="Station" />
+          <NavigationProperty Name="Type" Relationship="HomeAppsModel.FK_Miles_Types" FromRole="Mile" ToRole="Type" />
         </EntityType>
         <EntityType Name="Station">
           <Key>
@@ -352,8 +440,18 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <Property Name="ModfiyID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Miles" Relationship="HomeAppsModel.FK_Miles_Auto" FromRole="Station" ToRole="Mile" />
+          <NavigationProperty Name="Miles" Relationship="HomeAppsModel.FK_Miles_Stations" FromRole="Station" ToRole="Mile" />
           <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Stations_CreateModifyLog" FromRole="Station" ToRole="CreateModifyLog" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="GasTypeID" />
+          </Key>
+          <Property Name="GasTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Miles" Relationship="HomeAppsModel.FK_Miles_Types" FromRole="Type" ToRole="Mile" />
         </EntityType>
         <EntityType Name="CreateModifyLog">
           <Key>
@@ -403,11 +501,23 @@
           <Property Name="CreateModifyID" Type="Int32" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Autos" Relationship="HomeAppsModel.FK_Auto_Users" FromRole="User" ToRole="Auto" />
           <NavigationProperty Name="CreateModifyLog" Relationship="HomeAppsModel.FK_Users_CreateModifyLog" FromRole="User" ToRole="CreateModifyLog" />
           <NavigationProperty Name="Role" Relationship="HomeAppsModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UserRoles" Relationship="HomeAppsModel.FK_UserRoles_Users" FromRole="User" ToRole="UserRole" />
           <NavigationProperty Name="UserSchemas" Relationship="HomeAppsModel.FK_UserSchemas_Users" FromRole="User" ToRole="UserSchema" />
-          <Property Name="UserName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" Nullable="false" />
+          <Property Name="UsersID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_UserRoles_Users" FromRole="UserRole" ToRole="User" />
         </EntityType>
         <EntityType Name="UserSchema">
           <Key>
@@ -446,14 +556,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Miles_Auto">
-          <End Type="HomeAppsModel.Station" Role="Station" Multiplicity="1" />
+          <End Type="HomeAppsModel.Auto" Role="Auto" Multiplicity="1" />
           <End Type="HomeAppsModel.Mile" Role="Mile" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Station">
-              <PropertyRef Name="StationID" />
+            <Principal Role="Auto">
+              <PropertyRef Name="AutoID" />
             </Principal>
             <Dependent Role="Mile">
-              <PropertyRef Name="StationID" />
+              <PropertyRef Name="AutoID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -466,6 +576,30 @@
             </Principal>
             <Dependent Role="Mile">
               <PropertyRef Name="ModfiyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Miles_Stations">
+          <End Type="HomeAppsModel.Station" Role="Station" Multiplicity="1" />
+          <End Type="HomeAppsModel.Mile" Role="Mile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="StationID" />
+            </Principal>
+            <Dependent Role="Mile">
+              <PropertyRef Name="StationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Miles_Types">
+          <End Type="HomeAppsModel.Type" Role="Type" Multiplicity="0..1" />
+          <End Type="HomeAppsModel.Mile" Role="Mile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="GasTypeID" />
+            </Principal>
+            <Dependent Role="Mile">
+              <PropertyRef Name="GasTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -529,6 +663,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserRoles_Users">
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeAppsModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserSchemas_Users">
           <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
           <End Type="HomeAppsModel.UserSchema" Role="UserSchema" Multiplicity="*" />
@@ -541,7 +687,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -549,7 +695,7 @@
         <EntityContainerMapping StorageEntityContainer="HomeAppsModelStoreContainer" CdmEntityContainer="HomeAppsEntities">
           <EntitySetMapping Name="Autos">
             <EntityTypeMapping TypeName="HomeAppsModel.Auto">
-              <MappingFragment StoreEntitySet="Auto">
+              <MappingFragment StoreEntitySet="Autos">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="AutoName" ColumnName="AutoName" />
                 <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
@@ -561,6 +707,7 @@
           <EntitySetMapping Name="Miles">
             <EntityTypeMapping TypeName="HomeAppsModel.Mile">
               <MappingFragment StoreEntitySet="Miles">
+                <ScalarProperty Name="GasTypeID" ColumnName="GasTypeID" />
                 <ScalarProperty Name="StationID" ColumnName="StationID" />
                 <ScalarProperty Name="EngineRunTime" ColumnName="EngineRunTime" />
                 <ScalarProperty Name="TotalMilesDriven" ColumnName="TotalMilesDriven" />
@@ -581,6 +728,16 @@
                 <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="StationID" ColumnName="StationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Types">
+            <EntityTypeMapping TypeName="HomeAppsModel.Type">
+              <MappingFragment StoreEntitySet="Types">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="GasTypeID" ColumnName="GasTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -627,6 +784,17 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="HomeAppsModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UsersID" ColumnName="UsersID" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

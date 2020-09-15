@@ -18,6 +18,7 @@ namespace HomeApps
         public User()
         {
             this.Autos = new HashSet<Auto>();
+            this.UserRoles = new HashSet<UserRole>();
             this.UserSchemas = new HashSet<UserSchema>();
         }
     
@@ -34,6 +35,8 @@ namespace HomeApps
         public virtual ICollection<Auto> Autos { get; set; }
         public virtual CreateModifyLog CreateModifyLog { get; set; }
         public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRole> UserRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSchema> UserSchemas { get; set; }
     }

@@ -28,10 +28,12 @@ namespace HomeApps
         public virtual DbSet<Auto> Autos { get; set; }
         public virtual DbSet<Mile> Miles { get; set; }
         public virtual DbSet<Station> Stations { get; set; }
+        public virtual DbSet<Type> Types { get; set; }
         public virtual DbSet<CreateModifyLog> CreateModifyLogs { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Schema> Schemas { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserSchema> UserSchemas { get; set; }
     }
 }

@@ -24,8 +24,11 @@ namespace HomeApps
         public decimal TotalMilesDriven { get; set; }
         public Nullable<System.TimeSpan> EngineRunTime { get; set; }
         public int StationID { get; set; }
+        public Nullable<int> GasTypeID { get; set; }
     
-        public virtual Station Station { get; set; }
+        public virtual Auto Auto { get; set; }
         public virtual CreateModifyLog CreateModifyLog { get; set; }
+        public virtual Station Station { get; set; }
+        public virtual Type Type { get; set; }
     }
 }
