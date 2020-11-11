@@ -18,7 +18,7 @@ namespace HomeApps.Controllers
         {
             user = ((User)this.Session["_CurrentUser"]);
 
-            var autoes = db.Autos.Where(m => m.UserID == user.UserID);
+            var autoes = db.Autos.Where(m => m.Deleted == false).Where(m => m.UserID == user.UserID);
             return View(autoes.ToList());
         }
 
@@ -138,7 +138,8 @@ namespace HomeApps.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Auto auto = db.Autos.Find(id);
-            db.Autos.Remove(auto);
+            //db.Autos.Remove(auto);
+            auto.Deleted = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

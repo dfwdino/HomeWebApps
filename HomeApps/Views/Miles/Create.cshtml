@@ -2,12 +2,14 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_GasLayout.cshtml";
 
+}
 
-    
-    }
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+@*<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/modernizr-2.8.3.js"></script>*@
 
-<script src="~/Scripts/jquery-3.4.1.js"></script>
 <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
@@ -16,61 +18,63 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.AutoID, new { htmlAttributes = new { @class = "form-control" } })
 
-<div class="form-horizontal">
-    <h4>Mile</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>Mile</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.GasDate, htmlAttributes: new { @class = "control-label col-md-3" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.GasDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.GasDate, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.GasDate, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GasDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GasDate, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <span class="col-md-1"> @Html.LabelFor(model => model.GasTypeID, "GasType", htmlAttributes: new { @class = "control-label" })</span>
-        <div class="col-md-10">
-            @Html.DropDownList("GasTypeID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.GasTypeID, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <span class="col-md-1"> @Html.LabelFor(model => model.StationID, "Station", htmlAttributes: new { @class = "control-label" }) - <span onclick='AddStation()'>Add new Station</span></span>
+            <div class="col-md-10">
+                @Html.DropDownList("StationID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StationID, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.TotalGallons, htmlAttributes: new { @class = "control-label col-md-3" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TotalGallons, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.001" } })
-            @Html.ValidationMessageFor(model => model.TotalGallons, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <span class="col-md-1"> @Html.LabelFor(model => model.GasTypeID, "GasType", htmlAttributes: new { @class = "control-label" })</span>
+            <div class="col-md-10">
+                @Html.DropDownList("GasTypeID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GasTypeID, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "control-label col-md-3" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
-            @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
+                @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.TotalMilesDriven, htmlAttributes: new { @class = "control-label col-md-3" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TotalMilesDriven, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
-            @Html.ValidationMessageFor(model => model.TotalMilesDriven, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalGallons, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalGallons, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.001" } })
+                @Html.ValidationMessageFor(model => model.TotalGallons, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <span class="col-md-1"> @Html.LabelFor(model => model.StationID, "Station", htmlAttributes: new { @class = "control-label" }) - <span onclick='AddStation()'>Add new Station</span></span>
-        <div class="col-md-10">
-            @Html.DropDownList("StationID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.StationID, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalMilesDriven, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalMilesDriven, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
+                @Html.ValidationMessageFor(model => model.TotalMilesDriven, "", new { @class = "text-danger" })
+            </div>
         </div>
+
+
+
+
     </div>
-
-
-</div>
 
     <input type="submit" value="Add" class="btn-default" />
 }
@@ -93,7 +97,7 @@
 <br />
 
 <div>
-    @Html.ActionLink("Back to List", "Index",new { id =  Model.AutoID})
+    @Html.ActionLink("Back to List", "Index", new { id = Model.AutoID })
 </div>
 
 
@@ -108,23 +112,10 @@
 
     $('#AddStation').click(function (e) {
 
-    // prevent the default event behaviour
-        //e.preventDefault();
         var name = $("#NewStationName").val();
-        var AddURL = '@Url.Action("CreateWebStation","Stations")'
-
-        if ('@Request.Url.GetLeftPart(UriPartial.Authority).Contains("localhost")' == "True") {
-            AddURL = '@Request.Url.GetLeftPart(UriPartial.Authority)' + AddURL;
-            
-        }
-        else {
-            AddURL = 'http://dfwdino.dyndns.org/HomeApp' + AddURL;
-        }
-
-
 
         $.ajax({
-            url: AddURL,
+            url: '@Url.Action("CreateWebStation", "Stations", null, Request.Url.Scheme)',
             type: "POST",
             data: JSON.stringify({ 'station': name}),
             dataType: "json",
@@ -153,7 +144,7 @@
 
         CloseStationAdd();
 
-        
+
 
 });
 
@@ -169,7 +160,7 @@
         top: 0;
         width: 100%; /* Full width */
         height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */ 
+        overflow: auto; /* Enable scroll if needed */
         background-color: rgb(0,0,0); /* Fallback color */
         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     }

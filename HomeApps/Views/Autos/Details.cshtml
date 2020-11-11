@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_GasLayout.cshtml";
 }
 
 <h2>Details</h2>
@@ -10,13 +11,13 @@
     <h4>Auto</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Deleted)
-        </dt>
+        </dt>*@
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.Deleted)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.AutoName)
@@ -26,7 +27,7 @@
             @Html.DisplayFor(model => model.AutoName)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.CreateModifyLog.CreateModifyID)
         </dt>
 
@@ -40,7 +41,7 @@
 
         <dd>
             @Html.DisplayFor(model => model.User.FirstName)
-        </dd>
+        </dd>*@
 
     </dl>
 </div>

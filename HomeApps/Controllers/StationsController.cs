@@ -18,7 +18,7 @@ namespace HomeApps.Controllers
         // GET: Stations
         public ActionResult Index()
         {
-            var stations = db.Stations.Include(s => s.CreateModifyLog);
+            var stations = db.Stations.Where(m => m.Deleted == false).Include(s => s.CreateModifyLog);
             return View(stations.ToList());
         }
 
@@ -158,7 +158,9 @@ namespace HomeApps.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Station station = db.Stations.Find(id);
-            db.Stations.Remove(station);
+            station.Deleted = true;
+            //db.Stations.Remove(station);
+            
             db.SaveChanges();
             return RedirectToAction("Index");
         }

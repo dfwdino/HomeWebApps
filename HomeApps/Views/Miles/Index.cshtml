@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Index";
     User sessionuser = this.Session["_CurrentUser"] as User;
+    
+    Layout = "~/Views/Shared/_GasLayout.cshtml";
 
     decimal MPG = 0;
     decimal LastMiles = 0;

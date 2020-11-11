@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Index";
     User sessionuser = this.Session["_CurrentUser"] as User;
+
+    Layout = "~/Views/Shared/_GasLayout.cshtml";
 }
 
 <h2>Autos for @sessionuser.FirstName</h2>
