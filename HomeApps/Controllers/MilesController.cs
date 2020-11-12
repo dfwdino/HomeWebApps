@@ -36,10 +36,12 @@ namespace HomeApps.Controllers
         // GET: Miles/Create
         public ActionResult Create(int id)
         {
-            
-            ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name").Append(new SelectListItem() {Text = "Select Station", Selected = true,Value="0" });
+
+            ViewBag.StationID = new SelectList(db.Stations.Where(m => m.Deleted == false).AsEnumerable(), "StationID", "Name").Append(new SelectListItem() { Text = "Select Station", Selected = true, Value = "0" });
+
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID");
-            ViewBag.GasTypeID = new SelectList(db.Types, "GasTypeID", "TypeName").Append(new SelectListItem() { Text = "Select Gas Type", Selected = true, Value = "0" });
+
+            ViewBag.GasTypeID = new SelectList(items: db.Types.Where(m => m.Deleted == false).AsEnumerable(), "GasTypeID", "TypeName").Append(new SelectListItem() { Text = "Select Gas Type", Selected = true, Value = "0" });
             return View(new Models.MilesAddModel() {AutoID = id,GasDate = DateTime.Now});
         }
 
