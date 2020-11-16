@@ -6,13 +6,11 @@ namespace HomeApps.Controllers
     public class HomeController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() => Session["_CurrentUser"] == null ? View() : (ActionResult)RedirectToAction("AppList");
 
         public ActionResult Login()
         {
+
             return View();
         }
 
