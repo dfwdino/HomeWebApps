@@ -1,27 +1,22 @@
-﻿@model IEnumerable<HomeApps.Mile>
+﻿@model HomeApps.Models.MilesViewModel
 
 @{
     ViewBag.Title = "Index";
     User sessionuser = this.Session["_CurrentUser"] as User;
-    
+
     Layout = "~/Views/Shared/_GasLayout.cshtml";
 
-    decimal MPG = 0;
-    decimal LastMiles = 0;
+    decimal TotalMPG = Model.TotalMiles / Model.TotalGallons;
+    decimal Day30TotalMPG = Model.Day30MaxTotalMiles / Model.Day30MaxTotalGallons;
 
-    //decimal MaxMiles = Model.Max(m => m.TotalMilesDriven);
-    //decimal MinMiles = Model.Min(m => m.TotalMilesDriven);
-    //decimal TotalGallons = Model.Sum(m => m.TotalGallons);
-
-    //decimal TotalMiles = MaxMiles - MinMiles;
 }
 
-@if (@Model.Count().Equals(0))
+@if (@Model.Miles.Count().Equals(0))
 {
     <h2>No Miles Logged yet!!</h2>
 
     <div>
-        @Html.ActionLink("Back to Auto List", "Index","Autos")
+        @Html.ActionLink("Back to Auto List", "Index", "Autos")
     </div>
 
 }
@@ -29,34 +24,52 @@
 
 else
 {
-    <h2>Miles for @sessionuser.FirstName - @Model.First().AutoID</h2>
+    <h2>Miles for @sessionuser.FirstName - @Model.Miles.First().AutoID</h2>
+
+    <div id="HideShowSummaryMiles" style="padding-bottom:10px;">Hide/Show SummaryMiles</div>
+
+    <div id="SummaryMiles">
+
+        <div style="padding-bottom:10px;">
+            Since <span class="font-weight-bold">@Model.Miles.First().GasDate.ToShortDateString()</span> you have drove
+            <span class="font-weight-bold">@Model.TotalMiles.ToString("#")</span> miles and used <span class="font-weight-bold">@Model.TotalGallons</span> gallons of gas and MPG are <span class="font-weight-bold">@TotalMPG.ToString("#")</span>
+        </div>
+
+        <div>
+            Since <span class="font-weight-bold">@Model.Date30.ToShortDateString()</span> you have drove
+            <span class="font-weight-bold">@Model.Day30MaxTotalMiles.ToString("#")</span> miles and used <span class="font-weight-bold">@Model.Day30MaxTotalGallons</span> gallons of gas and MPG are <span class="font-weight-bold">@Day30TotalMPG.ToString("#")</span>
+        </div>
+    </div>
+
+
+
 
     <p>
-        @Html.ActionLink("Create New", "Create", new { id = Model.First().AutoID }) - @Html.ActionLink("Back to Auto List", "Index", "Autos")
+        @Html.ActionLink("Create New", "Create", new { id = Model.Miles.First().AutoID }) - @Html.ActionLink("Back to Auto List", "Index", "Autos")
     </p>
     <table class="table">
         <tr class="Header">
             <th style="width:33%">
                 <div class="row">
-                    @Html.DisplayNameFor(model => model.GasDate)
+                    @Html.DisplayName("Date")
                 </div>
                 <div class="row">
-                    @Html.DisplayNameFor(model => model.Station.Name)
+                    @Html.DisplayName("Station")
                 </div>
             </th>
             <th style="width:33%">
                 <div class="row">
-                    @Html.DisplayNameFor(model => model.TotalGallons)
+                    @Html.DisplayName("Total Gallons")
                 </div>
                 <div class="row">
-                    @Html.DisplayNameFor(model => model.TotalPrice)
+                    @Html.DisplayName("Total Price")
                 </div>
 
             </th>
 
             <th style="width:33%">
                 <div class="row">
-                    @Html.DisplayNameFor(model => model.TotalMilesDriven)
+                    @Html.DisplayName("Total Miles")
                 </div>
                 <div class="row">
                     @Html.DisplayName("MPG")
@@ -66,7 +79,7 @@ else
 
         </tr>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.Miles)
         {
             <tr>
                 <td>
@@ -82,28 +95,29 @@ else
                         @Html.DisplayFor(modelItem => item.TotalGallons)
                     </div>
                     <div class="row">
-                        @{
-                            if (LastMiles > 0)
-                            {
-                                MPG = (item.TotalMilesDriven - LastMiles) / item.TotalGallons;
-                            }
-                        }
-                        @Html.Label(MPG.ToString("0"))
+                        @item.TotalPrice.ToString("C")
                     </div>
-                  
+
                 </td>
                 <td>
                     <div class="row">
-                        @Html.DisplayFor(modelItem => item.TotalPrice)
+
+                        @item.TotalMilesDriven.ToString("#")
                     </div>
                     <div class="row">
-                        @Html.DisplayFor(modelItem => item.TotalMilesDriven)
+                        @{
+                            if (Model.LastMiles > 0)
+                            {
+                                Model.MPG = (Model.LastMiles - item.TotalMilesDriven) / item.TotalGallons;
+                            }
+                        }
+                        <span>@Model.MPG.ToString("#")</span>
                     </div>
-                  
+
                 </td>
             </tr>
 
-            LastMiles = item.TotalMilesDriven;
+            Model.LastMiles = item.TotalMilesDriven;
 
 
         }
@@ -113,8 +127,24 @@ else
 
 
 <style>
-    .row{
-        display:normal !important;
-        text-align:center;
+    .row {
+        display: block !important;
+        text-align: center;
     }
+
+    #SummaryMiles {
+        padding-bottom: 10px;
+        display: none;
+        border-bottom: solid;
+        border-bottom-width: thin;
+        border-bottom-color: black;
+    }
+
 </style>
+
+
+<script>
+    $("#HideShowSummaryMiles").click(function () {
+        $("#SummaryMiles").toggle();
+    });
+</script>

@@ -5,7 +5,7 @@ namespace HomeApps.Controllers
 {
     public class HomeController : Controller
     {
-        private HomeAppsEntities db = new HomeAppsEntities();
+        
         public ActionResult Index() => Session["_CurrentUser"] == null ? View() : (ActionResult)RedirectToAction("AppList");
 
         public ActionResult Login()
@@ -17,8 +17,9 @@ namespace HomeApps.Controllers
         [HttpPost]
         public ActionResult Login(HomeApps.User user)
         {
+            HomeAppsEntities db = new HomeAppsEntities();
 
-            User foundUser = db.Users.Where(m => m.UserName == user.UserName && m.Password == user.Password).FirstOrDefault();
+        User foundUser = db.Users.Where(m => m.UserName == user.UserName && m.Password == user.Password).FirstOrDefault();
         
             if (foundUser == null)
             {

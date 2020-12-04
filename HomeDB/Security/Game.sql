@@ -1,5 +1,3 @@
-﻿CREATE SCHEMA [Gas]
+﻿CREATE SCHEMA [Game]
     AUTHORIZATION [dbo];
-
-
 

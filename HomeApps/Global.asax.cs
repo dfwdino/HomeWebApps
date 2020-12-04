@@ -11,6 +11,7 @@ namespace HomeApps
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //GlobalFilters.Filters.Add(new MyExceptionHandler());
         }
 
         protected void Session_Start(Object sender, EventArgs e)

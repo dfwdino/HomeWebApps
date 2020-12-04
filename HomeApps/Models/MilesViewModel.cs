@@ -7,6 +7,24 @@ namespace HomeApps.Models
 {
     public class MilesViewModel
     {
+        public List<Mile> Miles = new List<Mile>();
+        public decimal MPG { get; set; }
+        public decimal LastMiles { get; set; }
+        public decimal MaxMiles { get; set; }
+        public decimal MinMiles { get; set; }
+        public decimal TotalGallons { get; set; }
+        public decimal TotalMiles { get; set; }
+        public DateTime Date30 { get; set; }
+        public decimal Day30MaxMiles { get; set; }
+        public decimal Day30MaxMinMiles { get; set; }
+        public decimal Day30MaxTotalGallons { get; set; }
+        public decimal Day30MaxTotalMiles { get; set; }
+
+    }
+
+
+    public class MilesModel
+    {
         public int MilesID { get; set; }
         public bool Deleted { get; set; }
         public int ModfiyID { get; set; }
@@ -22,6 +40,6 @@ namespace HomeApps.Models
         public virtual CreateModifyLog CreateModifyLog { get; set; }
 
         public int MPG { get; set; }
-        
     }
+
 }

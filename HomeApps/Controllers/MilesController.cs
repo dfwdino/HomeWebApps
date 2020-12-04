@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HomeApps.Models;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -14,8 +16,30 @@ namespace HomeApps.Controllers
         // GET: Miles
         public ActionResult Index(int id)
         {
-            var miles = db.Miles.Where(m => m.AutoID == id).Include(m => m.Station);
-            return View(miles.ToList());
+
+            MilesViewModel Miles = new MilesViewModel();
+
+            Miles.Miles = db.Miles.OrderByDescending(m => m.GasDate).Where(m => m.AutoID == id).ToList();//.Include(m => m.Station).Include(m => m.Auto).ToList();
+            
+            Miles.MPG = 0;
+            Miles.LastMiles = 0;
+            
+            Miles.MaxMiles = Miles.Miles.Max(m => m.TotalMilesDriven);
+            Miles.MinMiles = Miles.Miles.Min(m => m.TotalMilesDriven);
+            Miles.TotalGallons = Miles.Miles.Sum(m => m.TotalGallons);
+            
+            Miles.TotalMiles = Miles.MaxMiles - Miles.MinMiles;
+            
+            Miles.Date30 = DateTime.Now.AddDays(-30);
+            
+            Miles.Day30MaxMiles = Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Max(m => m.TotalMilesDriven);
+            Miles.Day30MaxMinMiles = Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Min(m => m.TotalMilesDriven);
+            Miles.Day30MaxTotalGallons = Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Sum(m => m.TotalGallons);
+            
+            Miles.Day30MaxTotalMiles = Miles.Day30MaxMiles - Miles.Day30MaxMinMiles;
+
+
+            return View(Miles);
         }
 
         // GET: Miles/Details/5
