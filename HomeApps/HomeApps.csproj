@@ -207,6 +207,9 @@
     <Compile Include="Model.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelImage.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelSocialSite.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
