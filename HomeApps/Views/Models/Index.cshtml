@@ -1,0 +1,51 @@
+﻿@model IEnumerable<HomeApps.Model>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/PhotoCRM.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+<table>
+ 
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <th style="padding-right:10px;" ><img style="width:150px;height:150px;" /></th>
+            <th>
+                @Html.ActionLink($"{item.FirstName} {item.LastName}", "edit","Models",new { id=item.ModelID},null)
+                 <br />@item.Gender<br />@item.PhoneNumber<br />@item.Email
+            <span class="NormalText">Nudes:</span> @item.AllNudes <br /><span class="NormalText">Boudoir:</span> @item.AllBoudoir <br /><span class="NormalText">Erotica:</span> @item.AllErotica
+</th>
+            <th>
+                @foreach (var mss in item.ModelSocialSites)
+                {
+                    <a href="@mss.URL">@mss.SocialSite.SocalSiteName</a>
+                }
+            </th>
+        </tr>
+        <tr>
+            <td colspan="8">@Html.DisplayFor(modelItem => item.Notes)</td>
+        </tr>
+        <tr class="BlankRow"></tr>
+    }
+
+</table>
+
+
+<style>
+    .NormalText{
+        font-weight:300;
+    }
+
+    .BlankRow {
+       height:15px;
+    }
+</style>

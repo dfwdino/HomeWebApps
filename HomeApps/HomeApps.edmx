@@ -23,7 +23,7 @@
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="ModfiyID" Type="int" Nullable="false" />
           <Property Name="AutoID" Type="int" Nullable="false" />
-          <Property Name="GasDate" Type="date" Nullable="false" />
+          <Property Name="GasDate" Type="datetime" Nullable="false" />
           <Property Name="TotalGallons" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="TotalPrice" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="TotalMilesDriven" Type="decimal" Precision="11" Scale="1" Nullable="false" />
@@ -90,6 +90,51 @@
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="ModelImages">
+          <Key>
+            <PropertyRef Name="ModelImage" />
+          </Key>
+          <Property Name="ModelImage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImageName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ImageFile" Type="image" Nullable="false" />
+          <Property Name="ModelID" Type="int" />
+        </EntityType>
+        <EntityType Name="Models">
+          <Key>
+            <PropertyRef Name="ModelID" />
+          </Key>
+          <Property Name="ModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AllNudes" Type="bit" />
+          <Property Name="AllBoudoir" Type="bit" />
+          <Property Name="AllErotica" Type="bit" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="25" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ModelSocialSites">
+          <Key>
+            <PropertyRef Name="ModelSocialID" />
+          </Key>
+          <Property Name="ModelSocialID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SocialSiteID" Type="int" Nullable="false" />
+          <Property Name="ModelID" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="ModfiyID" Type="int" />
+          <Property Name="URL" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SocialSites">
+          <Key>
+            <PropertyRef Name="SocalTypeID" />
+          </Key>
+          <Property Name="SocalTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SocalSiteName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UserRoles">
           <Key>
@@ -180,6 +225,42 @@
             </Principal>
             <Dependent Role="Miles">
               <PropertyRef Name="GasTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModelImages_Models">
+          <End Role="Models" Type="Self.Models" Multiplicity="0..1" />
+          <End Role="ModelImages" Type="Self.ModelImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Models">
+              <PropertyRef Name="ModelID" />
+            </Principal>
+            <Dependent Role="ModelImages">
+              <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModelSocialSites_Models">
+          <End Role="Models" Type="Self.Models" Multiplicity="1" />
+          <End Role="ModelSocialSites" Type="Self.ModelSocialSites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Models">
+              <PropertyRef Name="ModelID" />
+            </Principal>
+            <Dependent Role="ModelSocialSites">
+              <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModelSocialSites_SocalSites">
+          <End Role="SocialSites" Type="Self.SocialSites" Multiplicity="1" />
+          <End Role="ModelSocialSites" Type="Self.ModelSocialSites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SocialSites">
+              <PropertyRef Name="SocalTypeID" />
+            </Principal>
+            <Dependent Role="ModelSocialSites">
+              <PropertyRef Name="SocialSiteID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -276,6 +357,10 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Schemas" EntityType="Self.Schemas" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="HomeApp" store:Type="Tables" />
+          <EntitySet Name="ModelImages" EntityType="Self.ModelImages" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
+          <EntitySet Name="Models" EntityType="Self.Models" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
+          <EntitySet Name="ModelSocialSites" EntityType="Self.ModelSocialSites" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
+          <EntitySet Name="SocialSites" EntityType="Self.SocialSites" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UserSchemas" EntityType="Self.UserSchemas" Schema="Users" store:Type="Tables" />
           <AssociationSet Name="FK_Auto_CreateModifyLog" Association="Self.FK_Auto_CreateModifyLog">
@@ -301,6 +386,18 @@
           <AssociationSet Name="FK_Miles_Types" Association="Self.FK_Miles_Types">
             <End Role="Types" EntitySet="Types" />
             <End Role="Miles" EntitySet="Miles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModelImages_Models" Association="Self.FK_ModelImages_Models">
+            <End Role="Models" EntitySet="Models" />
+            <End Role="ModelImages" EntitySet="ModelImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModelSocialSites_Models" Association="Self.FK_ModelSocialSites_Models">
+            <End Role="Models" EntitySet="Models" />
+            <End Role="ModelSocialSites" EntitySet="ModelSocialSites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModelSocialSites_SocalSites" Association="Self.FK_ModelSocialSites_SocalSites">
+            <End Role="SocialSites" EntitySet="SocialSites" />
+            <End Role="ModelSocialSites" EntitySet="ModelSocialSites" />
           </AssociationSet>
           <AssociationSet Name="FK_Roles_CreateModifyLog" Association="Self.FK_Roles_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
@@ -398,6 +495,22 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserSchema" EntitySet="UserSchemas" />
           </AssociationSet>
+          <EntitySet Name="Models" EntityType="HomeAppsModel.Model" />
+          <EntitySet Name="ModelSocialSites" EntityType="HomeAppsModel.ModelSocialSite" />
+          <EntitySet Name="SocialSites" EntityType="HomeAppsModel.SocialSite" />
+          <AssociationSet Name="FK_ModelSocialSites_Models" Association="HomeAppsModel.FK_ModelSocialSites_Models">
+            <End Role="Model" EntitySet="Models" />
+            <End Role="ModelSocialSite" EntitySet="ModelSocialSites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModelSocialSites_SocalSites" Association="HomeAppsModel.FK_ModelSocialSites_SocalSites">
+            <End Role="SocialSite" EntitySet="SocialSites" />
+            <End Role="ModelSocialSite" EntitySet="ModelSocialSites" />
+          </AssociationSet>
+          <EntitySet Name="ModelImages" EntityType="HomeAppsModel.ModelImage" />
+          <AssociationSet Name="FK_ModelImages_Models" Association="HomeAppsModel.FK_ModelImages_Models">
+            <End Role="Model" EntitySet="Models" />
+            <End Role="ModelImage" EntitySet="ModelImages" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Auto">
           <Key>
@@ -420,7 +533,7 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <Property Name="ModfiyID" Type="Int32" Nullable="false" />
           <Property Name="AutoID" Type="Int32" Nullable="false" />
-          <Property Name="GasDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="GasDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalGallons" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
           <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
           <Property Name="TotalMilesDriven" Type="Decimal" Nullable="false" Precision="11" Scale="1" />
@@ -687,6 +800,93 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="ModelID" />
+          </Key>
+          <Property Name="ModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AllNudes" Type="Boolean" />
+          <Property Name="AllBoudoir" Type="Boolean" />
+          <Property Name="AllErotica" Type="Boolean" />
+          <NavigationProperty Name="ModelSocialSites" Relationship="HomeAppsModel.FK_ModelSocialSites_Models" FromRole="Model" ToRole="ModelSocialSite" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ModelImages" Relationship="HomeAppsModel.FK_ModelImages_Models" FromRole="Model" ToRole="ModelImage" />
+        </EntityType>
+        <EntityType Name="ModelSocialSite">
+          <Key>
+            <PropertyRef Name="ModelSocialID" />
+          </Key>
+          <Property Name="ModelSocialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SocialSiteID" Type="Int32" Nullable="false" />
+          <Property Name="ModelID" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="ModfiyID" Type="Int32" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Model" Relationship="HomeAppsModel.FK_ModelSocialSites_Models" FromRole="ModelSocialSite" ToRole="Model" />
+          <NavigationProperty Name="SocialSite" Relationship="HomeAppsModel.FK_ModelSocialSites_SocalSites" FromRole="ModelSocialSite" ToRole="SocialSite" />
+        </EntityType>
+        <EntityType Name="SocialSite">
+          <Key>
+            <PropertyRef Name="SocalTypeID" />
+          </Key>
+          <Property Name="SocalTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SocalSiteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ModelSocialSites" Relationship="HomeAppsModel.FK_ModelSocialSites_SocalSites" FromRole="SocialSite" ToRole="ModelSocialSite" />
+        </EntityType>
+        <Association Name="FK_ModelSocialSites_Models">
+          <End Type="HomeAppsModel.Model" Role="Model" Multiplicity="1" />
+          <End Type="HomeAppsModel.ModelSocialSite" Role="ModelSocialSite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="ModelID" />
+            </Principal>
+            <Dependent Role="ModelSocialSite">
+              <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModelSocialSites_SocalSites">
+          <End Type="HomeAppsModel.SocialSite" Role="SocialSite" Multiplicity="1" />
+          <End Type="HomeAppsModel.ModelSocialSite" Role="ModelSocialSite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SocialSite">
+              <PropertyRef Name="SocalTypeID" />
+            </Principal>
+            <Dependent Role="ModelSocialSite">
+              <PropertyRef Name="SocialSiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ModelImage">
+          <Key>
+            <PropertyRef Name="ModelImage1" />
+          </Key>
+          <Property Name="ModelImage1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ImageFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ModelID" Type="Int32" />
+          <NavigationProperty Name="Model" Relationship="HomeAppsModel.FK_ModelImages_Models" FromRole="ModelImage" ToRole="Model" />
+        </EntityType>
+        <Association Name="FK_ModelImages_Models">
+          <End Type="HomeAppsModel.Model" Role="Model" Multiplicity="0..1" />
+          <End Type="HomeAppsModel.ModelImage" Role="ModelImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="ModelID" />
+            </Principal>
+            <Dependent Role="ModelImage">
+              <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -806,6 +1006,55 @@
                 <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="UserSchemaID" ColumnName="UserSchemaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Models">
+            <EntityTypeMapping TypeName="HomeAppsModel.Model">
+              <MappingFragment StoreEntitySet="Models">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="AllErotica" ColumnName="AllErotica" />
+                <ScalarProperty Name="AllBoudoir" ColumnName="AllBoudoir" />
+                <ScalarProperty Name="AllNudes" ColumnName="AllNudes" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModelSocialSites">
+            <EntityTypeMapping TypeName="HomeAppsModel.ModelSocialSite">
+              <MappingFragment StoreEntitySet="ModelSocialSites">
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+                <ScalarProperty Name="SocialSiteID" ColumnName="SocialSiteID" />
+                <ScalarProperty Name="ModelSocialID" ColumnName="ModelSocialID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SocialSites">
+            <EntityTypeMapping TypeName="HomeAppsModel.SocialSite">
+              <MappingFragment StoreEntitySet="SocialSites">
+                <ScalarProperty Name="SocalSiteName" ColumnName="SocalSiteName" />
+                <ScalarProperty Name="SocalTypeID" ColumnName="SocalTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModelImages">
+            <EntityTypeMapping TypeName="HomeAppsModel.ModelImage">
+              <MappingFragment StoreEntitySet="ModelImages">
+                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+                <ScalarProperty Name="ImageFile" ColumnName="ImageFile" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ModelImage1" ColumnName="ModelImage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

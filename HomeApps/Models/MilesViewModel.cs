@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -7,7 +8,7 @@ namespace HomeApps.Models
 {
     public class MilesViewModel
     {
-        public List<Mile> Miles = new List<Mile>();
+        public List<MilesModel> Miles = new List<MilesModel>();
         public decimal MPG { get; set; }
         public decimal LastMiles { get; set; }
         public decimal MaxMiles { get; set; }
@@ -33,11 +34,16 @@ namespace HomeApps.Models
         public decimal TotalGallons { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal TotalMilesDriven { get; set; }
+
+        public decimal MilesDrove { get; set; }
+
         public Nullable<System.TimeSpan> EngineRunTime { get; set; }
         public int StationID { get; set; }
 
         public virtual Station Station { get; set; }
         public virtual CreateModifyLog CreateModifyLog { get; set; }
+
+        public virtual Type Type { get; set; }
 
         public int MPG { get; set; }
     }

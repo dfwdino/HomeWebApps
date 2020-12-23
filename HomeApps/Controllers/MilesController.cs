@@ -15,12 +15,42 @@ namespace HomeApps.Controllers
 
         // GET: Miles
         public ActionResult Index(int id)
-        {
-
+        {   
             MilesViewModel Miles = new MilesViewModel();
 
-            Miles.Miles = db.Miles.OrderByDescending(m => m.GasDate).Where(m => m.AutoID == id).ToList();//.Include(m => m.Station).Include(m => m.Auto).ToList();
-            
+            var tempmils = db.Miles.OrderBy(m => m.GasDate).Where(m => m.AutoID == id).ToList();//.Include(m => m.Station).Include(m => m.Auto).ToList();
+
+
+            foreach (Mile item in tempmils)
+            {
+
+                MilesModel test = new MilesModel();
+
+                DuckCopyShallow(test, item);
+
+                Miles.Miles.Add(test);
+
+            }
+
+
+            decimal LastMiles = 0;
+            foreach (MilesModel item in Miles.Miles)
+            {
+                if (LastMiles.Equals(0))
+                {
+                    LastMiles = item.TotalMilesDriven;
+                }
+                else
+                {
+                    item.MilesDrove = item.TotalMilesDriven - LastMiles;
+                    item.MPG =  Convert.ToInt32(item.MilesDrove / item.TotalGallons);
+                    LastMiles = item.TotalMilesDriven;
+
+                }
+            }
+
+
+
             Miles.MPG = 0;
             Miles.LastMiles = 0;
             
@@ -56,6 +86,32 @@ namespace HomeApps.Controllers
             }
             return View(mile);
         }
+
+
+        public void DuckCopyShallow<T1, T2>(T1 dst, T2 src)
+        {
+            var srcT = src.GetType();
+            var dstT = dst.GetType();
+            foreach (var f in srcT.GetFields())
+            {
+                var dstF = dstT.GetField(f.Name);
+                if (dstF == null)
+                    continue;
+                dstF.SetValue(dst, f.GetValue(src));
+            }
+
+            foreach (var f in srcT.GetProperties())
+            {
+                var dstF = dstT.GetProperty(f.Name);
+                if (dstF == null)
+                    continue;
+
+                dstF.SetValue(dst, f.GetValue(src, null), null);
+            }
+
+            //return dst;
+        }
+
 
         // GET: Miles/Create
         public ActionResult Create(int id)
