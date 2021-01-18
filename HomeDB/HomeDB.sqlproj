@@ -65,6 +65,8 @@
     <Folder Include="Users\Tables\" />
     <Folder Include="Gas\" />
     <Folder Include="Gas\Tables\" />
+    <Folder Include="ShanesGlassEyeCRM\" />
+    <Folder Include="ShanesGlassEyeCRM\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Template.sql" />
@@ -78,8 +80,20 @@
     <Build Include="Users\Tables\UserRoles.sql" />
     <Build Include="Gas\Tables\Miles.sql" />
     <Build Include="Gas\Tables\Stations.sql" />
-    <Build Include="Gas\Tables\Auto.sql" />
     <Build Include="Security\Gas.sql" />
+    <Build Include="HomeApp\Tables\Logging.sql" />
+    <Build Include="Gas\Tables\Types_2.sql" />
+    <Build Include="Gas\Tables\Autos_2.sql" />
+    <Build Include="ShanesGlassEyeCRM\Tables\ModelImages_1.sql" />
+    <Build Include="ShanesGlassEyeCRM\Tables\ModelSocialSites_1.sql" />
+    <Build Include="ShanesGlassEyeCRM\Tables\SocialSites_1.sql" />
+    <Build Include="ShanesGlassEyeCRM\Tables\Models_1.sql" />
+    <Build Include="Security\NT AUTHORITY_NETWORK SERVICE_2.sql" />
+    <Build Include="Security\NT AUTHORITY_Local account_2.sql" />
+    <Build Include="Security\RoleMemberships_3.sql" />
+    <Build Include="Security\RoleMemberships_4.sql" />
+    <Build Include="Security\ShanesGlassEyeCRM_2.sql" />
+    <Build Include="Security\Game_2.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TouchMeToProjectHomeApp.scmp" />

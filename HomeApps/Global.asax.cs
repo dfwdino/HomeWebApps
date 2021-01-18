@@ -1,3 +1,4 @@
+using HomeApps.Infrastructure;
 using System;
 using System.Web;
 using System.Web.Mvc;
@@ -12,11 +13,17 @@ namespace HomeApps
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             //GlobalFilters.Filters.Add(new MyExceptionHandler());
+            RegisterGlobalFilters(GlobalFilters.Filters);
         }
 
         protected void Session_Start(Object sender, EventArgs e)
         {
             
+        }
+
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new PageViewLoggingAttribute());
         }
 
     }

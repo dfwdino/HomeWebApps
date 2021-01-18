@@ -35,6 +35,7 @@
         <AssociationConnector Association="HomeAppsModel.FK_ModelSocialSites_SocalSites" />
         <EntityTypeShape EntityType="HomeAppsModel.ModelImage" Width="1.5" PointX="2.875" PointY="15.25" />
         <AssociationConnector Association="HomeAppsModel.FK_ModelImages_Models" />
+        <EntityTypeShape EntityType="HomeAppsModel.Logging" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

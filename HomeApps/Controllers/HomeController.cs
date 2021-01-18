@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using HomeApps.Models;
+using System.Linq;
 using System.Web.Mvc;
+using HomeApps.Infrastructure;
+using System;
 
 namespace HomeApps.Controllers
 {
@@ -19,20 +22,29 @@ namespace HomeApps.Controllers
         {
             HomeAppsEntities db = new HomeAppsEntities();
 
-        User foundUser = db.Users.Where(m => m.UserName == user.UserName && m.Password == user.Password).FirstOrDefault();
-        
+            User foundUser = db.Users.Where(m => m.UserName == user.UserName && m.Password == user.Password).FirstOrDefault();
+
             if (foundUser == null)
             {
                 ModelState.AddModelError("UserName", "User is not found with type of info.");
-                return View(user);
+                return View(foundUser);
             }
-            else
-            {
-                this.Session["_CurrentUser"] = foundUser;
-            }
+
+
+
+            UserViewModel userViewModel = new UserViewModel();
+            userViewModel.IsAdmin = foundUser.Role.RoleName.Equals("Admin");
+            userViewModel.Roles = string.Join(",",foundUser.UserSchemas.Select(m => m.Schema.SchemaName).ToArray());
+
+            Helper.DuckCopyShallow(userViewModel, foundUser);
+
+
+            this.Session["_CurrentUser"] = userViewModel;
 
             return RedirectToAction("AppList");
         }
+
+        
 
 
         public ActionResult AppList()

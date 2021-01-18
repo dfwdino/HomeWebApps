@@ -1,6 +1,9 @@
 ﻿<!DOCTYPE html>
-@{ 
-    User currentuser = this.Session["_CurrentUser"] as User;
+@using HomeApps.Models;
+@{
+
+
+    UserViewModel currentuser = this.Session["_CurrentUser"] as UserViewModel;
 }
 
 <html>
@@ -31,32 +34,32 @@
             {
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        @if (currentuser.Role.RoleName.Equals("Admin") || currentuser.UserSchemas.Where(m => m.Schema.SchemaName.Equals("Auto")).Count().Equals(1)) 
+                        @if (currentuser.IsAdmin || currentuser.Roles.IndexOf("Auto") > 0)
                         {
                             @Html.ActionLink("Gas", "Index", "Autos", null, new { @class = "nav-link" })
                         }
                     </li>
                     <li class="nav-item">
-                        @if (currentuser.Role.RoleName.Equals("Admin") || currentuser.UserSchemas.Where(m => m.Schema.SchemaName.Equals("Models")).Count().Equals(1))
+                        @if (currentuser.IsAdmin || currentuser.Roles.IndexOf("Models") > 0)
                         {
                             @Html.ActionLink("Models", "Index", "Models/Index", null, new { @class = "nav-link" })
                         }
-                        </li>
+                    </li>
                 </ul>
-        }
-        </nav>
+            }
+    </nav>
 
 
-        <div class="container body-content" id="RenderBody">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p></p>
-            </footer>
-        </div>
+    <div class="container body-content" id="RenderBody">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p></p>
+        </footer>
+    </div>
 
 
-    </body>
+</body>
 </html>
 
 <style>

@@ -60,6 +60,19 @@
           <Property Name="ModifyBy" Type="int" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Logging">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="20" />
+          <Property Name="ControllerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionParameters" Type="nvarchar(max)" />
+          <Property Name="AbsoluteUri" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -117,6 +130,7 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="25" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="ModelSocialSites">
           <Key>
@@ -354,6 +368,7 @@
           <EntitySet Name="Stations" EntityType="Self.Stations" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Types" EntityType="Self.Types" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="CreateModifyLog" EntityType="Self.CreateModifyLog" Schema="HomeApp" store:Type="Tables" />
+          <EntitySet Name="Logging" EntityType="Self.Logging" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Schemas" EntityType="Self.Schemas" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="HomeApp" store:Type="Tables" />
@@ -511,6 +526,7 @@
             <End Role="Model" EntitySet="Models" />
             <End Role="ModelImage" EntitySet="ModelImages" />
           </AssociationSet>
+          <EntitySet Name="Loggings" EntityType="HomeAppsModel.Logging" />
         </EntityContainer>
         <EntityType Name="Auto">
           <Key>
@@ -818,6 +834,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ModelImages" Relationship="HomeAppsModel.FK_ModelImages_Models" FromRole="Model" ToRole="ModelImage" />
+          <Property Name="FileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ModelSocialSite">
           <Key>
@@ -887,6 +904,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Logging">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IPAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ControllerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionParameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AbsoluteUri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1012,6 +1042,7 @@
           <EntitySetMapping Name="Models">
             <EntityTypeMapping TypeName="HomeAppsModel.Model">
               <MappingFragment StoreEntitySet="Models">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
@@ -1055,6 +1086,20 @@
                 <ScalarProperty Name="ImageName" ColumnName="ImageName" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ModelImage1" ColumnName="ModelImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loggings">
+            <EntityTypeMapping TypeName="HomeAppsModel.Logging">
+              <MappingFragment StoreEntitySet="Logging">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="AbsoluteUri" ColumnName="AbsoluteUri" />
+                <ScalarProperty Name="ActionParameters" ColumnName="ActionParameters" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

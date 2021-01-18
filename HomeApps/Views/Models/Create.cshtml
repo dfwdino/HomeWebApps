@@ -7,7 +7,9 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create",
+                        "Models",
+                        FormMethod.Post, new { enctype = "multipart/form-data" } ))
 {
     @Html.AntiForgeryToken()
     
@@ -87,10 +89,12 @@
     </div>
 
     <label asp-for="ImageFile" class="control-label"></label>
+
     <input asp-for="ImageFile" accept="image/*" />
 
 
-
+    <input type="file" name="file" id="file" /><br><br>
+    
     <div class="form-group">
         <span class="col-md-1"> @Html.Label("Socail Site") </span>
         <div id="SocialSitesArea">

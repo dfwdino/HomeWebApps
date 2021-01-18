@@ -1,4 +1,5 @@
-﻿using HomeApps.Models;
+﻿using HomeApps.Infrastructure;
+using HomeApps.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace HomeApps.Controllers
 {
+    [Access]
     public class MilesController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
@@ -27,6 +29,7 @@ namespace HomeApps.Controllers
                 MilesModel test = new MilesModel();
 
                 DuckCopyShallow(test, item);
+                
 
                 Miles.Miles.Add(test);
 
@@ -102,11 +105,19 @@ namespace HomeApps.Controllers
 
             foreach (var f in srcT.GetProperties())
             {
-                var dstF = dstT.GetProperty(f.Name);
-                if (dstF == null)
-                    continue;
+                try
+                {
+                    var dstF = dstT.GetProperty(f.Name);
+                    if (dstF == null)
+                        continue;
 
-                dstF.SetValue(dst, f.GetValue(src, null), null);
+                    dstF.SetValue(dst, f.GetValue(src, null), null);
+                }
+                ///Really need to write this error out.
+                catch (Exception ex) {
+                    var errormessage = ex.Message;
+                }
+                
             }
 
             //return dst;

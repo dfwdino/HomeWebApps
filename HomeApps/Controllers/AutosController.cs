@@ -1,4 +1,5 @@
 ﻿using HomeApps.Infrastructure;
+using HomeApps.Models;
 using System;
 using System.Data.Entity;
 using System.Linq;
@@ -11,12 +12,12 @@ namespace HomeApps.Controllers
     public class AutosController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
-        private User user;
+        private UserViewModel user;
 
         // GET: Autoes
         public ActionResult Index()
         {
-            user = ((User)this.Session["_CurrentUser"]);
+            user = ((UserViewModel)this.Session["_CurrentUser"]);
 
             var autoes = db.Autos.Where(m => m.Deleted == false).Where(m => m.UserID == user.UserID);
             return View(autoes.ToList());
@@ -43,7 +44,7 @@ namespace HomeApps.Controllers
 
             if (user == null)
             {
-                user = ((User)this.Session["_CurrentUser"]);
+                user = ((UserViewModel)this.Session["_CurrentUser"]);
             }
 
             return View();
@@ -60,7 +61,7 @@ namespace HomeApps.Controllers
             {
                 if (user == null)
                 {
-                    user = ((User)this.Session["_CurrentUser"]);
+                    user = ((UserViewModel)this.Session["_CurrentUser"]);
                 }
 
                 CreateModifyLog cml = new CreateModifyLog();

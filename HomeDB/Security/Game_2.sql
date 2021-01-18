@@ -1,0 +1,3 @@
+﻿CREATE SCHEMA [Game]
+    AUTHORIZATION [dbo];
+

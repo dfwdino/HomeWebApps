@@ -33,6 +33,7 @@ namespace HomeApps
         public string Notes { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+        public string FileName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ModelSocialSite> ModelSocialSites { get; set; }

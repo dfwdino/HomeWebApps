@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HomeApps;
+using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
+    [Access]
     public class ModelsController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
@@ -17,7 +20,13 @@ namespace HomeApps.Controllers
         // GET: Models
         public ActionResult Index()
         {
-            return View(db.Models.ToList());
+            return View(db.Models.Where(m => m.Deleted==false).ToList());
+        }
+
+        public ActionResult UploadFileTest()
+        {
+
+            return View();
         }
 
         // GET: Models/Details/5
@@ -49,10 +58,37 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Model model,FormCollection form)
-        {   
+        public ActionResult Create(HttpPostedFileBase file, Model model,FormCollection form)
+        {
+
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        string path = Path.Combine(Server.MapPath("~/uploads"),
+                                                   Path.GetFileName(file.FileName));
+
+                        var test = Server.MapPath("~/uploads");
+
+                        if (!System.IO.Directory.Exists(test))
+                        {
+                            System.IO.Directory.CreateDirectory(test);
+                        }
+
+                        file.SaveAs(path);
+                        ViewBag.Message = "File uploaded successfully";
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                else
+                {
+                    ViewBag.Message = "You have not specified a file.";
+                }
+
+
                 var SocialSites = form["SocialSites"].Split(',');
                 var SocialSiteURL = form["SocialSiteURL"].Split(',');
 
@@ -94,12 +130,41 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Model model, FormCollection form)
+        public ActionResult Edit(HttpPostedFileBase file, Model model, FormCollection form)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        string path = Path.Combine(Server.MapPath("~/uploads"),
+                                                   Path.GetFileName(file.FileName));
+
+                        var test = Server.MapPath("~/uploads");
+
+                        if (!System.IO.Directory.Exists(test))
+                        {
+                            System.IO.Directory.CreateDirectory(test);
+                        }
+
+                        file.SaveAs(path);
+                        ViewBag.Message = "File uploaded successfully";
+                        model.FileName = path;
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                else
+                {
+                    ViewBag.Message = "You have not specified a file.";
+                }
+
+
                 var SocialSites = form["SocialSites"].Split(',');
                 var SocialSiteURL = form["SocialSiteURL"].Split(',');
+
+                
 
                 db.Entry(model).State = EntityState.Modified;
 
@@ -136,7 +201,8 @@ namespace HomeApps.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Model model = db.Models.Find(id);
-            db.Models.Remove(model);
+            //db.Models.Remove(model);
+            model.Deleted = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

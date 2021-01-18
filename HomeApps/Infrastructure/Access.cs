@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HomeApps.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,14 +16,10 @@ namespace HomeApps.Infrastructure
 
             var session = HttpContext.Current.Session;
 
-            //var session = HttpContext.Current.Session;
             session["url"] = HttpContext.Current.Request.Url.ToString();
 
             if (session["_CurrentUser"] == null)
             {
-
-              
-
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
                     controller = "Home",
@@ -32,13 +29,12 @@ namespace HomeApps.Infrastructure
             }
             else
             {
-                User _user = (User)session["_CurrentUser"];
+                
+                UserViewModel currentuser = session["_CurrentUser"] as UserViewModel;
 
-                var accesspages = _user.UserSchemas.Select(m => m.Schema.SchemaName).ToList<string>();
-                bool IsAdmin = _user.RoleID >= 2;
                 var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
 
-                if (!accesspages.Contains(controller) && !IsAdmin)
+                if (!currentuser.Roles.Contains(controller) && !currentuser.IsAdmin)
                 {
                     throw new Exception("Dont have access to this page.");
                 }
