@@ -42,7 +42,7 @@
                     <li class="nav-item">
                         @if (currentuser.IsAdmin || currentuser.Roles.IndexOf("Models") > 0)
                         {
-                            @Html.ActionLink("Models", "Index", "Models/Index", null, new { @class = "nav-link" })
+                            @Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { @class = "nav-link" })
                         }
                     </li>
                 </ul>

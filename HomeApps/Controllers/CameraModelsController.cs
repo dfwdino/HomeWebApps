@@ -13,7 +13,7 @@ using HomeApps.Infrastructure;
 namespace HomeApps.Controllers
 {
     [Access]
-    public class ModelsController : Controller
+    public class CameraModelsController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
 
@@ -67,16 +67,19 @@ namespace HomeApps.Controllers
                     try
                     {
                         string path = Path.Combine(Server.MapPath("~/uploads"),
-                                                   Path.GetFileName(file.FileName));
+                                                   Path.GetFileName(file.FileName
+                                                   
+                                                   ));
 
-                        var test = Server.MapPath("~/uploads");
+                        var UploadsPath = Server.MapPath("~/uploads");
 
-                        if (!System.IO.Directory.Exists(test))
+                        if (!System.IO.Directory.Exists(UploadsPath))
                         {
-                            System.IO.Directory.CreateDirectory(test);
+                            System.IO.Directory.CreateDirectory(UploadsPath);
                         }
 
                         file.SaveAs(path);
+                        model.FileName = file.FileName;
                         ViewBag.Message = "File uploaded successfully";
                     }
                     catch (Exception ex)

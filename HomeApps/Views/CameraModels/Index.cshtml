@@ -20,7 +20,7 @@
         <tr>
             <th style="padding-right:10px;" ><img style="width:150px;height:150px;" src="~/uploads/@item.FileName" /></th>
             <th>
-                @Html.ActionLink($"{item.FirstName} {item.LastName}", "edit","Models",new { id=item.ModelID},null)
+                @Html.ActionLink($"{item.FirstName} {item.LastName}", "edit", "CameraModels", new { id=item.ModelID},null)
                  <br />@item.Gender<br />@item.PhoneNumber<br />@item.Email
             <span class="NormalText">Nudes:</span> @item.AllNudes <br /><span class="NormalText">Boudoir:</span> @item.AllBoudoir <br /><span class="NormalText">Erotica:</span>
                 @item.AllErotica
