@@ -88,31 +88,41 @@
         </div>
     </div>
 
-    <label asp-for="ImageFile" class="control-label"></label>
+    <div class="form-group">
 
-    <input asp-for="ImageFile" accept="image/*" />
+        @Html.Label("Profile File")
+
+        <div class="col-md-10">
+            <input asp-for="ImageFile" accept="image/*" />
 
 
-    <input type="file" name="file" id="file" /><br><br>
-    
+            <input type="file" name="file" id="file" />
+        </div>
+    </div>
+
+
     <div class="form-group">
         <span class="col-md-1"> @Html.Label("Socail Site") </span>
         <div id="SocialSitesArea">
             <div id="SocialSitesCopy">
-                <div class="col-md-10">
+                <span style="float:left;padding-right:10px">
                     @Html.DropDownList("SocialSites", null, htmlAttributes: new { @class = "form-control" })
+                </span>
+
+                <span style="float:left">
                     @Html.TextBox("SocialSiteURL")
-                </div>
-                <br />
+                </span>
+                <br /> <br />
             </div>
+           
         </div>
     </div>
-
-    <div style="margin-left:10px;margin-top:10px">
+</div>
+    <div style="margin-left:10px">
         <a style="margin: 10px 0;" href="javascript:addRow();">Add Other Site</a>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 30px">
         @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.TextAreaFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
@@ -125,7 +135,7 @@
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
-</div>
+
 }
 
 <div>
@@ -135,6 +145,6 @@
 
 <script>
     function addRow() {
-        $("#SocialSitesCopy").clone().find("input").each(function () { $(this).val(''); }).end().appendTo("#SocialSitesArea");
+        $("#SocialSitesCopy").clone().find("input").each(function () { $(this).val('')  }).end().appendTo("#SocialSitesArea");
     }
 </script>
