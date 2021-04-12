@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/PhotoCRM.cshtml";
+
+    HomeAppsEntities db = new HomeAppsEntities();
+    int currentSS = 1;
+
 }
 
 <h2>Edit</h2>
@@ -10,120 +14,147 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Model</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ModelID)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    <div class="form-horizontal">
+        <h4>Model</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ModelID)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.AllNudes, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.AllNudes)
-                @Html.ValidationMessageFor(model => model.AllNudes, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("First Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.AllBoudoir, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.AllBoudoir)
-                @Html.ValidationMessageFor(model => model.AllBoudoir, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Last Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.AllErotica, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.AllErotica)
-                @Html.ValidationMessageFor(model => model.AllErotica, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @foreach (var item in Model.ModelSocialSites)
-    {
-        @Html.DropDownList("SocialSites", null, htmlAttributes: new { @class = "form-control" })
-        @Html.TextBoxFor(m => item.URL)
-    }
-
-    <div class="form-group">
-        <span class="col-md-1"> @Html.Label("Socail Site") </span>
-        <div id="SocialSitesArea">
-            <div id="SocialSitesCopy">
-                <div class="col-md-10">
-                    @Html.DropDownList("SocialSites", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.TextBox("SocialSiteURL")
+        <div class="form-group">
+            @Html.LabelFor(model => model.AllNudes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.AllNudes)
+                    @Html.ValidationMessageFor(model => model.AllNudes, "", new { @class = "text-danger" })
                 </div>
-                <br />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("All Boudoir", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.AllBoudoir)
+                    @Html.ValidationMessageFor(model => model.AllBoudoir, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("All Erotica", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.AllErotica)
+                    @Html.ValidationMessageFor(model => model.AllErotica, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Phone Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @foreach (var item in Model.ModelSocialSites)
+        {
+
+            <div class="form-group">
+                <span class="col-md-1"> @Html.Label("Socail Site") </span>
+                <div id="SocialSitesArea">
+                    <div id="SocialSitesCopy">
+                        <div id="SocialSite-@currentSS">
+                            <span style="float:left;padding-right:10px">
+                                @Html.DropDownList("SocialSites",
+                                new SelectList(db.SocialSites, "SocalTypeID", "SocalSiteName"),
+                                item.SocialSite.SocalSiteName,
+                                htmlAttributes: new { @class = "form-control" })
+
+                                <br /><br />
+                            </span>
+
+                            <span style="float:left">
+                                @Html.TextBoxFor(m => item.URL) - <a href="javascript:removeRow();">Remove</a>
+                            </span>
+                            <br /> <br />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        }
+
+        <div class="form-group">
+            <span class="col-md-1"> @Html.Label("Socail Site") </span>
+            <div id="SocialSitesArea">
+                <div id="SocialSitesCopy">
+                    <span style="float:left;padding-right:10px">
+                        @Html.DropDownList("SocialSites", null, htmlAttributes: new { @class = "form-control" })
+                    </span>
+
+                    <span style="float:left">
+                        @Html.TextBox("SocialSiteURL")
+                    </span>
+                    <br /> <br />
+                </div>
+
+            </div>
+        </div>
+
+        <div style="margin-left:10px;margin-top:10px">
+            <a style="margin: 10px 0;" href="javascript:addRow();">Add Other Site</a>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
-
-    <div style="margin-left:10px;margin-top:10px">
-        <a style="margin: 10px 0;" href="javascript:addRow();">Add Other Site</a>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
@@ -131,7 +162,20 @@
 </div>
 
 <script>
+    var currentSS = @currentSS;
     function addRow() {
+        console.log(currentSS);
+        currentSS = currentSS + 1;
+        var test = $("#SocialSitesCopy").html();
+        
+
+        $("#SocialSitesArea").append(test.replace("SocialSite-1", "SocialSite-" + currentSS));
+
+
+    }
+
+    function removeRow() {
         $("#SocialSitesCopy").clone().find("input").each(function () { $(this).val(''); }).end().appendTo("#SocialSitesArea");
     }
+
 </script>

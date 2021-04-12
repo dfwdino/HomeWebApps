@@ -114,7 +114,7 @@ namespace HomeApps.Controllers
         // GET: Models/Edit/5
         public ActionResult Edit(int? id)
         {
-            ViewBag.SocialSites = new SelectList(db.SocialSites.AsEnumerable(), "SocalTypeID", "SocalSiteName").Append(new SelectListItem() { Text = "Select Site", Selected = true, Value = "0" });
+            ViewBag.SocialSites = new SelectList(db.SocialSites.AsEnumerable(), "SocalTypeID", "SocalSiteName").Append(new SelectListItem() { Text = "Select Site", Selected = true, Value = "0" }).ToList();
 
             if (id == null)
             {
