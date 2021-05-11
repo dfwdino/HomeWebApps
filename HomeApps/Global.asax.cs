@@ -14,6 +14,8 @@ namespace HomeApps
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             //GlobalFilters.Filters.Add(new MyExceptionHandler());
             RegisterGlobalFilters(GlobalFilters.Filters);
+
+            Bootstrapper.Initialise();
         }
 
         protected void Session_Start(Object sender, EventArgs e)

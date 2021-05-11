@@ -35,6 +35,10 @@ namespace HomeApps.Controllers
 
             }
 
+            if (Miles.Miles.Count().Equals(0))
+            {
+                return View(Miles);
+            }
 
             decimal LastMiles = 0;
             foreach (MilesModel item in Miles.Miles)
@@ -64,13 +68,21 @@ namespace HomeApps.Controllers
             Miles.TotalMiles = Miles.MaxMiles - Miles.MinMiles;
             
             Miles.Date30 = DateTime.Now.AddDays(-30);
-            
+
+            if(Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Count().Equals(0))
+            {
+                return View(Miles);
+            }
+
             Miles.Day30MaxMiles = Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Max(m => m.TotalMilesDriven);
             Miles.Day30MaxMinMiles = Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Min(m => m.TotalMilesDriven);
             Miles.Day30MaxTotalGallons = Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Sum(m => m.TotalGallons);
             
             Miles.Day30MaxTotalMiles = Miles.Day30MaxMiles - Miles.Day30MaxMinMiles;
 
+            Miles.TotalMPG = Miles.TotalMiles / Miles.TotalGallons;
+
+            Miles.Day30TotalMPG = Miles.Day30MaxTotalMiles / Miles.Day30MaxTotalGallons;
 
             return View(Miles);
         }

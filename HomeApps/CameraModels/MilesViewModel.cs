@@ -20,6 +20,8 @@ namespace HomeApps.Models
         public decimal Day30MaxMinMiles { get; set; }
         public decimal Day30MaxTotalGallons { get; set; }
         public decimal Day30MaxTotalMiles { get; set; }
+        public decimal TotalMPG { get; set; }
+        public decimal Day30TotalMPG { get; set; }
 
     }
 

@@ -6,6 +6,7 @@ using System;
 
 namespace HomeApps.Controllers
 {
+    
     public class HomeController : Controller
     {
         
@@ -16,6 +17,14 @@ namespace HomeApps.Controllers
 
             return View();
         }
+
+       
+        public HomeController()
+        {
+         
+        }
+
+
 
         [HttpPost]
         public ActionResult Login(HomeApps.User user)

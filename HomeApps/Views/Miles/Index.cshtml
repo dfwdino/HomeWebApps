@@ -6,9 +6,6 @@
 
     Layout = "~/Views/Shared/_GasLayout.cshtml";
 
-    decimal TotalMPG = Model.TotalMiles / Model.TotalGallons;
-    decimal Day30TotalMPG = Model.Day30MaxTotalMiles / Model.Day30MaxTotalGallons;
-
 }
 
 @if (@Model.Miles.Count().Equals(0))
@@ -32,12 +29,12 @@ else
 
         <div style="padding-bottom:10px;">
             Since <span class="font-weight-bold">@Model.Miles.First().GasDate.ToShortDateString()</span> you have drove
-            <span class="font-weight-bold">@Model.TotalMiles.ToString("#")</span> miles and used <span class="font-weight-bold">@Model.TotalGallons</span> gallons of gas and MPG are <span class="font-weight-bold">@TotalMPG.ToString("#")</span>
+            <span class="font-weight-bold">@Model.TotalMiles.ToString("#")</span> miles and used <span class="font-weight-bold">@Model.TotalGallons</span> gallons of gas and MPG are <span class="font-weight-bold">@Model.TotalMPG.ToString("#")</span>
         </div>
 
         <div>
             Since <span class="font-weight-bold">@Model.Date30.ToShortDateString()</span> you have drove
-            <span class="font-weight-bold">@Model.Day30MaxTotalMiles.ToString("#")</span> miles and used <span class="font-weight-bold">@Model.Day30MaxTotalGallons</span> gallons of gas and MPG are <span class="font-weight-bold">@Day30TotalMPG.ToString("#")</span>
+            <span class="font-weight-bold">@Model.Day30MaxTotalMiles.ToString("#")</span> miles and used <span class="font-weight-bold">@Model.Day30MaxTotalGallons</span> gallons of gas and MPG are <span class="font-weight-bold">@Model.Day30TotalMPG.ToString("#")</span>
         </div>
     </div>
 
@@ -113,11 +110,11 @@ else
                         @item.MPG.ToString("#")
                     </div>
                     <div class="row">
-                        @item.TotalMilesDriven.ToString("#")
+                        @item.TotalMilesDriven.ToString("#,##0")
                     </div>
                 <td>
                     <div class="row">
-                        @item.MilesDrove
+                        @item.MilesDrove.ToString("#")
                     </div>
                     <div class="row">
                         @item.Type.TypeName
