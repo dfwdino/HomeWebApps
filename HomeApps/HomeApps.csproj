@@ -195,19 +195,35 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Auto.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\ActionsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AutosController.cs" />
+    <Compile Include="Controllers\EventActionsController.cs" />
+    <Compile Include="Controllers\EventPeoplesController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MilesController.cs" />
     <Compile Include="Controllers\CameraModelsController.cs" />
     <Compile Include="Controllers\SocialSitesController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="CreateModifyLog.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Event.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EventAction.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EventPeople.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -330,6 +346,27 @@
     <Content Include="Views\SocialSites\Index.cshtml" />
     <Content Include="Views\Shared\PhotoCRM.cshtml" />
     <Content Include="ViewPage1.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\EventPeoples\Create.cshtml" />
+    <Content Include="Views\EventPeoples\Delete.cshtml" />
+    <Content Include="Views\EventPeoples\Details.cshtml" />
+    <Content Include="Views\EventPeoples\Edit.cshtml" />
+    <Content Include="Views\EventPeoples\Index.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Actions\Create.cshtml" />
+    <Content Include="Views\Actions\Delete.cshtml" />
+    <Content Include="Views\Actions\Details.cshtml" />
+    <Content Include="Views\Actions\Edit.cshtml" />
+    <Content Include="Views\Actions\Index.cshtml" />
+    <Content Include="Views\EventActions\Create.cshtml" />
+    <Content Include="Views\EventActions\Delete.cshtml" />
+    <Content Include="Views\EventActions\Details.cshtml" />
+    <Content Include="Views\EventActions\Edit.cshtml" />
+    <Content Include="Views\EventActions\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

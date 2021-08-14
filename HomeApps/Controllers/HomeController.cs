@@ -43,7 +43,7 @@ namespace HomeApps.Controllers
 
             UserViewModel userViewModel = new UserViewModel();
             userViewModel.IsAdmin = foundUser.Role.RoleName.Equals("Admin");
-            userViewModel.Roles = string.Join(",",foundUser.UserSchemas.Select(m => m.Schema.SchemaName).ToArray());
+            //userViewModel.UsersSchema = string.Join(",",foundUser.UserSchemas.Select(m => m.Schema.SchemaName).ToArray());
 
             Helper.DuckCopyShallow(userViewModel, foundUser);
 

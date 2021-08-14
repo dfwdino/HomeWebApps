@@ -40,5 +40,9 @@ namespace HomeApps
         public virtual DbSet<SocialSite> SocialSites { get; set; }
         public virtual DbSet<ModelImage> ModelImages { get; set; }
         public virtual DbSet<Logging> Loggings { get; set; }
+        public virtual DbSet<Action> Actions { get; set; }
+        public virtual DbSet<EventAction> EventActions { get; set; }
+        public virtual DbSet<EventPeople> EventPeoples { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
     }
 }

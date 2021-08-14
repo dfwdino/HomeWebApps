@@ -34,7 +34,7 @@ namespace HomeApps.Infrastructure
 
                 var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
 
-                if (!currentuser.Roles.Contains(controller) && !currentuser.IsAdmin)
+                if (!currentuser.UserSchemas.FirstOrDefault(m => m.Schema.SchemaName.Contains(controller)).Equals(null) && !currentuser.IsAdmin)
                 {
                     throw new Exception("Dont have access to this page.");
                 }

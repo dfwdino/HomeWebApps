@@ -20,7 +20,7 @@ namespace HomeApps
         public int AutoID { get; set; }
         public System.DateTime GasDate { get; set; }
         public decimal TotalGallons { get; set; }
-        public decimal TotalPrice { get; set; }
+        public Nullable<decimal> TotalPrice { get; set; }
         public decimal TotalMilesDriven { get; set; }
         public Nullable<System.TimeSpan> EngineRunTime { get; set; }
         public int StationID { get; set; }

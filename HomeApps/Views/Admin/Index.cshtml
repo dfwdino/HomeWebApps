@@ -1,8 +1,16 @@
-﻿
+﻿@model IEnumerable<User>
+
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
-<div> @Html.ActionLink("Auto", "Index", "Autos", null, new { })</div>
+@foreach (var user in Model)
+{
+    <div>
+        @user.FirstName @string.Join(",", user.UserSchemas.Select(m => m.Schema.SchemaName))
+        <hr />
+    </div>
+}

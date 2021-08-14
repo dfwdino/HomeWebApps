@@ -26,8 +26,8 @@ namespace HomeApps
       // e.g. container.RegisterType<ITestService, TestService>();    
             RegisterTypes(container);
 
-            container.RegisterType<IHelloer, HelloerA>();
-            container.RegisterType<IController, AdminController>("Helloer");
+            //container.RegisterType<IHelloer, HelloerA>();
+            //container.RegisterType<IController, AdminController>("Helloer");
 
             return container;
     }

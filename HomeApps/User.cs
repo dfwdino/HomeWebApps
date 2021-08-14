@@ -20,6 +20,8 @@ namespace HomeApps
             this.Autos = new HashSet<Auto>();
             this.UserRoles = new HashSet<UserRole>();
             this.UserSchemas = new HashSet<UserSchema>();
+            this.EventActions = new HashSet<EventAction>();
+            this.EventPeoples = new HashSet<EventPeople>();
         }
     
         public int UserID { get; set; }
@@ -39,5 +41,9 @@ namespace HomeApps
         public virtual ICollection<UserRole> UserRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSchema> UserSchemas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventAction> EventActions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventPeople> EventPeoples { get; set; }
     }
 }

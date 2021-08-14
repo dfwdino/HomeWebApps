@@ -42,7 +42,7 @@ else
 
 
     <p>
-        @Html.ActionLink("Create New", "Create", new { id = Model.Miles.First().AutoID }) - @Html.ActionLink("Back to Auto List", "Index", "Autos")
+        @Html.ActionLink("New Gas Log", "Create", new { id = Model.Miles.First().AutoID }) - @Html.ActionLink("Back to Auto List", "Index", "Autos")
     </p>
     <table class="table">
         <tr class="Header">
@@ -57,10 +57,10 @@ else
 
             <th style="width:25%">
                 <div class="row">
-                    @Html.DisplayName("Total Gallons")
+                    @Html.DisplayName("Gallons")
                 </div>
                 <div class="row">
-                    @Html.DisplayName("Total Price")
+                    @Html.DisplayName("Price")
                 </div>
             </th>
 
@@ -75,7 +75,7 @@ else
 
             <th style="width:25%">
                 <div class="row">
-                    @Html.DisplayName("Miles Drove")
+                    @Html.DisplayName("Trip")
                 </div>
                 <div class="row">
                     @Html.DisplayName("Gas Type")

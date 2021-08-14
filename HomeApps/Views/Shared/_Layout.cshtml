@@ -32,20 +32,26 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             @if (this.Session["_CurrentUser"] != null)
             {
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        @if (currentuser.IsAdmin || currentuser.Roles.IndexOf("Auto") > 0)
-                        {
-                            @Html.ActionLink("Gas", "Index", "Autos", null, new { @class = "nav-link" })
-                        }
-                    </li>
-                    <li class="nav-item">
-                        @if (currentuser.IsAdmin || currentuser.Roles.IndexOf("Models") > 0)
-                        {
-                            @Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { @class = "nav-link" })
-                        }
-                    </li>
-                </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    @if (currentuser.IsAdmin || currentuser.UserSchemas.Where(m => m.Schema.SchemaName.Contains("Auto")).Equals(true))
+                    {
+                        @Html.ActionLink("Gas", "Index", "Autos", null, new { @class = "nav-link" })
+                    }
+                </li>
+                <li class="nav-item">
+                    @if (currentuser.IsAdmin || currentuser.UserSchemas.Where(m => m.Schema.SchemaName.Contains("Models")).Equals(true))
+                    {
+                        @Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { @class = "nav-link" })
+                    }
+                </li>
+                <li class="nav-item">
+                    @if (currentuser.IsAdmin)
+                    {
+                        @Html.ActionLink("Admin", "Index", "Admin/Index", null, new { @class = "nav-link" })
+                    }
+                </li>
+            </ul>
             }
     </nav>
 
