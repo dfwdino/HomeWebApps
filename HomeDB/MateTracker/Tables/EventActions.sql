@@ -1,14 +1,15 @@
 ﻿CREATE TABLE [MateTracker].[EventActions] (
-    [ActionEventID] INT IDENTITY (1, 1) NOT NULL,
-    [EventID]       INT NOT NULL,
-    [EntryPersonID] INT NOT NULL,
-    [EventPersonID] INT NOT NULL,
-    [ActionID]      INT NOT NULL,
-    [IsDeleted]     BIT CONSTRAINT [DF_EventActions_IsDeleted] DEFAULT ((0)) NOT NULL,
-    CONSTRAINT [PK_EventActions] PRIMARY KEY CLUSTERED ([ActionEventID] ASC),
-    CONSTRAINT [FK_EventActions_Actions] FOREIGN KEY ([ActionID]) REFERENCES [MateTracker].[Actions] ([ActionID]),
-    CONSTRAINT [FK_EventActions_Events] FOREIGN KEY ([EventID]) REFERENCES [MateTracker].[Events] ([EventID]),
-    CONSTRAINT [FK_EventActions_PartyPeople] FOREIGN KEY ([EventPersonID]) REFERENCES [MateTracker].[EventPeople] ([PartyPersonID]),
-    CONSTRAINT [FK_EventActions_Users] FOREIGN KEY ([EntryPersonID]) REFERENCES [HomeApp].[Users] ([UserID])
+    [EventActionsID]    INT NOT NULL,
+    [GivingPersonID]    INT NOT NULL,
+    [ReveivingPersonID] INT NOT NULL,
+    [ActionID]          INT NOT NULL,
+    [OwnerID]           INT NOT NULL,
+    CONSTRAINT [PK_EventActions] PRIMARY KEY CLUSTERED ([EventActionsID] ASC),
+    CONSTRAINT [FK_EventActions_Actions] FOREIGN KEY ([EventActionsID]) REFERENCES [MateTracker].[Actions] ([ActionID]),
+    CONSTRAINT [FK_EventActions_Users] FOREIGN KEY ([OwnerID]) REFERENCES [HomeApp].[Users] ([UserID]),
+    CONSTRAINT [FK_EventActions_UsersPeople] FOREIGN KEY ([GivingPersonID]) REFERENCES [MateTracker].[UsersPeople] ([UsersPersonID]),
+    CONSTRAINT [FK_EventActions_UsersPeople1] FOREIGN KEY ([ReveivingPersonID]) REFERENCES [MateTracker].[UsersPeople] ([UsersPersonID])
 );
+
+
 

@@ -12,17 +12,12 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class EventAction
+    public partial class TheEvent
     {
-        public int EventActionsID { get; set; }
-        public int GivingPersonID { get; set; }
-        public int ReveivingPersonID { get; set; }
-        public int ActionID { get; set; }
-        public int OwnerID { get; set; }
-    
-        public virtual User User { get; set; }
-        public virtual Action Action { get; set; }
-        public virtual UsersPeople UsersPeople { get; set; }
-        public virtual UsersPeople UsersPeople1 { get; set; }
+        public int EventID { get; set; }
+        public System.DateTime DateOfEvent { get; set; }
+        public Nullable<System.DateTimeOffset> DateofEventOffSet { get; set; }
+        public bool IsDeleted { get; set; }
+        public string EventName { get; set; }
     }
 }

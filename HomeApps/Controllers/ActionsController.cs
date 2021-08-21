@@ -7,11 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HomeApps;
-using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
-    [Access]
     public class ActionsController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
@@ -19,7 +17,8 @@ namespace HomeApps.Controllers
         // GET: Actions
         public ActionResult Index()
         {
-            return View(db.Actions.ToList());
+            var actions = db.Actions.Include(a => a.EventAction);
+            return View(actions.ToList());
         }
 
         // GET: Actions/Details/5
@@ -40,7 +39,8 @@ namespace HomeApps.Controllers
         // GET: Actions/Create
         public ActionResult Create()
         {
-            return View(new Action());
+            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID");
+            return View();
         }
 
         // POST: Actions/Create
@@ -48,7 +48,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Action action)
+        public ActionResult Create([Bind(Include = "ActionID,IsDeleted,Name")] Action action)
         {
             if (ModelState.IsValid)
             {
@@ -56,17 +56,8 @@ namespace HomeApps.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            else
-            {
-                foreach (ModelState modelState in ViewData.ModelState.Values)
-                {
-                    foreach (ModelError error in modelState.Errors)
-                    {
-                        var test = error;
-                    }
-                }
-            }
 
+            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
             return View(action);
         }
 
@@ -82,6 +73,7 @@ namespace HomeApps.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
             return View(action);
         }
 
@@ -98,6 +90,7 @@ namespace HomeApps.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
             return View(action);
         }
 
@@ -122,8 +115,7 @@ namespace HomeApps.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Action action = db.Actions.Find(id);
-            //db.Actions.Remove(action);
-            action.IsDeleted = true;
+            db.Actions.Remove(action);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

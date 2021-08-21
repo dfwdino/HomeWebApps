@@ -36,15 +36,17 @@
         <EntityTypeShape EntityType="HomeAppsModel.ModelImage" Width="1.5" PointX="2.875" PointY="15.25" />
         <AssociationConnector Association="HomeAppsModel.FK_ModelImages_Models" />
         <EntityTypeShape EntityType="HomeAppsModel.Logging" Width="1.5" PointX="10.375" PointY="0.75" />
-        <EntityTypeShape EntityType="HomeAppsModel.Action" Width="1.5" PointX="10.5" PointY="19.375" />
-        <EntityTypeShape EntityType="HomeAppsModel.EventAction" Width="1.5" PointX="12.75" PointY="3.25" />
-        <EntityTypeShape EntityType="HomeAppsModel.EventPeople" Width="1.5" PointX="7.5" PointY="0.75" />
-        <EntityTypeShape EntityType="HomeAppsModel.Event" Width="1.5" PointX="10.5" PointY="16.375" />
+        <EntityTypeShape EntityType="HomeAppsModel.Gender" Width="1.5" PointX="10.625" PointY="23.875" />
+        <EntityTypeShape EntityType="HomeAppsModel.Action" Width="1.5" PointX="10.625" PointY="15.625" />
+        <EntityTypeShape EntityType="HomeAppsModel.EventAction" Width="1.5" PointX="12.875" PointY="10.25" />
+        <EntityTypeShape EntityType="HomeAppsModel.TheEvent" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="HomeAppsModel.UsersPeople" Width="1.5" PointX="13.25" PointY="14.25" />
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_Users" />
-        <AssociationConnector Association="HomeAppsModel.FK_PartyPeople_Users" />
+        <AssociationConnector Association="HomeAppsModel.FK_UsersPeople_Users" />
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_Actions" />
-        <AssociationConnector Association="HomeAppsModel.FK_EventActions_Events" />
-        <AssociationConnector Association="HomeAppsModel.FK_EventActions_PartyPeople" />
+        <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople" />
+        <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople1" />
+        <AssociationConnector Association="HomeAppsModel.FK_UsersPeople_Genders" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

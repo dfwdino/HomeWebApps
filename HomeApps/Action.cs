@@ -14,17 +14,10 @@ namespace HomeApps
     
     public partial class Action
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Action()
-        {
-            this.EventActions = new HashSet<EventAction>();
-        }
-    
         public int ActionID { get; set; }
         public bool IsDeleted { get; set; }
         public string Name { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventAction> EventActions { get; set; }
+        public virtual EventAction EventAction { get; set; }
     }
 }

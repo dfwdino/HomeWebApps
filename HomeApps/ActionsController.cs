@@ -6,116 +6,115 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using HomeApps;
 
-namespace HomeApps.Controllers
+namespace HomeApps
 {
-    public class EventPeoplesController : Controller
+    public class ActionsController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
 
-        // GET: EventPeoples
+        // GET: Actions
         public ActionResult Index()
         {
-            var eventPeoples = db.EventPeoples.Include(e => e.User);
-            return View(eventPeoples.ToList());
+            var actions = db.Actions.Include(a => a.EventAction);
+            return View(actions.ToList());
         }
 
-        // GET: EventPeoples/Details/5
+        // GET: Actions/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventPeople eventPeople = db.EventPeoples.Find(id);
-            if (eventPeople == null)
+            Action action = db.Actions.Find(id);
+            if (action == null)
             {
                 return HttpNotFound();
             }
-            return View(eventPeople);
+            return View(action);
         }
 
-        // GET: EventPeoples/Create
+        // GET: Actions/Create
         public ActionResult Create()
         {
-            ViewBag.EntryUserID = new SelectList(db.Users, "UserID", "FirstName");
+            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID");
             return View();
         }
 
-        // POST: EventPeoples/Create
+        // POST: Actions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PartyPersonID,EntryUserID,PartyPersonName,IsDeleted")] EventPeople eventPeople)
+        public ActionResult Create([Bind(Include = "ActionID,IsDeleted,Name")] Action action)
         {
             if (ModelState.IsValid)
             {
-                db.EventPeoples.Add(eventPeople);
+                db.Actions.Add(action);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EntryUserID = new SelectList(db.Users, "UserID", "FirstName", eventPeople.EntryUserID);
-            return View(eventPeople);
+            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
+            return View(action);
         }
 
-        // GET: EventPeoples/Edit/5
+        // GET: Actions/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventPeople eventPeople = db.EventPeoples.Find(id);
-            if (eventPeople == null)
+            Action action = db.Actions.Find(id);
+            if (action == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.EntryUserID = new SelectList(db.Users, "UserID", "FirstName", eventPeople.EntryUserID);
-            return View(eventPeople);
+            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
+            return View(action);
         }
 
-        // POST: EventPeoples/Edit/5
+        // POST: Actions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PartyPersonID,EntryUserID,PartyPersonName,IsDeleted")] EventPeople eventPeople)
+        public ActionResult Edit([Bind(Include = "ActionID,IsDeleted,Name")] Action action)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(eventPeople).State = EntityState.Modified;
+                db.Entry(action).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EntryUserID = new SelectList(db.Users, "UserID", "FirstName", eventPeople.EntryUserID);
-            return View(eventPeople);
+            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
+            return View(action);
         }
 
-        // GET: EventPeoples/Delete/5
+        // GET: Actions/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventPeople eventPeople = db.EventPeoples.Find(id);
-            if (eventPeople == null)
+            Action action = db.Actions.Find(id);
+            if (action == null)
             {
                 return HttpNotFound();
             }
-            return View(eventPeople);
+            return View(action);
         }
 
-        // POST: EventPeoples/Delete/5
+        // POST: Actions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EventPeople eventPeople = db.EventPeoples.Find(id);
-            db.EventPeoples.Remove(eventPeople);
+            Action action = db.Actions.Find(id);
+            db.Actions.Remove(action);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -12,21 +12,26 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class EventPeople
+    public partial class UsersPeople
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EventPeople()
+        public UsersPeople()
         {
             this.EventActions = new HashSet<EventAction>();
+            this.EventActions1 = new HashSet<EventAction>();
         }
     
-        public int PartyPersonID { get; set; }
-        public int EntryUserID { get; set; }
-        public string PartyPersonName { get; set; }
-        public bool IsDeleted { get; set; }
+        public int UsersPersonID { get; set; }
+        public string PersonName { get; set; }
+        public int PersonGenderID { get; set; }
+        public int UserID { get; set; }
+        public string Notes { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventAction> EventActions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventAction> EventActions1 { get; set; }
+        public virtual Gender Gender { get; set; }
     }
 }

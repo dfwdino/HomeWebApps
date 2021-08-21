@@ -97,11 +97,12 @@
     <Build Include="Security\ShanesGlassEyeCRM_2.sql" />
     <Build Include="Security\Game_2.sql" />
     <Build Include="dbo\Tables\__EFMigrationsHistory.sql" />
-    <Build Include="MateTracker\Tables\EventPeople.sql" />
     <Build Include="MateTracker\Tables\Actions.sql" />
-    <Build Include="MateTracker\Tables\Events.sql" />
     <Build Include="MateTracker\Tables\EventActions.sql" />
     <Build Include="Security\MateTracker.sql" />
+    <Build Include="MateTracker\Tables\UsersPeople.sql" />
+    <Build Include="MateTracker\Tables\TheEvent.sql" />
+    <Build Include="MateTracker\Tables\Genders.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TouchMeToProjectHomeApp.scmp" />

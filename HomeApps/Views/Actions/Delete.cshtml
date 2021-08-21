@@ -28,6 +28,14 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.EventAction.EventActionsID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventAction.EventActionsID)
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {
