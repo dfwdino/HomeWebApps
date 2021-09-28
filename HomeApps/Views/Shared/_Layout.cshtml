@@ -34,15 +34,15 @@
             {
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UserSchemas.Where(m => m.Schema.SchemaName.Contains("Auto")).Equals(true))
+                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Auto").Equals(true))
                     {
-                        @Html.ActionLink("Gas", "Index", "Autos", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Gas", "Index", "Autos", null, new { @class = "nav-link" })
                     }
                 </li>
                 <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UserSchemas.Where(m => m.Schema.SchemaName.Contains("Models")).Equals(true))
+                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
                     {
-                        @Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { @class = "nav-link" })
                     }
                 </li>
                 <li class="nav-item">

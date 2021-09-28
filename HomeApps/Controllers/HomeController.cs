@@ -29,18 +29,16 @@ namespace HomeApps.Controllers
         private string GetUsersSchemasName(User user)
         {
 
-            var asdf = user.UserSchemas.Select(a => a.SchemaID).ToList();
+            var userschemaslist = user.UserSchemas.Select(a => a.SchemaID).ToList();
 
             var usersceam = db.Schemas.Where(m => m.UserSchemas
-                                            .Any(a => asdf.Contains(m.SchemaID))).Select(m => m.SchemaName).ToList();
+                                            .Any(a => userschemaslist.Contains(m.SchemaID))).Select(m => m.SchemaName).ToList();
 
             return String.Join(",", usersceam);
         }
 
-
-
         [HttpPost]
-        public ActionResult Login(HomeApps.User user)
+        public ActionResult Login(User user)
         {
             User foundUser = db.Users.Where(m => m.UserName == user.UserName && m.Password == user.Password).FirstOrDefault();
 

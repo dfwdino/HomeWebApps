@@ -52,7 +52,7 @@ namespace HomeApps.Controllers
 
             List<UserViewModel> allusers = new List<UserViewModel>();
 
-            var viewforadming = db.Users;
+            var viewforadming = db.Users.Where(m => m.FirstName != "System");
 
             return View(viewforadming);
         }
