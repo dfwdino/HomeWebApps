@@ -14,6 +14,6 @@ namespace HomeApps.Models
         public string UsersRoles = string.Empty;
 
         public bool IsAdmin { get; set; } = false;
-        //public string UsersSchema { get; set; } = null;
+        public string UsersSchema { get; set; } = null;
     }
 }

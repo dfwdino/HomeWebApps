@@ -17,7 +17,7 @@ namespace HomeApps.Controllers
         // GET: Actions
         public ActionResult Index()
         {
-            var actions = db.Actions.Include(a => a.EventAction);
+            var actions = db.Actions.OrderBy(m => m.Name);
             return View(actions.ToList());
         }
 
@@ -39,8 +39,9 @@ namespace HomeApps.Controllers
         // GET: Actions/Create
         public ActionResult Create()
         {
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID");
-            return View();
+            Action action= db.Actions.Create();
+            action.Name = "me";
+            return View(action);
         }
 
         // POST: Actions/Create
@@ -48,7 +49,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ActionID,IsDeleted,Name")] Action action)
+        public ActionResult Create(Action action)
         {
             if (ModelState.IsValid)
             {

@@ -242,13 +242,13 @@
         </Association>
         <Association Name="FK_EventActions_Actions">
           <End Role="Actions" Type="Self.Actions" Multiplicity="1" />
-          <End Role="EventActions" Type="Self.EventActions" Multiplicity="0..1" />
+          <End Role="EventActions" Type="Self.EventActions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Actions">
               <PropertyRef Name="ActionID" />
             </Principal>
             <Dependent Role="EventActions">
-              <PropertyRef Name="EventActionsID" />
+              <PropertyRef Name="ActionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -432,15 +432,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserSchemas_CreateModifyLog1">
+        <Association Name="FK_UserSchemas_Schemas">
           <End Role="Schemas" Type="Self.Schemas" Multiplicity="1" />
-          <End Role="UserSchemas" Type="Self.UserSchemas" Multiplicity="0..1" />
+          <End Role="UserSchemas" Type="Self.UserSchemas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Schemas">
               <PropertyRef Name="SchemaID" />
             </Principal>
             <Dependent Role="UserSchemas">
-              <PropertyRef Name="UserSchemaID" />
+              <PropertyRef Name="SchemaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -573,7 +573,7 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserSchemas_CreateModifyLog1" Association="Self.FK_UserSchemas_CreateModifyLog1">
+          <AssociationSet Name="FK_UserSchemas_Schemas" Association="Self.FK_UserSchemas_Schemas">
             <End Role="Schemas" EntitySet="Schemas" />
             <End Role="UserSchemas" EntitySet="UserSchemas" />
           </AssociationSet>
@@ -675,17 +675,21 @@
           </AssociationSet>
           <EntitySet Name="Loggings" EntityType="HomeAppsModel.Logging" />
           <EntitySet Name="Genders" EntityType="HomeAppsModel.Gender" />
-          <EntitySet Name="Actions" EntityType="HomeAppsModel.Action" />
-          <EntitySet Name="EventActions" EntityType="HomeAppsModel.EventAction" />
           <EntitySet Name="TheEvents" EntityType="HomeAppsModel.TheEvent" />
           <EntitySet Name="UsersPeoples" EntityType="HomeAppsModel.UsersPeople" />
-          <AssociationSet Name="FK_EventActions_Users" Association="HomeAppsModel.FK_EventActions_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="EventAction" EntitySet="EventActions" />
-          </AssociationSet>
           <AssociationSet Name="FK_UsersPeople_Users" Association="HomeAppsModel.FK_UsersPeople_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="UsersPeople" EntitySet="UsersPeoples" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersPeople_Genders" Association="HomeAppsModel.FK_UsersPeople_Genders">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="UsersPeople" EntitySet="UsersPeoples" />
+          </AssociationSet>
+          <EntitySet Name="Actions" EntityType="HomeAppsModel.Action" />
+          <EntitySet Name="EventActions" EntityType="HomeAppsModel.EventAction" />
+          <AssociationSet Name="FK_EventActions_Users" Association="HomeAppsModel.FK_EventActions_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="EventAction" EntitySet="EventActions" />
           </AssociationSet>
           <AssociationSet Name="FK_EventActions_Actions" Association="HomeAppsModel.FK_EventActions_Actions">
             <End Role="Action" EntitySet="Actions" />
@@ -699,9 +703,9 @@
             <End Role="UsersPeople" EntitySet="UsersPeoples" />
             <End Role="EventAction" EntitySet="EventActions" />
           </AssociationSet>
-          <AssociationSet Name="FK_UsersPeople_Genders" Association="HomeAppsModel.FK_UsersPeople_Genders">
-            <End Role="Gender" EntitySet="Genders" />
-            <End Role="UsersPeople" EntitySet="UsersPeoples" />
+          <AssociationSet Name="FK_UserSchemas_Schemas" Association="HomeAppsModel.FK_UserSchemas_Schemas">
+            <End Role="Schema" EntitySet="Schemas" />
+            <End Role="UserSchema" EntitySet="UserSchemas" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Auto">
@@ -794,6 +798,7 @@
           <Property Name="ModfiyID" Type="Int32" Nullable="false" />
           <Property Name="SchemaName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserSchema" Relationship="HomeAppsModel.FK_UserSchemas_CreateModifyLog1" FromRole="Schema" ToRole="UserSchema" />
+          <NavigationProperty Name="UserSchemas" Relationship="HomeAppsModel.FK_UserSchemas_Schemas" FromRole="Schema" ToRole="UserSchema" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -812,8 +817,8 @@
           <NavigationProperty Name="Role" Relationship="HomeAppsModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="UserRoles" Relationship="HomeAppsModel.FK_UserRoles_Users" FromRole="User" ToRole="UserRole" />
           <NavigationProperty Name="UserSchemas" Relationship="HomeAppsModel.FK_UserSchemas_Users" FromRole="User" ToRole="UserSchema" />
-          <NavigationProperty Name="EventActions" Relationship="HomeAppsModel.FK_EventActions_Users" FromRole="User" ToRole="EventAction" />
           <NavigationProperty Name="UsersPeoples" Relationship="HomeAppsModel.FK_UsersPeople_Users" FromRole="User" ToRole="UsersPeople" />
+          <NavigationProperty Name="EventActions" Relationship="HomeAppsModel.FK_EventActions_Users" FromRole="User" ToRole="EventAction" />
           </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -837,6 +842,7 @@
           <Property Name="SchemaID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Schema" Relationship="HomeAppsModel.FK_UserSchemas_CreateModifyLog1" FromRole="UserSchema" ToRole="Schema" />
           <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_UserSchemas_Users" FromRole="UserSchema" ToRole="User" />
+          <NavigationProperty Name="Schema1" Relationship="HomeAppsModel.FK_UserSchemas_Schemas" FromRole="UserSchema" ToRole="Schema" />
         </EntityType>
         <Association Name="FK_Auto_CreateModifyLog">
           <End Type="HomeAppsModel.CreateModifyLog" Role="CreateModifyLog" Multiplicity="1" />
@@ -1104,29 +1110,6 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="UsersPeoples" Relationship="HomeAppsModel.FK_UsersPeople_Genders" FromRole="Gender" ToRole="UsersPeople" />
         </EntityType>
-        <EntityType Name="Action">
-          <Key>
-            <PropertyRef Name="ActionID" />
-          </Key>
-          <Property Name="ActionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="EventAction" Relationship="HomeAppsModel.FK_EventActions_Actions" FromRole="Action" ToRole="EventAction" />
-        </EntityType>
-        <EntityType Name="EventAction">
-          <Key>
-            <PropertyRef Name="EventActionsID" />
-          </Key>
-          <Property Name="EventActionsID" Type="Int32" Nullable="false" />
-          <Property Name="GivingPersonID" Type="Int32" Nullable="false" />
-          <Property Name="ReveivingPersonID" Type="Int32" Nullable="false" />
-          <Property Name="ActionID" Type="Int32" Nullable="false" />
-          <Property Name="OwnerID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_EventActions_Users" FromRole="EventAction" ToRole="User" />
-          <NavigationProperty Name="Action" Relationship="HomeAppsModel.FK_EventActions_Actions" FromRole="EventAction" ToRole="Action" />
-          <NavigationProperty Name="UsersPeople" Relationship="HomeAppsModel.FK_EventActions_UsersPeople" FromRole="EventAction" ToRole="UsersPeople" />
-          <NavigationProperty Name="UsersPeople1" Relationship="HomeAppsModel.FK_EventActions_UsersPeople1" FromRole="EventAction" ToRole="UsersPeople" />
-        </EntityType>
         <EntityType Name="TheEvent">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1147,9 +1130,56 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_UsersPeople_Users" FromRole="UsersPeople" ToRole="User" />
+          <NavigationProperty Name="Gender" Relationship="HomeAppsModel.FK_UsersPeople_Genders" FromRole="UsersPeople" ToRole="Gender" />
           <NavigationProperty Name="EventActions" Relationship="HomeAppsModel.FK_EventActions_UsersPeople" FromRole="UsersPeople" ToRole="EventAction" />
           <NavigationProperty Name="EventActions1" Relationship="HomeAppsModel.FK_EventActions_UsersPeople1" FromRole="UsersPeople" ToRole="EventAction" />
-          <NavigationProperty Name="Gender" Relationship="HomeAppsModel.FK_UsersPeople_Genders" FromRole="UsersPeople" ToRole="Gender" />
+        </EntityType>
+        <Association Name="FK_UsersPeople_Users">
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeAppsModel.UsersPeople" Role="UsersPeople" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersPeople">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersPeople_Genders">
+          <End Type="HomeAppsModel.Gender" Role="Gender" Multiplicity="1" />
+          <End Type="HomeAppsModel.UsersPeople" Role="UsersPeople" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="UsersPeople">
+              <PropertyRef Name="PersonGenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Action">
+          <Key>
+            <PropertyRef Name="ActionID" />
+          </Key>
+          <Property Name="ActionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EventActions" Relationship="HomeAppsModel.FK_EventActions_Actions" FromRole="Action" ToRole="EventAction" />
+        </EntityType>
+        <EntityType Name="EventAction">
+          <Key>
+            <PropertyRef Name="EventActionsID" />
+          </Key>
+          <Property Name="EventActionsID" Type="Int32" Nullable="false" />
+          <Property Name="GivingPersonID" Type="Int32" Nullable="false" />
+          <Property Name="ReveivingPersonID" Type="Int32" Nullable="false" />
+          <Property Name="ActionID" Type="Int32" Nullable="false" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_EventActions_Users" FromRole="EventAction" ToRole="User" />
+          <NavigationProperty Name="Action" Relationship="HomeAppsModel.FK_EventActions_Actions" FromRole="EventAction" ToRole="Action" />
+          <NavigationProperty Name="UsersPeople" Relationship="HomeAppsModel.FK_EventActions_UsersPeople" FromRole="EventAction" ToRole="UsersPeople" />
+          <NavigationProperty Name="UsersPeople1" Relationship="HomeAppsModel.FK_EventActions_UsersPeople1" FromRole="EventAction" ToRole="UsersPeople" />
         </EntityType>
         <Association Name="FK_EventActions_Users">
           <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
@@ -1163,27 +1193,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UsersPeople_Users">
-          <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
-          <End Type="HomeAppsModel.UsersPeople" Role="UsersPeople" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="UsersPeople">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EventActions_Actions">
           <End Type="HomeAppsModel.Action" Role="Action" Multiplicity="1" />
-          <End Type="HomeAppsModel.EventAction" Role="EventAction" Multiplicity="0..1" />
+          <End Type="HomeAppsModel.EventAction" Role="EventAction" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Action">
               <PropertyRef Name="ActionID" />
             </Principal>
             <Dependent Role="EventAction">
-              <PropertyRef Name="EventActionsID" />
+              <PropertyRef Name="ActionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1211,15 +1229,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UsersPeople_Genders">
-          <End Type="HomeAppsModel.Gender" Role="Gender" Multiplicity="1" />
-          <End Type="HomeAppsModel.UsersPeople" Role="UsersPeople" Multiplicity="*" />
+        <Association Name="FK_UserSchemas_Schemas">
+          <End Type="HomeAppsModel.Schema" Role="Schema" Multiplicity="1" />
+          <End Type="HomeAppsModel.UserSchema" Role="UserSchema" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Gender">
-              <PropertyRef Name="GenderID" />
+            <Principal Role="Schema">
+              <PropertyRef Name="SchemaID" />
             </Principal>
-            <Dependent Role="UsersPeople">
-              <PropertyRef Name="PersonGenderID" />
+            <Dependent Role="UserSchema">
+              <PropertyRef Name="SchemaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1418,26 +1436,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Actions">
-            <EntityTypeMapping TypeName="HomeAppsModel.Action">
-              <MappingFragment StoreEntitySet="Actions">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ActionID" ColumnName="ActionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventActions">
-            <EntityTypeMapping TypeName="HomeAppsModel.EventAction">
-              <MappingFragment StoreEntitySet="EventActions">
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-                <ScalarProperty Name="ActionID" ColumnName="ActionID" />
-                <ScalarProperty Name="ReveivingPersonID" ColumnName="ReveivingPersonID" />
-                <ScalarProperty Name="GivingPersonID" ColumnName="GivingPersonID" />
-                <ScalarProperty Name="EventActionsID" ColumnName="EventActionsID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TheEvents">
             <EntityTypeMapping TypeName="HomeAppsModel.TheEvent">
               <MappingFragment StoreEntitySet="TheEvent">
@@ -1457,6 +1455,26 @@
                 <ScalarProperty Name="PersonGenderID" ColumnName="PersonGenderID" />
                 <ScalarProperty Name="PersonName" ColumnName="PersonName" />
                 <ScalarProperty Name="UsersPersonID" ColumnName="UsersPersonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Actions">
+            <EntityTypeMapping TypeName="HomeAppsModel.Action">
+              <MappingFragment StoreEntitySet="Actions">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ActionID" ColumnName="ActionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventActions">
+            <EntityTypeMapping TypeName="HomeAppsModel.EventAction">
+              <MappingFragment StoreEntitySet="EventActions">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="ActionID" ColumnName="ActionID" />
+                <ScalarProperty Name="ReveivingPersonID" ColumnName="ReveivingPersonID" />
+                <ScalarProperty Name="GivingPersonID" ColumnName="GivingPersonID" />
+                <ScalarProperty Name="EventActionsID" ColumnName="EventActionsID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

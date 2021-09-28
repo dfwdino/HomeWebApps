@@ -1,0 +1,51 @@
+﻿@model Models.TheEventCreate
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MateLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TheEvent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfEvent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfEvent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateofEventOffSet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateofEventOffSet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EventID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -14,11 +14,19 @@ namespace HomeApps
     
     public partial class Schema
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Schema()
+        {
+            this.UserSchemas = new HashSet<UserSchema>();
+        }
+    
         public int SchemaID { get; set; }
         public bool Deleted { get; set; }
         public int ModfiyID { get; set; }
         public string SchemaName { get; set; }
     
         public virtual UserSchema UserSchema { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserSchema> UserSchemas { get; set; }
     }
 }

@@ -22,5 +22,6 @@ namespace HomeApps
     
         public virtual Schema Schema { get; set; }
         public virtual User User { get; set; }
+        public virtual Schema Schema1 { get; set; }
     }
 }

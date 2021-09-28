@@ -1,0 +1,51 @@
+﻿@model HomeApps.UsersPeople
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MateLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UsersPeople</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender.Gender1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender.Gender1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UsersPersonID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -9,7 +9,9 @@ namespace HomeApps.Controllers
     
     public class HomeController : Controller
     {
-        
+
+        HomeAppsEntities db;
+
         public ActionResult Index() => Session["_CurrentUser"] == null ? View() : (ActionResult)RedirectToAction("AppList");
 
         public ActionResult Login()
@@ -21,7 +23,18 @@ namespace HomeApps.Controllers
        
         public HomeController()
         {
-         
+            db = new HomeAppsEntities();
+        }
+
+        private string GetUsersSchemasName(User user)
+        {
+
+            var asdf = user.UserSchemas.Select(a => a.SchemaID).ToList();
+
+            var usersceam = db.Schemas.Where(m => m.UserSchemas
+                                            .Any(a => asdf.Contains(m.SchemaID))).Select(m => m.SchemaName).ToList();
+
+            return String.Join(",", usersceam);
         }
 
 
@@ -29,8 +42,6 @@ namespace HomeApps.Controllers
         [HttpPost]
         public ActionResult Login(HomeApps.User user)
         {
-            HomeAppsEntities db = new HomeAppsEntities();
-
             User foundUser = db.Users.Where(m => m.UserName == user.UserName && m.Password == user.Password).FirstOrDefault();
 
             if (foundUser == null)
@@ -39,11 +50,9 @@ namespace HomeApps.Controllers
                 return View(foundUser);
             }
 
-
-
             UserViewModel userViewModel = new UserViewModel();
             userViewModel.IsAdmin = foundUser.Role.RoleName.Equals("Admin");
-            //userViewModel.UsersSchema = string.Join(",",foundUser.UserSchemas.Select(m => m.Schema.SchemaName).ToArray());
+            userViewModel.UsersSchema = GetUsersSchemasName(foundUser);
 
             Helper.DuckCopyShallow(userViewModel, foundUser);
 

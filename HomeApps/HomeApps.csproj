@@ -198,7 +198,6 @@
     <Compile Include="Action.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
-    <Compile Include="ActionsController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Auto.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
@@ -212,6 +211,8 @@
     <Compile Include="Controllers\CameraModelsController.cs" />
     <Compile Include="Controllers\SocialSitesController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
+    <Compile Include="Controllers\TheEventsController.cs" />
+    <Compile Include="Controllers\UsersPeoplesController.cs" />
     <Compile Include="CreateModifyLog.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
@@ -261,6 +262,7 @@
     <Compile Include="CameraModels\MilesAddModel.cs" />
     <Compile Include="CameraModels\MilesViewModel.cs" />
     <Compile Include="CameraModels\UserViewModel.cs" />
+    <Compile Include="Model\TheEventCreate.cs" />
     <Compile Include="MyExceptionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
@@ -333,7 +335,6 @@
     <Content Include="Views\Shared\_GasLayout.cshtml" />
     <Content Include="Views\Admin\AddSchema.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Schemas.cshtml" />
     <Content Include="Views\Shared\SomeException.cshtml" />
     <Content Include="Views\CameraModels\Create.cshtml" />
     <Content Include="Views\CameraModels\Delete.cshtml" />
@@ -353,6 +354,18 @@
     <Content Include="Views\Actions\Details.cshtml" />
     <Content Include="Views\Actions\Edit.cshtml" />
     <Content Include="Views\Actions\Index.cshtml" />
+    <Content Include="Views\UsersPeoples\Create.cshtml" />
+    <Content Include="Views\UsersPeoples\Delete.cshtml" />
+    <Content Include="Views\UsersPeoples\Details.cshtml" />
+    <Content Include="Views\UsersPeoples\Edit.cshtml" />
+    <Content Include="Views\UsersPeoples\Index.cshtml" />
+    <Content Include="Views\TheEvents\Create.cshtml" />
+    <Content Include="Views\TheEvents\Delete.cshtml" />
+    <Content Include="Views\TheEvents\Details.cshtml" />
+    <Content Include="Views\TheEvents\Edit.cshtml" />
+    <Content Include="Views\TheEvents\Index.cshtml" />
+    <Content Include="Views\Shared\_MateLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -6,115 +6,118 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using HomeApps;
+using HomeApps.Models;
 
-namespace HomeApps
+namespace HomeApps.Controllers
 {
-    public class ActionsController : Controller
+    public class TheEventsController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
 
-        // GET: Actions
+        // GET: TheEvents
         public ActionResult Index()
         {
-            var actions = db.Actions.Include(a => a.EventAction);
-            return View(actions.ToList());
+            return View(db.TheEvents.ToList());
         }
 
-        // GET: Actions/Details/5
+        // GET: TheEvents/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Action action = db.Actions.Find(id);
-            if (action == null)
+            TheEvent theEvent = db.TheEvents.Find(id);
+            if (theEvent == null)
             {
                 return HttpNotFound();
             }
-            return View(action);
+            return View(theEvent);
         }
 
-        // GET: Actions/Create
+        // GET: TheEvents/Create
         public ActionResult Create()
         {
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID");
-            return View();
+            UserViewModel userViewModel = Session["_CurrentUser"] as UserViewModel;
+
+            ViewBag.GivingPerson = new SelectList(db.UsersPeoples.Where(m => m.User.FirstName.Contains(userViewModel.FirstName)), "UserID", "PersonName");
+            ViewBag.RevelivingPerson = new SelectList(db.UsersPeoples.Where(m => m.User.FirstName.Contains(userViewModel.FirstName)), "UserID", "PersonName");
+            ViewBag.ActionsDone = new SelectList(db.Actions, "ActionID", "Name");
+
+            return View(new TheEventCreate());
         }
 
-        // POST: Actions/Create
+        // POST: TheEvents/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ActionID,IsDeleted,Name")] Action action)
+        public ActionResult Create([Bind(Include = "EventID,DateOfEvent,DateofEventOffSet,IsDeleted,EventName")] TheEvent theEvent)
         {
             if (ModelState.IsValid)
             {
-                db.Actions.Add(action);
+                db.TheEvents.Add(theEvent);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
-            return View(action);
+            return View(theEvent);
         }
 
-        // GET: Actions/Edit/5
+        // GET: TheEvents/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Action action = db.Actions.Find(id);
-            if (action == null)
+            TheEvent theEvent = db.TheEvents.Find(id);
+            if (theEvent == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
-            return View(action);
+            return View(theEvent);
         }
 
-        // POST: Actions/Edit/5
+        // POST: TheEvents/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ActionID,IsDeleted,Name")] Action action)
+        public ActionResult Edit([Bind(Include = "EventID,DateOfEvent,DateofEventOffSet,IsDeleted,EventName")] TheEvent theEvent)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(action).State = EntityState.Modified;
+                db.Entry(theEvent).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
-            return View(action);
+            return View(theEvent);
         }
 
-        // GET: Actions/Delete/5
+        // GET: TheEvents/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Action action = db.Actions.Find(id);
-            if (action == null)
+            TheEvent theEvent = db.TheEvents.Find(id);
+            if (theEvent == null)
             {
                 return HttpNotFound();
             }
-            return View(action);
+            return View(theEvent);
         }
 
-        // POST: Actions/Delete/5
+        // POST: TheEvents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Action action = db.Actions.Find(id);
-            db.Actions.Remove(action);
+            TheEvent theEvent = db.TheEvents.Find(id);
+            db.TheEvents.Remove(theEvent);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -41,9 +41,9 @@ namespace HomeApps
         public virtual DbSet<ModelImage> ModelImages { get; set; }
         public virtual DbSet<Logging> Loggings { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
-        public virtual DbSet<Action> Actions { get; set; }
-        public virtual DbSet<EventAction> EventActions { get; set; }
         public virtual DbSet<TheEvent> TheEvents { get; set; }
         public virtual DbSet<UsersPeople> UsersPeoples { get; set; }
+        public virtual DbSet<Action> Actions { get; set; }
+        public virtual DbSet<EventAction> EventActions { get; set; }
     }
 }

@@ -1,16 +1,10 @@
 ﻿<!DOCTYPE html>
-@using HomeApps.Models;
-@{
-
-
-    UserViewModel currentuser = this.Session["_CurrentUser"] as UserViewModel;
-}
-
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Shans's Home Apps</title>
+    <title>Gas App</title>
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -24,41 +18,33 @@
 
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Home Apps</a>
+        <a class="navbar-brand" href="/">Home Apps</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            @if (this.Session["_CurrentUser"] != null)
-            {
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UserSchemas.Where(m => m.Schema.SchemaName.Contains("Auto")).Equals(true))
-                    {
-                        @Html.ActionLink("Gas", "Index", "Autos", null, new { @class = "nav-link" })
-                    }
+                    @Html.ActionLink("Schemas", "Index", "Schemas", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UserSchemas.Where(m => m.Schema.SchemaName.Contains("Models")).Equals(true))
-                    {
-                        @Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { @class = "nav-link" })
-                    }
+                    @Html.ActionLink("Users", "Index", "Users", null, new { @class = "nav-link" })
                 </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin)
-                    {
-                        @Html.ActionLink("Admin", "Index", "Admin/Index", null, new { @class = "nav-link" })
-                    }
-                </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin)
-                    {
-                        @Html.ActionLink("Event", "Index", "TheEvent/Index", null, new { @class = "nav-link" })
-                    }
-                </li>
+                @*<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>*@
             </ul>
-            }
+
+
+        </div>
     </nav>
 
 
@@ -83,4 +69,3 @@
         padding-top: 15px;
     }
 </style>
-
