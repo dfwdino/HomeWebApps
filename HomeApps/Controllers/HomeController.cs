@@ -26,16 +26,7 @@ namespace HomeApps.Controllers
             db = new HomeAppsEntities();
         }
 
-        private string GetUsersSchemasName(User user)
-        {
-
-            var userschemaslist = user.UserSchemas.Select(a => a.SchemaID).ToList();
-
-            var usersceam = db.Schemas.Where(m => m.UserSchemas
-                                            .Any(a => userschemaslist.Contains(m.SchemaID))).Select(m => m.SchemaName).ToList();
-
-            return String.Join(",", usersceam);
-        }
+        
 
         [HttpPost]
         public ActionResult Login(User user)
@@ -50,7 +41,7 @@ namespace HomeApps.Controllers
 
             UserViewModel userViewModel = new UserViewModel();
             userViewModel.IsAdmin = foundUser.Role.RoleName.Equals("Admin");
-            userViewModel.UsersSchema = GetUsersSchemasName(foundUser);
+            userViewModel.UsersSchema = Helper.GetUsersSchemasName(foundUser, db.Schemas);
 
             Helper.DuckCopyShallow(userViewModel, foundUser);
 

@@ -52,9 +52,15 @@ namespace HomeApps.Controllers
 
             List<UserViewModel> allusers = new List<UserViewModel>();
 
-            var viewforadming = db.Users.Where(m => m.FirstName != "System");
+            allusers = db.Users.Where(m => m.FirstName != "System").ToList().Select(m => new UserViewModel
+            {
+                FirstName = m.FirstName,
+                IsAdmin = m.Role.RoleName.Equals("Admin"),
+                UsersSchema = Infrastructure.Helper.GetUsersSchemasName(m, db.Schemas)
 
-            return View(viewforadming);
+            }).ToList();
+      
+        return View(allusers);
         }
 
         public ActionResult Schemas()

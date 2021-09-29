@@ -9,24 +9,7 @@ namespace HomeApps.Infrastructure
 {
     static public class Helper
     {
-        static public void CopyClass<T>(T source, T destion)
-        {
-
-            System.Type destionclass = destion.GetType();
-            foreach (PropertyInfo property in source.GetType().GetProperties())
-            {
-                PropertyInfo other = destionclass.GetProperty(property.Name);
-
-                if (other != null)
-                {
-                    var test = property.GetValue(property.Name);
-                    other.SetValue(destionclass, property.GetValue(source, null), null);
-                }
-            }
-
-        }
-
-        static public void DuckCopyShallow<T1, T2>(T1 dst, T2 src)
+       static public void DuckCopyShallow<T1, T2>(T1 dst, T2 src)
         {
             var srcT = src.GetType();
             var dstT = dst.GetType();
@@ -57,6 +40,17 @@ namespace HomeApps.Infrastructure
             }
 
             //return dst;
+        }
+
+        static public string GetUsersSchemasName(User user, IEnumerable<Schema> schemas)
+        {
+
+            var userschemaslist = user.UserSchemas.Select(a => a.SchemaID).ToList();
+
+            var userschemas = schemas.Where(m => m.UserSchemas
+                                            .Any(a => userschemaslist.Contains(m.SchemaID))).Select(m => m.SchemaName).ToList();
+
+            return String.Join(",", userschemas);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<User>
+﻿@model IEnumerable<HomeApps.Models.UserViewModel>
 
 
 @{
@@ -9,8 +9,8 @@
 
 @foreach (var user in Model)
 {
-    <div>
-        @user.FirstName @string.Join(",", user.UserSchemas.Select(m => m.Schema.SchemaName))
-        <hr />
-    </div>
+<div>
+    @user.FirstName @user.UsersSchema
+    <hr />
+</div>
 }

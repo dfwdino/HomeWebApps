@@ -121,19 +121,17 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
 
-                var stationID = Number(data);
+                if (data.IsCreated) {
 
-                if (stationID != "NaN") {
+                    var stationID = data.NewStationID;
+
                     $('#myModal').hide()
-                    $("#StationID").append(
-                                    $('<option/>', {
-                                        value: data,
-                                        text: name
-                                    }));
+                    $("#StationID").append($('<option/>', {value: data,text: name}));
                         alert('New Station Added')
-                    } else {
-                        alert("Error occurs on the Database level! " + data);
-                    }
+                
+                }
+
+                
                 },
             error: function () {
                     alert("An error has occured!!!");

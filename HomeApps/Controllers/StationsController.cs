@@ -34,7 +34,8 @@ namespace HomeApps.Controllers
 
             if(user == null)
             {
-                return Json("User is not logged in");
+                return Json(new {IsCreated = false, 
+                    ErrorMessage = "User is not logged in" });
             }
 
             CreateModifyLog cml = new CreateModifyLog();
@@ -48,7 +49,8 @@ namespace HomeApps.Controllers
             db.Stations.Add(newstation);
             db.SaveChanges();
 
-            return Json(newstation.StationID);
+            return Json(new {IsCreated = true,
+                    NewStationID = newstation.StationID });
         }
 
         // GET: Stations/Details/5
