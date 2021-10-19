@@ -45,5 +45,9 @@ namespace HomeApps
         public virtual DbSet<UsersPeople> UsersPeoples { get; set; }
         public virtual DbSet<Action> Actions { get; set; }
         public virtual DbSet<EventAction> EventActions { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<List> Lists { get; set; }
+        public virtual DbSet<Price> Prices { get; set; }
+        public virtual DbSet<Store> Stores { get; set; }
     }
 }

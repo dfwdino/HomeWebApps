@@ -48,6 +48,15 @@
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople" />
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople1" />
         <AssociationConnector Association="HomeAppsModel.FK_UserSchemas_Schemas" />
+        <EntityTypeShape EntityType="HomeAppsModel.Item" Width="1.5" PointX="11.25" PointY="21" />
+        <EntityTypeShape EntityType="HomeAppsModel.List" Width="1.5" PointX="13.5" PointY="6.25" />
+        <EntityTypeShape EntityType="HomeAppsModel.Price" Width="1.5" PointX="13.5" PointY="19.5" />
+        <EntityTypeShape EntityType="HomeAppsModel.Store" Width="1.5" PointX="11.25" PointY="18.375" />
+        <AssociationConnector Association="HomeAppsModel.FK_Lists_Items" />
+        <AssociationConnector Association="HomeAppsModel.FK_Prices_Items" />
+        <AssociationConnector Association="HomeAppsModel.FK_Lists_Strores" />
+        <AssociationConnector Association="HomeAppsModel.FK_Lists_Users" />
+        <AssociationConnector Association="HomeAppsModel.FK_Prices_Strores" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

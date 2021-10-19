@@ -49,6 +49,43 @@
           <Property Name="ModfiyID" Type="int" />
           <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Lists">
+          <Key>
+            <PropertyRef Name="ListID" />
+          </Key>
+          <Property Name="ListID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodItemID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="StoreID" Type="int" Nullable="false" />
+          <Property Name="GotItem" Type="bit" Nullable="false" />
+          <Property Name="ShowOnAllLists" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prices">
+          <Key>
+            <PropertyRef Name="PriceID" />
+          </Key>
+          <Property Name="PriceID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="StoreID" Type="int" Nullable="false" />
+          <Property Name="FoodItemID" Type="int" Nullable="false" />
+          <Property Name="PriceDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stores">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="CreateModifyLog">
           <Key>
             <PropertyRef Name="CreateModifyID" />
@@ -288,6 +325,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Lists_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="Lists" Type="Self.Lists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="Lists">
+              <PropertyRef Name="FoodItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lists_Strores">
+          <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
+          <End Role="Lists" Type="Self.Lists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stores">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="Lists">
+              <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lists_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Lists" Type="Self.Lists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Lists">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Miles_Auto">
           <End Role="Autos" Type="Self.Autos" Multiplicity="1" />
           <End Role="Miles" Type="Self.Miles" Multiplicity="*" />
@@ -369,6 +442,30 @@
             </Principal>
             <Dependent Role="ModelSocialSites">
               <PropertyRef Name="SocialSiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prices_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="FoodItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prices_Strores">
+          <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stores">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="StoreID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -485,6 +582,10 @@
           <EntitySet Name="Miles" EntityType="Self.Miles" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Stations" EntityType="Self.Stations" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Types" EntityType="Self.Types" Schema="Gas" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="Grocery" store:Type="Tables" />
+          <EntitySet Name="Lists" EntityType="Self.Lists" Schema="Grocery" store:Type="Tables" />
+          <EntitySet Name="Prices" EntityType="Self.Prices" Schema="Grocery" store:Type="Tables" />
+          <EntitySet Name="Stores" EntityType="Self.Stores" Schema="Grocery" store:Type="Tables" />
           <EntitySet Name="CreateModifyLog" EntityType="Self.CreateModifyLog" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Logging" EntityType="Self.Logging" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="HomeApp" store:Type="Tables" />
@@ -525,6 +626,18 @@
             <End Role="UsersPeople" EntitySet="UsersPeople" />
             <End Role="EventActions" EntitySet="EventActions" />
           </AssociationSet>
+          <AssociationSet Name="FK_Lists_Items" Association="Self.FK_Lists_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="Lists" EntitySet="Lists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lists_Strores" Association="Self.FK_Lists_Strores">
+            <End Role="Stores" EntitySet="Stores" />
+            <End Role="Lists" EntitySet="Lists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lists_Users" Association="Self.FK_Lists_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Lists" EntitySet="Lists" />
+          </AssociationSet>
           <AssociationSet Name="FK_Miles_Auto" Association="Self.FK_Miles_Auto">
             <End Role="Autos" EntitySet="Autos" />
             <End Role="Miles" EntitySet="Miles" />
@@ -552,6 +665,14 @@
           <AssociationSet Name="FK_ModelSocialSites_SocalSites" Association="Self.FK_ModelSocialSites_SocalSites">
             <End Role="SocialSites" EntitySet="SocialSites" />
             <End Role="ModelSocialSites" EntitySet="ModelSocialSites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prices_Items" Association="Self.FK_Prices_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prices_Strores" Association="Self.FK_Prices_Strores">
+            <End Role="Stores" EntitySet="Stores" />
+            <End Role="Prices" EntitySet="Prices" />
           </AssociationSet>
           <AssociationSet Name="FK_Roles_CreateModifyLog" Association="Self.FK_Roles_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
@@ -707,6 +828,30 @@
             <End Role="Schema" EntitySet="Schemas" />
             <End Role="UserSchema" EntitySet="UserSchemas" />
           </AssociationSet>
+          <EntitySet Name="Items" EntityType="HomeAppsModel.Item" />
+          <EntitySet Name="Lists" EntityType="HomeAppsModel.List" />
+          <EntitySet Name="Prices" EntityType="HomeAppsModel.Price" />
+          <EntitySet Name="Stores" EntityType="HomeAppsModel.Store" />
+          <AssociationSet Name="FK_Lists_Items" Association="HomeAppsModel.FK_Lists_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="List" EntitySet="Lists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prices_Items" Association="HomeAppsModel.FK_Prices_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Price" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lists_Strores" Association="HomeAppsModel.FK_Lists_Strores">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="List" EntitySet="Lists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lists_Users" Association="HomeAppsModel.FK_Lists_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="List" EntitySet="Lists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prices_Strores" Association="HomeAppsModel.FK_Prices_Strores">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Price" EntitySet="Prices" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Auto">
           <Key>
@@ -819,6 +964,7 @@
           <NavigationProperty Name="UserSchemas" Relationship="HomeAppsModel.FK_UserSchemas_Users" FromRole="User" ToRole="UserSchema" />
           <NavigationProperty Name="UsersPeoples" Relationship="HomeAppsModel.FK_UsersPeople_Users" FromRole="User" ToRole="UsersPeople" />
           <NavigationProperty Name="EventActions" Relationship="HomeAppsModel.FK_EventActions_Users" FromRole="User" ToRole="EventAction" />
+          <NavigationProperty Name="Lists" Relationship="HomeAppsModel.FK_Lists_Users" FromRole="User" ToRole="List" />
           </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -1241,6 +1387,112 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
+          <NavigationProperty Name="Lists" Relationship="HomeAppsModel.FK_Lists_Items" FromRole="Item" ToRole="List" />
+          <NavigationProperty Name="Prices" Relationship="HomeAppsModel.FK_Prices_Items" FromRole="Item" ToRole="Price" />
+        </EntityType>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="ListID" />
+          </Key>
+          <Property Name="ListID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodItemID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="StoreID" Type="Int32" Nullable="false" />
+          <Property Name="GotItem" Type="Boolean" Nullable="false" />
+          <Property Name="ShowOnAllLists" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="HomeAppsModel.FK_Lists_Items" FromRole="List" ToRole="Item" />
+          <NavigationProperty Name="Store" Relationship="HomeAppsModel.FK_Lists_Strores" FromRole="List" ToRole="Store" />
+          <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_Lists_Users" FromRole="List" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="PriceID" />
+          </Key>
+          <Property Name="PriceID" Type="Int32" Nullable="false" />
+          <Property Name="Price1" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="StoreID" Type="Int32" Nullable="false" />
+          <Property Name="FoodItemID" Type="Int32" Nullable="false" />
+          <Property Name="PriceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Item" Relationship="HomeAppsModel.FK_Prices_Items" FromRole="Price" ToRole="Item" />
+          <NavigationProperty Name="Store" Relationship="HomeAppsModel.FK_Prices_Strores" FromRole="Price" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Lists" Relationship="HomeAppsModel.FK_Lists_Strores" FromRole="Store" ToRole="List" />
+          <NavigationProperty Name="Prices" Relationship="HomeAppsModel.FK_Prices_Strores" FromRole="Store" ToRole="Price" />
+        </EntityType>
+        <Association Name="FK_Lists_Items">
+          <End Type="HomeAppsModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="HomeAppsModel.List" Role="List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="List">
+              <PropertyRef Name="FoodItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prices_Items">
+          <End Type="HomeAppsModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="HomeAppsModel.Price" Role="Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="FoodItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lists_Strores">
+          <End Type="HomeAppsModel.Store" Role="Store" Multiplicity="1" />
+          <End Type="HomeAppsModel.List" Role="List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="List">
+              <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lists_Users">
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeAppsModel.List" Role="List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="List">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prices_Strores">
+          <End Type="HomeAppsModel.Store" Role="Store" Multiplicity="1" />
+          <End Type="HomeAppsModel.Price" Role="Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1475,6 +1727,47 @@
                 <ScalarProperty Name="ReveivingPersonID" ColumnName="ReveivingPersonID" />
                 <ScalarProperty Name="GivingPersonID" ColumnName="GivingPersonID" />
                 <ScalarProperty Name="EventActionsID" ColumnName="EventActionsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="HomeAppsModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lists">
+            <EntityTypeMapping TypeName="HomeAppsModel.List">
+              <MappingFragment StoreEntitySet="Lists">
+                <ScalarProperty Name="ShowOnAllLists" ColumnName="ShowOnAllLists" />
+                <ScalarProperty Name="GotItem" ColumnName="GotItem" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FoodItemID" ColumnName="FoodItemID" />
+                <ScalarProperty Name="ListID" ColumnName="ListID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prices">
+            <EntityTypeMapping TypeName="HomeAppsModel.Price">
+              <MappingFragment StoreEntitySet="Prices">
+                <ScalarProperty Name="PriceDate" ColumnName="PriceDate" />
+                <ScalarProperty Name="FoodItemID" ColumnName="FoodItemID" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="Price1" ColumnName="Price" />
+                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="HomeAppsModel.Store">
+              <MappingFragment StoreEntitySet="Stores">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

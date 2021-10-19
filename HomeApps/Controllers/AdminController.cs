@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -70,10 +71,27 @@ namespace HomeApps.Controllers
             return View(schema);
         }
 
+        private List<string> GetAllControllers()
+        {
+            Assembly asm = Assembly.GetExecutingAssembly();
+
+            var controlleractionlist = asm.GetTypes()
+        .Where(type => typeof(System.Web.Mvc.Controller).IsAssignableFrom(type))
+        .SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
+        .Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
+        .Select(x => new { Controller = x.DeclaringType.Name })
+        .GroupBy(m => m.Controller)
+        .Select(m => m.Key)
+        .ToList();
+
+            return controlleractionlist;
+        }
+
         public ActionResult AddSchema()
         {
-            return View();
+            return View(GetAllControllers());
         }
+
         [HttpPost]
         public ActionResult AddSchema(Schema schema)
         {
