@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28705.295
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeApps", "HomeApps\HomeApps.csproj", "{096D3D97-938D-4073-9C98-3EEFBFB048AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{33BDAE32-EEFA-4B7F-B6F8-9340D25D393D} = {33BDAE32-EEFA-4B7F-B6F8-9340D25D393D}
+	EndProjectSection
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HomeDB", "HomeDB\HomeDB.sqlproj", "{C865A1AD-4160-4340-A400-56E7BF0570C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroceryStoreAPI", "..\..\GroceryStoreAPI\GroceryStoreAPI\GroceryStoreAPI.csproj", "{33BDAE32-EEFA-4B7F-B6F8-9340D25D393D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +28,10 @@ Global
 		{C865A1AD-4160-4340-A400-56E7BF0570C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C865A1AD-4160-4340-A400-56E7BF0570C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C865A1AD-4160-4340-A400-56E7BF0570C9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{33BDAE32-EEFA-4B7F-B6F8-9340D25D393D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33BDAE32-EEFA-4B7F-B6F8-9340D25D393D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33BDAE32-EEFA-4B7F-B6F8-9340D25D393D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33BDAE32-EEFA-4B7F-B6F8-9340D25D393D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

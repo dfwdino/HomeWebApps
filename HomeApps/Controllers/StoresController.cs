@@ -23,7 +23,8 @@ namespace HomeApps.Controllers
             string stores = string.Empty;
             //HttpResponseMessage response = await client.GetAsync("http://" + System.Web.HttpContext.Current.Request.Url.Host + "StoreAPI/API/Store/");
 
-            var response = await client.GetAsync("http://" + System.Web.HttpContext.Current.Request.Url.Host + "/StoreAPI/API/Store/");
+            //var response = await client.GetAsync("http://" + System.Web.HttpContext.Current.Request.Url.Host + "/StoreAPI/API/Store/");
+            var response = await client.GetAsync("http://localhost:5000/StoreAPI/API/Store/");
 
             if (response.IsSuccessStatusCode)
             {

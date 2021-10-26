@@ -12,12 +12,12 @@ namespace HomeApps.Controllers
 {
     public class ActionsController : Controller
     {
-        private HomeAppsEntities db = new HomeAppsEntities();
+        private readonly HomeAppsEntities db = new HomeAppsEntities();
 
         // GET: Actions
         public ActionResult Index()
         {
-            var actions = db.Actions.OrderBy(m => m.Name);
+            var actions = this.db.Actions.OrderBy(m => m.Name);
             return View(actions.ToList());
         }
 
@@ -39,7 +39,7 @@ namespace HomeApps.Controllers
         // GET: Actions/Create
         public ActionResult Create()
         {
-            Action action= db.Actions.Create();
+            Action action = this.db.Actions.Create();
             action.Name = "me";
             return View(action);
         }
@@ -53,8 +53,8 @@ namespace HomeApps.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Actions.Add(action);
-                db.SaveChanges();
+                this.db.Actions.Add(action);
+                this.db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
