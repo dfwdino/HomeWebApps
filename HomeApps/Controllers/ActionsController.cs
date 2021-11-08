@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using HomeApps;
-
-namespace HomeApps.Controllers
+﻿namespace HomeApps.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Web;
+    using System.Web.Mvc;
+    using HomeApps;
+
     public class ActionsController : Controller
     {
         private readonly HomeAppsEntities db = new HomeAppsEntities();
@@ -39,7 +39,7 @@ namespace HomeApps.Controllers
         // GET: Actions/Create
         public ActionResult Create()
         {
-            Action action = this.db.Actions.Create();
+            HomeApps.Action action = this.db.Actions.Create();
             action.Name = "me";
             return View(action);
         }
