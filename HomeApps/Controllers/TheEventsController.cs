@@ -43,7 +43,10 @@ namespace HomeApps.Controllers
 
             ViewBag.GivingPerson = new SelectList(db.UsersPeoples.Where(m => m.User.FirstName.Contains(userViewModel.FirstName)), "UserID", "PersonName");
             ViewBag.RevelivingPerson = new SelectList(db.UsersPeoples.Where(m => m.User.FirstName.Contains(userViewModel.FirstName)), "UserID", "PersonName");
-            ViewBag.ActionsDone = new SelectList(db.Actions, "ActionID", "Name");
+            ViewBag.People = new SelectList(db.UsersPeoples.Where(m => m.User.FirstName.Contains(userViewModel.FirstName)), "UserID", "PersonName");
+            //ViewBag.ActionsDone = new SelectList(db.Actions, "ActionID", "Name");
+
+            this.ViewBag.ActionsDone = this.db.Actions.ToList();
 
             return View(new TheEventCreate());
         }
@@ -53,7 +56,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventID,DateOfEvent,DateofEventOffSet,IsDeleted,EventName")] TheEvent theEvent)
+        public ActionResult Create(TheEvent theEvent)
         {
             if (ModelState.IsValid)
             {

@@ -1,0 +1,60 @@
+﻿@model HomeApps.List
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_GroceryLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>List</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Item", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Item.Name, null, htmlAttributes: new { @class = "form-control" })
+                @Html.HiddenFor(m => m.FoodItemID, null)
+                @Html.ValidationMessageFor(model => model.FoodItemID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Store", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("StoreID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StoreID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Item For Everyone", htmlAttributes: new { @class = "control-label col-md-2" })  <span class="checkbox"> @Html.EditorFor(model => model.ShowOnAllLists)</span>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+<script>
+    $(function () {
+        $("#Item_Name").autocomplete({ source: '@Url.Action("GetItems", "Items")', minLength: 3 });
+    });
+</script>

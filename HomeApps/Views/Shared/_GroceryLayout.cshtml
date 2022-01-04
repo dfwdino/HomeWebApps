@@ -34,36 +34,26 @@
             {
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Auto").Equals(true))
+                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Store").Equals(true))
                     {
-                        @Html.ActionLink("Gas", "Index", "Autos", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Store", "Index", "Stores", null, new { @class = "nav-link" })
                     }
                 </li>
                 <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
+                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Store").Equals(true))
                     {
-                        @Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Items", "Index", "Items", null, new { @class = "nav-link" })
                     }
                 </li>
                 <li class="nav-item">
-                    @if (currentuser.IsAdmin)
+                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Lists").Equals(true))
                     {
-                        @Html.ActionLink("Admin", "Index", "Admin/Index", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Lists", "Index", "Lists", null, new { @class = "nav-link" })
                     }
                 </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
-                    {
-                        @Html.ActionLink("Event", "Index", "TheEvent/Index", null, new { @class = "nav-link" })
-                    }
-                </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
-                    {
-                        @Html.ActionLink("Grocery", "Index", "Grocery/Index", null, new { @class = "nav-link" })
-                    }
-                </li>
+
             </ul>
+
             }
     </nav>
 

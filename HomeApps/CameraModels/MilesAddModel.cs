@@ -14,7 +14,7 @@ namespace HomeApps.Models
 
         [Required]
         [DisplayName("Gas Date")]
-        public System.DateTime GasDate { get; set; }
+        public System.DateTime GasDate { get; set; } = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
 
         [Required]
         [DisplayName("Total Gallons")]

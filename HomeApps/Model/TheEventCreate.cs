@@ -16,11 +16,10 @@ namespace HomeApps.Models
         public new System.DateTimeOffset DateofEventOffSet { get; set; }
 
         [DisplayName("Event Name?")]
-
         public new string EventName { get; set; }
 
-        
-        
+
+        public IList<EventAction> EventActions { get; set; } 
 
         public TheEventCreate()
         {

@@ -10,116 +10,126 @@ using HomeApps;
 
 namespace HomeApps.Controllers
 {
-
-    public class ActionsController : Controller
+    public class ItemsController : Controller
     {
-        private readonly HomeAppsEntities db = new HomeAppsEntities();
+        private HomeAppsEntities db = new HomeAppsEntities();
 
-        // GET: Actions
+        // GET: Items
         public ActionResult Index()
         {
-            var actions = this.db.Actions.OrderBy(m => m.Name);
-            return View(actions.ToList());
+            return View(db.Items.ToList());
         }
 
-        // GET: Actions/Details/5
+        // GET: Items/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Action action = db.Actions.Find(id);
-            if (action == null)
+            Item item = db.Items.Find(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(action);
+            return View(item);
+        }
+              
+        public JsonResult GetItems(string term)
+        {
+            List<string> fooditems = db.Items.Where(m => m.Deleted == false && m.Name.Contains(term)).OrderBy(m => m.Name).Select(m => m.Name).ToList();
+
+            if (fooditems.Count.Equals(0))
+            {
+                fooditems.Add("No Items Found");
+            }
+
+
+            return Json(fooditems, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Actions/Create
+
+        // GET: Items/Create
         public ActionResult Create()
         {   
+
             return View();
         }
 
-        // POST: Actions/Create
+        // POST: Items/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string action)
+        public ActionResult Create(Item item)
         {
-            if (ModelState.IsValid)
-            {
-                Action newaction = new Action();
-                newaction.Name = action;
+            int ItemCount = db.Items.Where(m => m.Name == item.Name).Count();
 
-                this.db.Actions.Add(newaction);
-                this.db.SaveChanges();
-                return RedirectToAction("Index");
+            if (ModelState.IsValid && ItemCount.Equals(0))
+            {
+                item.Deleted = false;
+                db.Items.Add(item);
+                db.SaveChanges();
+
+                return View(new Item());
             }
 
-            return View(action);
+            return View(item);
         }
 
-        // GET: Actions/Edit/5
+        // GET: Items/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Action action = db.Actions.Find(id);
-            if (action == null)
+            Item item = db.Items.Find(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
-            return View(action);
+            return View(item);
         }
 
-        // POST: Actions/Edit/5
+        // POST: Items/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edt([Bind(Include = "ActionID,IsDeleted,Name")] Action action)
+        public ActionResult Edit([Bind(Include = "ItemID,Name,Deleted")] Item item)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(action).State = EntityState.Modified;
+                db.Entry(item).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
-            return View(action);
+            return View(item);
         }
 
-        // GET: Actions/Delete/5
+        // GET: Items/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Action action = db.Actions.Find(id);
-            if (action == null)
+            Item item = db.Items.Find(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(action);
+            return View(item);
         }
 
-        // POST: Actions/Delete/5
+        // POST: Items/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Action action = db.Actions.Find(id);
-            //db.Actions.Remove(action);
-            action.IsDeleted = false;
+            Item item = db.Items.Find(id);
+            db.Items.Remove(item);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -130,7 +140,6 @@ namespace HomeApps.Controllers
             {
                 db.Dispose();
             }
-
             base.Dispose(disposing);
         }
     }

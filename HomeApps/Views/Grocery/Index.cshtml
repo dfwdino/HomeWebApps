@@ -1,0 +1,18 @@
+﻿@model IEnumerable<HomeApps.List>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_GroceryLayout.cshtml";
+}
+
+<h2>Food Need List</h2>
+
+
+@foreach (var item in Model)
+{
+<div class="row">
+    <div class="col">@Html.LabelFor(m => item.Item.Name)</div>
+    <div class="col">@Html.LabelFor(m => item.Store.Name)</div>
+    <div class="col"></div>
+</div>
+}

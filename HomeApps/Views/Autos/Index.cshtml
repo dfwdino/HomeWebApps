@@ -26,8 +26,8 @@
             @Html.DisplayFor(modelItem => item.AutoName)
         </td>
         <td>
-            @Html.ActionLink("Miles", "Index", "Miles", new { id = item.AutoID }, null) |
             @Html.ActionLink("Add Miles", "Create", "Miles", new { id = item.AutoID }, null) |
+            @Html.ActionLink("Miles", "Index", "Miles", new { id = item.AutoID }, null) |
             @Html.ActionLink("Edit", "Edit", new { id = item.AutoID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.AutoID })
         </td>

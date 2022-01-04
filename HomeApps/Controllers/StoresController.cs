@@ -42,11 +42,16 @@ namespace HomeApps.Controllers
 
 
         // GET: Stores
-        public ActionResult Index()
+        public ActionResult IndexWS()
         {
             Task<string> AllStores = GetStores();
             
             return View(AllStores);
+        }
+
+        public ActionResult Index()
+        {
+            return View(db.Stores);
         }
 
         // GET: Stores/Details/5

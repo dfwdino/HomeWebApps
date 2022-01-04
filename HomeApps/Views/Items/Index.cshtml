@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HomeApps.Store>
+﻿@model IEnumerable<HomeApps.Item>
 
 @{
     ViewBag.Title = "Index";
@@ -24,8 +24,9 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.StoreID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.StoreID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.ItemID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ItemID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ItemID })
         </td>
     </tr>
 }
