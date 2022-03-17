@@ -239,7 +239,6 @@
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ListsController.cs" />
     <Compile Include="Controllers\MilesController.cs" />
-    <Compile Include="Controllers\CameraModelsController.cs" />
     <Compile Include="Controllers\SocialSitesController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Controllers\StoresController.cs" />
@@ -287,10 +286,10 @@
     <Compile Include="Mile.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model.cs">
+    <Compile Include="ModelImage.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelImage.cs">
+    <Compile Include="ModelPeople.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelSocialSite.cs">
@@ -300,6 +299,7 @@
     <Compile Include="CameraModels\MilesAddModel.cs" />
     <Compile Include="CameraModels\MilesViewModel.cs" />
     <Compile Include="CameraModels\UserViewModel.cs" />
+    <Compile Include="Model\EventCreateModel.cs" />
     <Compile Include="Model\TheEventCreate.cs" />
     <Compile Include="MyExceptionHandler.cs" />
     <Compile Include="Price.cs">
@@ -380,11 +380,6 @@
     <Content Include="Views\Admin\AddSchema.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\SomeException.cshtml" />
-    <Content Include="Views\CameraModels\Create.cshtml" />
-    <Content Include="Views\CameraModels\Delete.cshtml" />
-    <Content Include="Views\CameraModels\Details.cshtml" />
-    <Content Include="Views\CameraModels\Edit.cshtml" />
-    <Content Include="Views\CameraModels\Index.cshtml" />
     <Content Include="Views\SocialSites\Create.cshtml" />
     <Content Include="Views\SocialSites\Delete.cshtml" />
     <Content Include="Views\SocialSites\Details.cshtml" />

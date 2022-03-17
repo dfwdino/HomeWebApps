@@ -12,16 +12,16 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class Model
+    public partial class ModelPeople
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Model()
+        public ModelPeople()
         {
-            this.ModelSocialSites = new HashSet<ModelSocialSite>();
             this.ModelImages = new HashSet<ModelImage>();
+            this.ModelSocialSites = new HashSet<ModelSocialSite>();
         }
     
-        public int ModelID { get; set; }
+        public int ModelPersonID { get; set; }
         public bool Deleted { get; set; }
         public Nullable<int> ModfiyID { get; set; }
         public string FirstName { get; set; }
@@ -36,8 +36,8 @@ namespace HomeApps
         public string FileName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ModelSocialSite> ModelSocialSites { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ModelImage> ModelImages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ModelSocialSite> ModelSocialSites { get; set; }
     }
 }

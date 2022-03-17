@@ -23,7 +23,7 @@ namespace HomeApps
     
         public int ItemID { get; set; }
         public string Name { get; set; }
-        public Nullable<bool> Deleted { get; set; }
+        public bool Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<List> Lists { get; set; }

@@ -20,7 +20,7 @@ namespace HomeApps.Controllers
         // GET: Models
         public ActionResult Index()
         {
-            return View(db.Models.Where(m => m.Deleted==false).ToList());
+            return View(db.ModelPeoples.Where(m => m.Deleted == false).ToList());
         }
 
         public ActionResult UploadFileTest()
@@ -36,7 +36,7 @@ namespace HomeApps.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Model model = db.Models.Find(id);
+            ModelPeople model = db.ModelPeoples.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -58,17 +58,18 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(HttpPostedFileBase file, Model model,FormCollection form)
+        public ActionResult Create(HttpPostedFileBase file, ModelPeople model)
         {
 
             if (ModelState.IsValid)
             {
                 if (file != null && file.ContentLength > 0)
+                {
                     try
                     {
                         string path = Path.Combine(Server.MapPath("~/uploads"),
                                                    Path.GetFileName(file.FileName
-                                                   
+
                                                    ));
 
                         var UploadsPath = Server.MapPath("~/uploads");
@@ -86,23 +87,24 @@ namespace HomeApps.Controllers
                     {
                         ViewBag.Message = "ERROR:" + ex.Message.ToString();
                     }
+                }
                 else
                 {
                     ViewBag.Message = "You have not specified a file.";
                 }
 
 
-                var SocialSites = form["SocialSites"].Split(',');
-                var SocialSiteURL = form["SocialSiteURL"].Split(',');
+                //var SocialSites = form["SocialSites"].Split(',');
+                //var SocialSiteURL = form["SocialSiteURL"].Split(',');
 
-                for (int i = 0; i < SocialSites.Length; i++)
-                {
-                   
-                    model.ModelSocialSites.Add(new ModelSocialSite {ModelID=model.ModelID,SocialSiteID= Convert.ToInt16(SocialSites[i]),URL= SocialSiteURL[i] });
+                //for (int i = 0; i < SocialSites.Length; i++)
+                //{
 
-                }
+                //    model.ModelSocialSites.Add(new ModelSocialSite { ModelID = model.ModelID, SocialSiteID = Convert.ToInt16(SocialSites[i]), URL = SocialSiteURL[i] });
 
-                db.Models.Add(model);
+                //}
+
+                db.ModelPeoples.Add(model);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -120,11 +122,14 @@ namespace HomeApps.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Model model = db.Models.Find(id);
+
+            ModelPeople model = db.ModelPeoples.Find(id);
+            
             if (model == null)
             {
                 return HttpNotFound();
             }
+
             return View(model);
         }
 
@@ -133,11 +138,12 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(HttpPostedFileBase file, Model model, FormCollection form)
+        public ActionResult Edit(HttpPostedFileBase file, ModelPeople model)
         {
             if (ModelState.IsValid)
             {
                 if (file != null && file.ContentLength > 0)
+                {
                     try
                     {
                         string path = Path.Combine(Server.MapPath("~/uploads"),
@@ -158,25 +164,39 @@ namespace HomeApps.Controllers
                     {
                         ViewBag.Message = "ERROR:" + ex.Message.ToString();
                     }
+                }
                 else
                 {
+
                     ViewBag.Message = "You have not specified a file.";
                 }
 
+                ModelPeople clientModel = db.ModelPeoples.Where(m => m.ModelPersonID == model.ModelPersonID).FirstOrDefault();
 
-                var SocialSites = form["SocialSites"].Split(',');
-                var SocialSiteURL = form["SocialSiteURL"].Split(',');
+                //var SocialSites = form["SocialSites"].Split(',');
+                //string[] SocialSiteURL;
 
-                
+                //if (form["SocialSiteURL"] != null)
+                //{
+                //    SocialSiteURL = form["SocialSiteURL"].Split(',');
+                //}
 
-                db.Entry(model).State = EntityState.Modified;
+                //db.Entry(model).State = EntityState.Modified;
 
-                for (int i = 0; i < SocialSites.Length; i++)
-                {
+                clientModel.Notes = model.Notes;
 
-                    model.ModelSocialSites.Add(new ModelSocialSite { ModelID = model.ModelID, SocialSiteID = Convert.ToInt16(SocialSites[i]), URL = SocialSiteURL[i] });
+                //model.ModelSocialSites.Where(m => m.ModelID == model.ModelID).Select(m => m.Deleted = true);
 
-                }
+                //for (int i = 0; i < SocialSites.Length; i++)
+                //{
+                //    if (!string.IsNullOrEmpty(SocialSites[i]))
+                //        {
+                //        model.ModelSocialSites.Add(new ModelSocialSite { ModelID = model.ModelID, SocialSiteID = Convert.ToInt16(SocialSites[i]), URL = SocialSiteURL[i] }); 
+                //    }
+
+                //}
+
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -190,7 +210,7 @@ namespace HomeApps.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Model model = db.Models.Find(id);
+            ModelPeople model = db.ModelPeoples.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -203,7 +223,7 @@ namespace HomeApps.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Model model = db.Models.Find(id);
+            ModelPeople model = db.ModelPeoples.Find(id);
             //db.Models.Remove(model);
             model.Deleted = true;
             db.SaveChanges();

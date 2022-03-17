@@ -91,7 +91,6 @@
     <Build Include="ShanesGlassEyeCRM\Tables\ModelImages_1.sql" />
     <Build Include="ShanesGlassEyeCRM\Tables\ModelSocialSites_1.sql" />
     <Build Include="ShanesGlassEyeCRM\Tables\SocialSites_1.sql" />
-    <Build Include="ShanesGlassEyeCRM\Tables\Models_1.sql" />
     <Build Include="Security\NT AUTHORITY_NETWORK SERVICE_2.sql" />
     <Build Include="Security\NT AUTHORITY_Local account_2.sql" />
     <Build Include="Security\RoleMemberships_3.sql" />
@@ -110,6 +109,7 @@
     <Build Include="Grocery\Tables\Stores.sql" />
     <Build Include="Grocery\Tables\Items.sql" />
     <Build Include="Security\Grocery.sql" />
+    <Build Include="ShanesGlassEyeCRM\Tables\ModelPeople.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TouchMeToProjectHomeApp.scmp" />

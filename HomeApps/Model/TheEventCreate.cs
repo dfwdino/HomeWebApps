@@ -9,22 +9,19 @@ namespace HomeApps.Models
 {
     public class TheEventCreate : TheEvent
     {
+        private DateTimeOffset dateofEventOffSet;
 
         [DisplayName("Date Of Event")]
-        public new System.DateTime DateOfEvent { get; set; }
+        public new DateTime DateOfEvent { get; set; }
 
-        public new System.DateTimeOffset DateofEventOffSet { get; set; }
+        public new System.DateTimeOffset DateofEventOffSet { get => dateofEventOffSet; set => dateofEventOffSet = value; }
 
         [DisplayName("Event Name?")]
         public new string EventName { get; set; }
 
 
-        public IList<EventAction> EventActions { get; set; } 
+        public IList<EventAction> EventActions { get; set; }
 
-        public TheEventCreate()
-        {
-            DateofEventOffSet = DateTimeOffset.Now;
-            DateOfEvent = DateTime.Now;
-        }
+        public TheEventCreate() => DateOfEvent = DateTime.Now;
     }
 }

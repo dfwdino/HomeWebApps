@@ -1,4 +1,4 @@
-﻿@model HomeApps.Models.TheEventCreate
+﻿@model HomeApps.Models.EventCreateModel
 
 @{
     ViewBag.Title = "Create";
@@ -23,13 +23,13 @@
         </div>
     </div>
 
-    <div class="form-group" style="display:none;">
+    @*<div class="form-group" style="display:none;">
         @Html.LabelFor(model => model.DateofEventOffSet, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.DateofEventOffSet, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.DateofEventOffSet, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -46,31 +46,39 @@
 
 </div>
 
-<input type="button" id="AddEvents" value="Add" onclick="javascript:AddNewAction()">
+<input class="btn btn-secondary" type="button" id="AddEvents" value="Add New Action" onclick="javascript:AddNewAction()">
 
 <div id="SchemaAction" hidden>
+
+    <div class="row">
+        <div class="col-md-5"> @Html.Label("Giving Person", htmlAttributes: new { @class = "control-label" })</div>
+        <div class="col-md-5">  @Html.Label("Reveliving Person", htmlAttributes: new { @class = "control-label" })</div>
+    </div>
+    <div class="row">
+        <div class="col-md-5"> @Html.DropDownList("EventActions[X].GivingPersonID", (SelectList)ViewBag.People, htmlAttributes: new {@id =  "EventActions[X].GivingPersonID", @class = "form-control" })</div>
+        <div class="col-md-5"> @Html.DropDownList("EventActions[X].ReveivingPersonID", (SelectList)ViewBag.People, htmlAttributes: new {@id = "EventActions[X].ReveivingPersonID", @class = "form-control" })</div>
+    </div>
+
+
+
     <div class="form-group">
-        @Html.Label("Giving Person", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("GivingPerson_X", null, htmlAttributes: new {@class = "form-control" })
-        </div>
     </div>
     <div class="form-group">
-        @Html.Label("Action Done", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Action Done", htmlAttributes: new { @class = "control-label col-md-5" })
         <div class="col-md-10">
             @foreach (var item in ViewBag.ActionsDone)
             {
                 HomeApps.Action action = item;
 
-                <span>@Html.CheckBox("ActionID_X",false,new { @value = action.ActionID }) @Html.Label(action.Name)</span>
+                <span style="padding-right:10px">@Html.CheckBox("EventActions[X].ActionID", false, new { @id = "EventActions[X].ActionID", @value = action.ActionID }) @Html.Label(action.Name)</span>
 
             }
         </div>
     </div>
     <div class="form-group">
-        @Html.Label("Reveliving Person", htmlAttributes: new { @class = "control-label col-md-2" })
+       
         <div class="col-md-10">
-            @Html.DropDownList("RevelivingPerson_X", null, htmlAttributes: new { @class = "form-control" })
+
         </div>
     </div>
 
@@ -78,7 +86,7 @@
 
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Create" class="btn btn-default" />
+        <input type="submit" value="Create Event" class="btn btn-default" />
     </div>
 </div>
 
@@ -91,12 +99,19 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 
 <script>
-    var CurrentActionGroup = 1;
+    var CurrentActionGroup = 0;
+
+    $(function () {
+        AddNewAction();
+    });
+
 
     function AddNewAction() {
         var data = $("#SchemaAction").html().replaceAll('X',CurrentActionGroup);
         var man = $("#EventActions");
         man.append(data);
+
+        CurrentActionGroup++;
     }
 
 

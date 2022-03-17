@@ -1,4 +1,4 @@
-﻿@model HomeApps.Model
+﻿@model HomeApps.ModelPeople
 
 @{
     ViewBag.Title = "Create";
@@ -102,15 +102,16 @@
 
 
     <div class="form-group">
-        <span class="col-md-1"> @Html.Label("Socail Site") </span>
+        <span class="col-md-1"> @Html.Label("Social Site") </span>
         <div id="SocialSitesArea">
             <div id="SocialSitesCopy">
                 <span style="float:left;padding-right:10px">
-                    @Html.DropDownList("SocialSites", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("ModelSocialSites[X].SocialSiteID", (SelectList)ViewBag.SocialSites,
+                            htmlAttributes: new { @id = "ModelSocialSites[X].SocialSiteID", @class = "form-control" })
                 </span>
 
                 <span style="float:left">
-                    @Html.TextBox("SocialSiteURL")
+                    @Html.TextBox("ModelSocialSites[X].URL")
                 </span>
                 <br /> <br />
             </div>
@@ -120,6 +121,7 @@
 
 
 </div>
+
     <div style="margin-left:10px">
         <a style="margin: 10px 0;" href="javascript:addRow();">Add Other Site</a>
     </div>
@@ -146,7 +148,18 @@
 
 
 <script>
-    function addRow() {
-        $("#SocialSitesCopy").clone().find("input").each(function () { $(this).val('')  }).end().appendTo("#SocialSitesArea");
+    var CurrentActionGroup = 0;
+
+    $(function () {
+        AddNewAction();
+    });
+
+
+    function AddNewAction() {
+        var data = $("#SocialSitesCopy").html().replaceAll('X', CurrentActionGroup);
+        var man = $("#SocialSitesArea");
+        man.append(data);
+
+        CurrentActionGroup++;
     }
 </script>

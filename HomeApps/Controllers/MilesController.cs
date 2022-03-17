@@ -145,7 +145,8 @@ namespace HomeApps.Controllers
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID");
 
             ViewBag.GasTypeID = new SelectList(items: db.Types.Where(m => m.Deleted == false).AsEnumerable(), "GasTypeID", "TypeName").Append(new SelectListItem() { Text = "Select Gas Type", Selected = true, Value = "0" });
-            return View(new Models.MilesAddModel() {AutoID = id,GasDate = DateTime.Now});
+
+            return View(new Models.MilesAddModel() { AutoID = id });
         }
 
         // POST: Miles/Create

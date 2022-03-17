@@ -41,14 +41,13 @@ namespace HomeApps.Controllers
         {
             UserViewModel userViewModel = Session["_CurrentUser"] as UserViewModel;
 
-            ViewBag.GivingPerson = new SelectList(db.UsersPeoples.Where(m => m.User.FirstName.Contains(userViewModel.FirstName)), "UserID", "PersonName");
-            ViewBag.RevelivingPerson = new SelectList(db.UsersPeoples.Where(m => m.User.FirstName.Contains(userViewModel.FirstName)), "UserID", "PersonName");
-            ViewBag.People = new SelectList(db.UsersPeoples.Where(m => m.User.FirstName.Contains(userViewModel.FirstName)), "UserID", "PersonName");
-            //ViewBag.ActionsDone = new SelectList(db.Actions, "ActionID", "Name");
+            ViewBag.People = new SelectList(db.UsersPeoples.OrderBy(m => m.PersonName), "UsersPersonID", "PersonName");
+            ViewBag.ActionsDone = this.db.Actions.OrderBy(m => m.Name).ToList();
+            ViewBag.GivingPersonID = new SelectList(db.UsersPeoples.OrderBy(m => m.PersonName), "UsersPersonID", "PersonName");
 
-            this.ViewBag.ActionsDone = this.db.Actions.ToList();
 
-            return View(new TheEventCreate());
+
+            return View(new EventCreateModel());
         }
 
         // POST: TheEvents/Create
@@ -56,12 +55,44 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TheEvent theEvent)
+        public ActionResult Create(EventCreateModel theEvent)
         {
+
             if (ModelState.IsValid)
             {
-                db.TheEvents.Add(theEvent);
+                UserViewModel user = null;
+                if (user == null)
+                {
+                    user = ((UserViewModel)this.Session["_CurrentUser"]);
+                }
+
+
+                TheEvent currentEvent = new TheEvent { EventName = theEvent.EventName, DateOfEvent = Convert.ToDateTime(theEvent.DateOfEvent) };
+
+                db.TheEvents.Add(currentEvent);
                 db.SaveChanges();
+
+                foreach (var eventAction in theEvent.EventActions)
+                {
+                    foreach (var item in eventAction.ActionID.Where(m => m != "false"))
+                    {
+                        EventAction ac = new EventAction();
+
+                        ac.ActionID = Convert.ToInt32(item);
+                        ac.GivingPersonID = Convert.ToInt32(eventAction.GivingPersonID);
+                        ac.ReveivingPersonID = Convert.ToInt32(eventAction.ReveivingPersonID);
+                        ac.EventID = currentEvent.EventID;
+                        ac.OwnerID = user.UserID;
+
+                        db.EventActions.Add(ac);
+                    }
+
+                    
+                }
+
+
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

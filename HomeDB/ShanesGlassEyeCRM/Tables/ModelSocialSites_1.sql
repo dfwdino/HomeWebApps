@@ -6,7 +6,9 @@
     [ModfiyID]      INT           NULL,
     [URL]           NVARCHAR (50) NOT NULL,
     CONSTRAINT [PK_ModelSocialSites] PRIMARY KEY CLUSTERED ([ModelSocialID] ASC),
-    CONSTRAINT [FK_ModelSocialSites_Models] FOREIGN KEY ([ModelID]) REFERENCES [ShanesGlassEyeCRM].[Models] ([ModelID]),
+    CONSTRAINT [FK_ModelSocialSites_Models] FOREIGN KEY ([ModelID]) REFERENCES [ShanesGlassEyeCRM].[ModelPeople] ([ModelPersonID]),
     CONSTRAINT [FK_ModelSocialSites_SocalSites] FOREIGN KEY ([SocialSiteID]) REFERENCES [ShanesGlassEyeCRM].[SocialSites] ([SocalTypeID])
 );
+
+
 

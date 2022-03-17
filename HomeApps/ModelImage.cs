@@ -14,12 +14,12 @@ namespace HomeApps
     
     public partial class ModelImage
     {
-        public int ModelImage1 { get; set; }
+        public int ModelImageID { get; set; }
         public string Title { get; set; }
         public string ImageName { get; set; }
         public byte[] ImageFile { get; set; }
-        public Nullable<int> ModelID { get; set; }
+        public Nullable<int> ModelPersonID { get; set; }
     
-        public virtual Model Model { get; set; }
+        public virtual ModelPeople ModelPeople { get; set; }
     }
 }

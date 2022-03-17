@@ -11,13 +11,10 @@
         <EntityTypeShape EntityType="HomeAppsModel.Type" Width="1.5" PointX="7.5" PointY="14" />
         <EntityTypeShape EntityType="HomeAppsModel.CreateModifyLog" Width="1.5" PointX="0.5" PointY="4.75" />
         <EntityTypeShape EntityType="HomeAppsModel.Role" Width="1.5" PointX="3" PointY="5.375" />
-        <EntityTypeShape EntityType="HomeAppsModel.Schema" Width="1.5" PointX="8.25" PointY="3.375" />
+        <EntityTypeShape EntityType="HomeAppsModel.Schema" Width="1.5" PointX="17.25" PointY="5.625" />
         <EntityTypeShape EntityType="HomeAppsModel.User" Width="1.5" PointX="5.25" PointY="5.625" />
         <EntityTypeShape EntityType="HomeAppsModel.UserRole" Width="1.5" PointX="7.5" PointY="10.5" />
         <EntityTypeShape EntityType="HomeAppsModel.UserSchema" Width="1.5" PointX="10.75" PointY="6.375" />
-        <EntityTypeShape EntityType="HomeAppsModel.Model" Width="1.5" PointX="0.625" PointY="0.5" />
-        <EntityTypeShape EntityType="HomeAppsModel.ModelSocialSite" Width="1.5" PointX="2.625" PointY="0.5" />
-        <EntityTypeShape EntityType="HomeAppsModel.SocialSite" Width="1.5" PointX="4.375" PointY="0.5" />
         <AssociationConnector Association="HomeAppsModel.FK_Auto_CreateModifyLog" />
         <AssociationConnector Association="HomeAppsModel.FK_Auto_Users" />
         <AssociationConnector Association="HomeAppsModel.FK_Miles_Auto" />
@@ -31,11 +28,7 @@
         <AssociationConnector Association="HomeAppsModel.FK_UserSchemas_CreateModifyLog1" />
         <AssociationConnector Association="HomeAppsModel.FK_UserRoles_Users" />
         <AssociationConnector Association="HomeAppsModel.FK_UserSchemas_Users" />
-        <AssociationConnector Association="HomeAppsModel.FK_ModelSocialSites_Models" />
-        <AssociationConnector Association="HomeAppsModel.FK_ModelSocialSites_SocalSites" />
-        <EntityTypeShape EntityType="HomeAppsModel.ModelImage" Width="1.5" PointX="2.875" PointY="15.25" />
-        <AssociationConnector Association="HomeAppsModel.FK_ModelImages_Models" />
-        <EntityTypeShape EntityType="HomeAppsModel.Logging" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HomeAppsModel.Logging" Width="1.5" PointX="17.125" PointY="1.875" />
         <EntityTypeShape EntityType="HomeAppsModel.Gender" Width="1.5" PointX="11" PointY="14.875" />
         <EntityTypeShape EntityType="HomeAppsModel.TheEvent" Width="1.5" PointX="0.75" PointY="8.75" />
         <EntityTypeShape EntityType="HomeAppsModel.UsersPeople" Width="1.5" PointX="13.25" PointY="14.25" />
@@ -57,6 +50,14 @@
         <AssociationConnector Association="HomeAppsModel.FK_Lists_Strores" />
         <AssociationConnector Association="HomeAppsModel.FK_Lists_Users" />
         <AssociationConnector Association="HomeAppsModel.FK_Prices_Strores" />
+        <EntityTypeShape EntityType="HomeAppsModel.ModelImage" Width="1.5" PointX="3" PointY="16.75" />
+        <EntityTypeShape EntityType="HomeAppsModel.ModelPeople" Width="1.5" PointX="0.75" PointY="15.875" />
+        <EntityTypeShape EntityType="HomeAppsModel.ModelSocialSite" Width="1.5" PointX="6" PointY="17.5" />
+        <EntityTypeShape EntityType="HomeAppsModel.SocialSite" Width="1.5" PointX="3.75" PointY="20" />
+        <AssociationConnector Association="HomeAppsModel.FK_ModelImages_Models" />
+        <AssociationConnector Association="HomeAppsModel.FK_ModelSocialSites_Models" />
+        <AssociationConnector Association="HomeAppsModel.FK_ModelSocialSites_SocalSites" />
+        <AssociationConnector Association="HomeAppsModel.FK_EventActions_TheEvent" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

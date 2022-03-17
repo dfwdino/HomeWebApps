@@ -35,10 +35,6 @@ namespace HomeApps
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserSchema> UserSchemas { get; set; }
-        public virtual DbSet<Model> Models { get; set; }
-        public virtual DbSet<ModelSocialSite> ModelSocialSites { get; set; }
-        public virtual DbSet<SocialSite> SocialSites { get; set; }
-        public virtual DbSet<ModelImage> ModelImages { get; set; }
         public virtual DbSet<Logging> Loggings { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<TheEvent> TheEvents { get; set; }
@@ -49,5 +45,9 @@ namespace HomeApps
         public virtual DbSet<List> Lists { get; set; }
         public virtual DbSet<Price> Prices { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<ModelImage> ModelImages { get; set; }
+        public virtual DbSet<ModelPeople> ModelPeoples { get; set; }
+        public virtual DbSet<ModelSocialSite> ModelSocialSites { get; set; }
+        public virtual DbSet<SocialSite> SocialSites { get; set; }
     }
 }

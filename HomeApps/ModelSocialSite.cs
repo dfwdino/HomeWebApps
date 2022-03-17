@@ -21,7 +21,7 @@ namespace HomeApps
         public Nullable<int> ModfiyID { get; set; }
         public string URL { get; set; }
     
-        public virtual Model Model { get; set; }
+        public virtual ModelPeople ModelPeople { get; set; }
         public virtual SocialSite SocialSite { get; set; }
     }
 }
