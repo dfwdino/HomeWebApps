@@ -300,6 +300,7 @@
     <Compile Include="CameraModels\MilesViewModel.cs" />
     <Compile Include="CameraModels\UserViewModel.cs" />
     <Compile Include="Model\EventCreateModel.cs" />
+    <Compile Include="Model\TheEventDetails.cs" />
     <Compile Include="Model\TheEventCreate.cs" />
     <Compile Include="MyExceptionHandler.cs" />
     <Compile Include="Price.cs">

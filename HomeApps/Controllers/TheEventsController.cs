@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using HomeApps;
 using HomeApps.Models;
+using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
@@ -29,11 +30,48 @@ namespace HomeApps.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TheEvent theEvent = db.TheEvents.Find(id);
+
             if (theEvent == null)
             {
                 return HttpNotFound();
             }
-            return View(theEvent);
+
+
+            TheEventDetails eventDetails = new TheEventDetails() {DateOfEvent = theEvent.DateOfEvent, EventName = theEvent.EventName };
+
+            UserViewModel user = (UserViewModel)this.Session["_CurrentUser"];
+
+             List<EventAction> eventactions = db.EventActions.Where(m => m.EventID == id)
+                                                            .OrderBy(m => new { m.GivingPersonID, m.ReveivingPersonID })
+                                                        .ToList();
+            GroupAction tempEA = new GroupAction();
+            foreach (var item in eventactions)
+            {
+                if(tempEA.Giving == null)
+                {
+                    tempEA.Giving = item.UsersPeople.PersonName;
+                    tempEA.Recving = item.UsersPeople1.PersonName;
+                    tempEA.Action = item.Action.Name;
+                }
+                else if(tempEA.Giving == item.UsersPeople.PersonName && tempEA.Recving == item.UsersPeople1.PersonName)
+                {
+                    tempEA.Action += ", " + item.Action.Name;
+                }
+                else
+                {
+                    eventDetails.Actions.Add(tempEA);
+                    tempEA = new GroupAction();
+                    tempEA.Giving = item.UsersPeople.PersonName;
+                    tempEA.Recving = item.UsersPeople1.PersonName;
+                    tempEA.Action = item.Action.Name;
+
+                }
+                
+
+            }
+            eventDetails.Actions.Add(tempEA);
+
+            return View(eventDetails);
         }
 
         // GET: TheEvents/Create

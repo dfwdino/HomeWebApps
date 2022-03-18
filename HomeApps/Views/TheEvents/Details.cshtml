@@ -1,4 +1,4 @@
-﻿@model Models.TheEventCreate
+﻿@model HomeApps.Models.TheEventDetails
 
 @{
     ViewBag.Title = "Details";
@@ -12,36 +12,21 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.DateOfEvent)
+            @Html.DisplayNameFor(model => model.DateOfEvent) - @Html.DisplayFor(model => model.DateOfEvent)
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOfEvent)
-        </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DateofEventOffSet)
+            @Html.DisplayNameFor(model => model.EventName) - @Html.DisplayFor(model => model.EventName)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateofEventOffSet)
-        </dd>
+        @foreach (var item in Model.Actions)
+        {
+            <div>
+                @item.Giving to @item.Recving <br/>
+                @item.Action
+            </div>
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EventName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EventName)
-        </dd>
 
     </dl>
 </div>
