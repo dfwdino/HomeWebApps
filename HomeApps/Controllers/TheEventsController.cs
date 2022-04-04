@@ -37,7 +37,7 @@ namespace HomeApps.Controllers
             }
 
 
-            TheEventDetails eventDetails = new TheEventDetails() {DateOfEvent = theEvent.DateOfEvent, EventName = theEvent.EventName };
+            TheEventDetails eventDetails = new TheEventDetails() {DateOfEvent = theEvent.DateOfEvent.ToShortDateString(), EventName = theEvent.EventName };
 
             UserViewModel user = (UserViewModel)this.Session["_CurrentUser"];
 

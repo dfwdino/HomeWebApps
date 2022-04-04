@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using HomeApps.Infrastructure;
 using System;
+using System.Configuration;
 
 namespace HomeApps.Controllers
 {
@@ -16,7 +17,7 @@ namespace HomeApps.Controllers
 
         public ActionResult Login()
         {
-
+            
             return View();
         }
 
@@ -24,6 +25,7 @@ namespace HomeApps.Controllers
         public HomeController()
         {
             db = new HomeAppsEntities();
+            
         }
 
         

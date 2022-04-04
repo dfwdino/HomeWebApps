@@ -11,12 +11,12 @@ namespace HomeApps.Models
     {
         private DateTimeOffset dateofEventOffSet;
 
-        [DisplayName("Date Of Event")]
-        public new DateTime DateOfEvent { get; set; }
+        [DisplayName("Date:")]
+        public new string DateOfEvent { get; set; }
 
         public new System.DateTimeOffset DateofEventOffSet { get; set; }
 
-        [DisplayName("Event Name?")]
+        [DisplayName("Title")]
         public new string EventName { get; set; }
 
         public List<GroupAction> Actions { get; set; }

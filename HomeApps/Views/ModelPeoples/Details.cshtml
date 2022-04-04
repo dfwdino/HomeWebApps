@@ -1,0 +1,104 @@
+﻿@model HomeApps.ModelPeople
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_GroceryLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Models</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            <img src="~/Content/Images/Models/@Model.FileName" />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllNudes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllNudes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllBoudoir)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllBoudoir)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllErotica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllErotica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>Sites</dt>
+
+        @foreach (var item in Model.ModelSocialSites)
+        {
+            <dd><a href="@item.URL" target="_blank">@item.URL</a></dd>
+        }
+
+        <div></div>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ModelPersonID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

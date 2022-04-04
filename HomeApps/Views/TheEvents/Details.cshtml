@@ -5,25 +5,22 @@
     Layout = "~/Views/Shared/_MateLayout.cshtml";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>TheEvent</h4>
+    <h4>@Html.DisplayFor(model => model.EventName)</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.DateOfEvent) - @Html.DisplayFor(model => model.DateOfEvent)
+            @Html.Label("Date:") - @Html.Label(Model.DateOfEvent)
         </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EventName) - @Html.DisplayFor(model => model.EventName)
-        </dt>
+        <div class="BottomPadding20"></div>
 
         @foreach (var item in Model.Actions)
         {
-            <div>
-                @item.Giving to @item.Recving <br/>
-                @item.Action
+            <div class="BottomPadding20">
+                <span style="font-weight:700">@item.Giving</span>
+                    <span style="color:Highlight;font-style:italic">@item.Action</span>
+                <span style="font-weight:700">@item.Recving</span>
             </div>
         }
 
@@ -34,3 +31,6 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.EventID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+<link href="~/Content/Website/HomeApps.Default.css" rel="stylesheet" />

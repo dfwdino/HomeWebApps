@@ -56,6 +56,12 @@
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Base, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Configuration.ConfigurationBuilders.Base.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.UserSecrets, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -178,7 +184,6 @@
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\jquery-ui.js" />
-    <Content Include="Web.config" />
     <EntityDeploy Include="HomeApps.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>HomeApps.Designer.cs</LastGenOutput>
@@ -186,6 +191,7 @@
     <Content Include="HomeApps.edmx.diagram">
       <DependentUpon>HomeApps.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\Website\HomeApps.Default.css" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Properties\PublishProfiles\sdnhomeapps - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\sdnhomeapps - Web Deploy.pubxml" />
@@ -215,6 +221,12 @@
     <Content Include="Views\Lists\Details.cshtml" />
     <Content Include="Views\Lists\Edit.cshtml" />
     <Content Include="Views\Lists\Index.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Views\ModelPeoples\Create.cshtml" />
+    <Content Include="Views\ModelPeoples\Delete.cshtml" />
+    <Content Include="Views\ModelPeoples\Details.cshtml" />
+    <Content Include="Views\ModelPeoples\Edit.cshtml" />
+    <Content Include="Views\ModelPeoples\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -239,6 +251,7 @@
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ListsController.cs" />
     <Compile Include="Controllers\MilesController.cs" />
+    <Compile Include="Controllers\ModelPeoplesController.cs" />
     <Compile Include="Controllers\SocialSitesController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Controllers\StoresController.cs" />
@@ -300,6 +313,7 @@
     <Compile Include="CameraModels\MilesViewModel.cs" />
     <Compile Include="CameraModels\UserViewModel.cs" />
     <Compile Include="Model\EventCreateModel.cs" />
+    <Compile Include="Model\ModelPeopleModel.cs" />
     <Compile Include="Model\TheEventDetails.cs" />
     <Compile Include="Model\TheEventCreate.cs" />
     <Compile Include="MyExceptionHandler.cs" />
@@ -421,6 +435,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\images\Models\" />
     <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
