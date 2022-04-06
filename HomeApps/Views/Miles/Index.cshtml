@@ -29,12 +29,12 @@ else
 
         <div style="padding-bottom:10px;">
             Since <span class="font-weight-bold">@Model.Miles.First().GasDate.ToShortDateString()</span> you have drove
-            <span class="font-weight-bold">@Model.TotalMiles.ToString("#")</span> miles and used <span class="font-weight-bold">@Model.TotalGallons</span> gallons of gas and MPG are <span class="font-weight-bold">@Model.TotalMPG.ToString("#")</span>
+            <span class="font-weight-bold">@Model.TotalMiles.ToString("N0")</span> miles and used <span class="font-weight-bold">@Model.TotalGallons.ToString("N0")</span> gallons of gas and MPG are <span class="font-weight-bold">@Model.TotalMPG.ToString("#")</span>
         </div>
 
         <div>
             Since <span class="font-weight-bold">@Model.Date30.ToShortDateString()</span> you have drove
-            <span class="font-weight-bold">@Model.Day30MaxTotalMiles.ToString("#")</span> miles and used <span class="font-weight-bold">@Model.Day30MaxTotalGallons</span> gallons of gas and MPG are <span class="font-weight-bold">@Model.Day30TotalMPG.ToString("#")</span>
+            <span class="font-weight-bold">@Model.Day30MaxTotalMiles.ToString("N0")</span> miles and used <span class="font-weight-bold">@Model.Day30MaxTotalGallons.ToString("N0")</span> gallons of gas and MPG are <span class="font-weight-bold">@Model.Day30TotalMPG.ToString("N0")</span>
         </div>
     </div>
 
@@ -42,7 +42,7 @@ else
 
 
     <p>
-        @Html.ActionLink("New Gas Log", "Create", new { id = Model.Miles.First().AutoID }) - @Html.ActionLink("Back to Auto List", "Index", "Autos")
+        @Html.ActionLink("Add New Miles", "Create", new { id = Model.Miles.First().AutoID }) - @Html.ActionLink("Back to Auto List", "Index", "Autos")
     </p>
     <table class="table">
         <tr class="Header">

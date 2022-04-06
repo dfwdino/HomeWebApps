@@ -126,8 +126,8 @@
                     var stationID = data.NewStationID;
 
                     $('#myModal').hide()
-                    $("#StationID").append($('<option/>', {value: data,text: name}));
-                    alert('New Station Added');
+                    $("#StationID").append($('<option/>', { value: stationID,text: name}));
+                    alert('New Station Added ' + stationID);
                     $("#NewStationName").val('');
                 
                 }
