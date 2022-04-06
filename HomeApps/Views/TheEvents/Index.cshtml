@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_MateLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Actions Times</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,10 +13,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DateOfEvent)
+            @Html.Label("Date")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EventName)
+            @Html.Label("Title")
         </th>
         <th></th>
     </tr>
@@ -24,7 +24,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.DateOfEvent)
+            @Html.Label(item.DateOfEvent.ToShortDateString())
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EventName)
