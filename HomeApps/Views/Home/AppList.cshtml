@@ -6,17 +6,24 @@
 
 @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Auto").Equals(true))
 {
-<div>@Html.ActionLink("Auto", "Index", "Autos", null, new { })</div>
-<br />
+    <div>@Html.ActionLink("Auto", "Index", "Autos", null, new { })</div>
+    <br />
 }
 @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
 {
-<div>@Html.ActionLink("Models", "Index", "ModelPeoples", null, new { })</div>
-<br />
+    <div>@Html.ActionLink("Models", "Index", "ModelPeoples", null, new { })</div>
+    <br />
 }
 
 @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Event").Equals(true))
 {
-<div>@Html.ActionLink("The Event", "Index", "TheEvents/Index", null, new { })</div>
+    <div>@Html.ActionLink("The Event", "Index", "TheEvents/Index", null, new { })</div>
+    <br />
 }
+
+@if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Grocery").Equals(true))
+{
+    <div>@Html.ActionLink("Grocery", "Index", "Grocery", null, new { })</div>
+}
+
 

@@ -85,7 +85,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edt([Bind(Include = "ActionID,IsDeleted,Name")] Action action)
+        public ActionResult Edt(Action action)
         {
             if (ModelState.IsValid)
             {

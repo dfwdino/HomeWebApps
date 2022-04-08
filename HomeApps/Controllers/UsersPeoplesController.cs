@@ -40,11 +40,16 @@ namespace HomeApps.Controllers
         // GET: UsersPeoples/Create
         public ActionResult Create()
         {
-            UserViewModel userViewModel = Session["_CurrentUser"] as UserViewModel;
+            UserViewModel userViewModel = (UserViewModel)this.Session["_CurrentUser"];
+            UsersPeople createUser = new UsersPeople();
+            createUser.UserID = userViewModel.UserID;
 
-            ViewBag.UserID = new SelectList(db.Users.Where(m => m.FirstName.Contains(userViewModel.FirstName)), "UserID", "FirstName");
+            //ViewBag.UserID = new SelectList(db.Users.Where(m => m.FirstName.Contains(userViewModel.FirstName)).ToList(), "UserID", "FirstName");
             ViewBag.PersonGenderID = new SelectList(db.Genders, "GenderID", "Gender1");
-            return View();
+
+            
+
+            return View(createUser);
         }
 
         // POST: UsersPeoples/Create
@@ -52,7 +57,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UsersPersonID,PersonName,PersonGenderID,UserID,Notes")] UsersPeople usersPeople)
+        public ActionResult Create(UsersPeople usersPeople)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +66,7 @@ namespace HomeApps.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName", usersPeople.UserID);
+            //ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName", usersPeople.UserID);
             ViewBag.PersonGenderID = new SelectList(db.Genders, "GenderID", "Gender1", usersPeople.PersonGenderID);
             return View(usersPeople);
         }
