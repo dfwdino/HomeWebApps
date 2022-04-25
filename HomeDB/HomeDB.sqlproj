@@ -69,8 +69,6 @@
     <Folder Include="ShanesGlassEyeCRM\Tables\" />
     <Folder Include="MateTracker\" />
     <Folder Include="MateTracker\Tables\" />
-    <Folder Include="Grocery\" />
-    <Folder Include="Grocery\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Template.sql" />
@@ -104,12 +102,8 @@
     <Build Include="MateTracker\Tables\UsersPeople.sql" />
     <Build Include="MateTracker\Tables\TheEvent.sql" />
     <Build Include="MateTracker\Tables\Genders.sql" />
-    <Build Include="Grocery\Tables\Prices.sql" />
-    <Build Include="Grocery\Tables\Lists.sql" />
-    <Build Include="Grocery\Tables\Stores.sql" />
-    <Build Include="Grocery\Tables\Items.sql" />
-    <Build Include="Security\Grocery.sql" />
     <Build Include="ShanesGlassEyeCRM\Tables\ModelPeople.sql" />
+    <Build Include="Security\Groceries.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TouchMeToProjectHomeApp.scmp" />
