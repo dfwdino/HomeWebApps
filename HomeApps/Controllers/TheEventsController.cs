@@ -19,7 +19,7 @@ namespace HomeApps.Controllers
         // GET: TheEvents
         public ActionResult Index()
         {
-            return View(db.TheEvents.ToList());
+            return View(db.TheEvents.OrderByDescending(m => m.DateOfEvent).ToList());
         }
 
         // GET: TheEvents/Details/5

@@ -22,7 +22,6 @@ namespace HomeApps
             this.UserSchemas = new HashSet<UserSchema>();
             this.UsersPeoples = new HashSet<UsersPeople>();
             this.EventActions = new HashSet<EventAction>();
-            this.Lists = new HashSet<List>();
         }
     
         public int UserID { get; set; }
@@ -46,7 +45,5 @@ namespace HomeApps
         public virtual ICollection<UsersPeople> UsersPeoples { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventAction> EventActions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<List> Lists { get; set; }
     }
 }

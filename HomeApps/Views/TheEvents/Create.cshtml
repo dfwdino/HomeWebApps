@@ -11,90 +11,89 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>TheEvent</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.DateOfEvent, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DateOfEvent, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DateOfEvent, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>TheEvent</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateOfEvent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateOfEvent, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DateOfEvent, "", new { @class = "text-danger" })
+            </div>
         </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
     </div>
 
-    @*<div class="form-group" style="display:none;">
-        @Html.LabelFor(model => model.DateofEventOffSet, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DateofEventOffSet, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DateofEventOffSet, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
-        </div>
+    <div id="EventActions">
+
     </div>
+
+    <label id="AddEvents" onclick="javascript:AddNewAction()">Add New Action</label>
+
+    <div id="SchemaAction" hidden>
+
+        
+            <div class="col-md-12"> 
+            @Html.Label("They Did", htmlAttributes: new { @class = "control-label" }): 
+            @Html.DropDownList("EventActions[X].GivingPersonID", (SelectList)ViewBag.People, htmlAttributes: new { @id = "EventActions[X].GivingPersonID", @class = "form-control" })
+            </div>
+        
+        <div class="row">
+            <div class="col-md-5"> </div>
+        </div>
+
+        <div class="BottomPadding20"></div>
+
+        <div class="form-group">
+
+            @Html.Label("Action Done", htmlAttributes: new { @class = "control-label col-md-5", @style = "padding-top:30px;padding-bottom:10px" })
+            <div class="col-md-10">
+                @foreach (var item in ViewBag.ActionsDone)
+                {
+                    HomeApps.Action action = item;
+                    <label>
+                        <span style="padding-right:10px">
+                            @Html.CheckBox("EventActions[X].ActionID", false, new { @id = "EventActions[X].ActionID", @class = "cb" + action.ActionID, @value = action.ActionID })
+                            @Html.Label(action.Name, new { @class = action.ActionID, @onclick = "myfunction(this)" })
+                        </span>
+                    </label>
+
+                }
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Label("To Them", htmlAttributes: new { @class = "control-label" }):
+                @Html.DropDownList("EventActions[X].ReveivingPersonID", (SelectList)ViewBag.People, htmlAttributes: new { @id = "EventActions[X].ReveivingPersonID", @class = "form-control" })
+            </div>
+        </div>
+        
+        <div style="padding-bottom:40px"></div>
+    </div>   
     
-</div>
-
-
-<div id="EventActions">
-
-</div>
-
-<input class="btn btn-secondary" type="button" id="AddEvents" value="Add New Action" onclick="javascript:AddNewAction()">
-
-<div id="SchemaAction" hidden>
-
-    <div class="row">
-        <div class="col-md-5"> @Html.Label("Giving Person", htmlAttributes: new { @class = "control-label" })</div>
-        <div class="col-md-5">  @Html.Label("Reveliving Person", htmlAttributes: new { @class = "control-label" })</div>
-    </div>
-    <div class="row">
-        <div class="col-md-5"> @Html.DropDownList("EventActions[X].GivingPersonID", (SelectList)ViewBag.People, htmlAttributes: new {@id =  "EventActions[X].GivingPersonID", @class = "form-control" })</div>
-        <div class="col-md-5"> @Html.DropDownList("EventActions[X].ReveivingPersonID", (SelectList)ViewBag.People, htmlAttributes: new {@id = "EventActions[X].ReveivingPersonID", @class = "form-control" })</div>
-    </div>
-
-
-
+    <hr />
+    
+   
     <div class="form-group">
-    </div>
-    <div class="form-group">
-        @Html.Label("Action Done", htmlAttributes: new { @class = "control-label col-md-5" })
-        <div class="col-md-10">
-            @foreach (var item in ViewBag.ActionsDone)
-            {
-                HomeApps.Action action = item;
-
-                <span style="padding-right:10px">@Html.CheckBox("EventActions[X].ActionID", false, new { @id = "EventActions[X].ActionID", @value = action.ActionID }) @Html.Label(action.Name)</span>
-
-            }
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create Event" class="btn btn-primary" /> -   @Html.ActionLink("Back to List", "Index")
         </div>
     </div>
-    <div class="form-group">
-       
-        <div class="col-md-10">
-
-        </div>
-    </div>
-
-</div>
-
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Create Event" class="btn btn-default" />
-    </div>
-</div>
 
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 
@@ -105,14 +104,22 @@
         AddNewAction();
     });
 
-
     function AddNewAction() {
-        var data = $("#SchemaAction").html().replaceAll('X',CurrentActionGroup);
+        var data = $("#SchemaAction").html().replaceAll('X', CurrentActionGroup);
         var man = $("#EventActions");
         man.append(data);
 
         CurrentActionGroup++;
     }
 
+    function myfunction(id) {
+        var IDvalue = $(id).attr("class");
+        if ($('.cb' + IDvalue).prop('checked')) {
+            $('.cb' + IDvalue).prop('checked', false);
+        }
+        else {
+            $('.cb' + IDvalue).prop('checked', true);
+        }
+    }
 
 </script>
