@@ -24,14 +24,12 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.Label(item.DateOfEvent.ToShortDateString())
+            @Html.ActionLink(item.DateOfEvent.ToShortDateString(), "Details", new { id = item.EventID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EventName)
+            @Html.ActionLink(item.EventName, "Edit", new { id = item.EventID })
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EventID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EventID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.EventID })
         </td>
     </tr>
