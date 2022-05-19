@@ -84,7 +84,7 @@ namespace HomeApps.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Stores.Add(store);
+                db.stor.Add(store);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

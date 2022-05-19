@@ -64,8 +64,8 @@
                     HomeApps.Action action = item;
                     <label>
                         <span style="padding-right:10px">
-                            @Html.CheckBox("EventActions[X].ActionID", false, new { @id = "EventActions[X].ActionID", @class = "cb" + action.ActionID, @value = action.ActionID })
-                            @Html.Label(action.Name, new { @class = action.ActionID, @onclick = "myfunction(this)" })
+                            @Html.CheckBox("EventActions[X].ActionID", false, new { @id = "EventActions[X].ActionID", @class = "cb" + action.ActionID + "Y", @value = action.ActionID })
+                            @Html.Label(action.Name, new { @class = action.ActionID + "Y", @onclick = "myfunction(this)" })
                         </span>
                     </label>
 
@@ -99,17 +99,19 @@
 
 <script>
     var CurrentActionGroup = 0;
-
+    var NumberOrActionList = 1;
+    
     $(function () {
         AddNewAction();
     });
 
     function AddNewAction() {
-        var data = $("#SchemaAction").html().replaceAll('X', CurrentActionGroup);
+        var data = $("#SchemaAction").html().replaceAll('X', CurrentActionGroup).replaceAll('Y', NumberOrActionList);
         var man = $("#EventActions");
         man.append(data);
 
         CurrentActionGroup++;
+        NumberOrActionList = NumberOrActionList + 1;
     }
 
     function myfunction(id) {

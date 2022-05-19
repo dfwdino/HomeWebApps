@@ -222,6 +222,7 @@
     <Content Include="Views\ModelPeoples\Details.cshtml" />
     <Content Include="Views\ModelPeoples\Edit.cshtml" />
     <Content Include="Views\ModelPeoples\Index.cshtml" />
+    <Content Include="Views\Actions\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -246,7 +247,6 @@
     <Compile Include="Controllers\ModelPeoplesController.cs" />
     <Compile Include="Controllers\SocialSitesController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
-    <Compile Include="Controllers\StoresController.cs" />
     <Compile Include="Controllers\TheEventsController.cs" />
     <Compile Include="Controllers\UsersPeoplesController.cs" />
     <Compile Include="CreateModifyLog.cs">
@@ -300,6 +300,7 @@
     <Compile Include="CameraModels\UserViewModel.cs" />
     <Compile Include="Model\EventCreateModel.cs" />
     <Compile Include="Model\ModelPeopleModel.cs" />
+    <Compile Include="Model\TheEventAction.cs" />
     <Compile Include="Model\TheEventDetails.cs" />
     <Compile Include="Model\TheEventCreate.cs" />
     <Compile Include="MyExceptionHandler.cs" />
@@ -386,12 +387,10 @@
     <Content Include="Views\Actions\Create.cshtml" />
     <Content Include="Views\Actions\Delete.cshtml" />
     <Content Include="Views\Actions\Details.cshtml" />
-    <Content Include="Views\Actions\Edit.cshtml" />
     <Content Include="Views\Actions\Index.cshtml" />
     <Content Include="Views\UsersPeoples\Create.cshtml" />
     <Content Include="Views\UsersPeoples\Delete.cshtml" />
     <Content Include="Views\UsersPeoples\Details.cshtml" />
-    <Content Include="Views\UsersPeoples\Edit.cshtml" />
     <Content Include="Views\UsersPeoples\Index.cshtml" />
     <Content Include="Views\TheEvents\Create.cshtml" />
     <Content Include="Views\TheEvents\Delete.cshtml" />

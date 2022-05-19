@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HomeApps;
+using HomeApps.Model;
 
 namespace HomeApps.Controllers
 {
@@ -70,31 +71,40 @@ namespace HomeApps.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Action action = db.Actions.Find(id);
+
+            TheEventAction theEventAction = new TheEventAction {ActionID = action.ActionID, ActionName = action.Name };
+
             if (action == null)
             {
                 return HttpNotFound();
             }
 
             ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
-            return View(action);
+            return View(theEventAction);
         }
 
         // POST: Actions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        
         [ValidateAntiForgeryToken]
-        public ActionResult Edt(Action action)
+        [HttpPost]
+        public ActionResult Edit(TheEventAction theeventaction)
         {
             if (ModelState.IsValid)
             {
+                Action action = db.Actions.Find(theeventaction.ActionID);
+
+                action.Name = theeventaction.ActionName;
+
                 db.Entry(action).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
-            return View(action);
+            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", theeventaction.ActionID);
+            return View(theeventaction);
         }
 
         // GET: Actions/Delete/5
