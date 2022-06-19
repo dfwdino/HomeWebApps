@@ -12,6 +12,7 @@ using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
+    [Access]
     public class TheEventsController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();

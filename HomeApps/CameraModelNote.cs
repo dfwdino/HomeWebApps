@@ -12,16 +12,13 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class ModelSocialSite
+    public partial class CameraModelNote
     {
-        public int ModelSocialID { get; set; }
-        public int SocialSiteID { get; set; }
-        public int ModelID { get; set; }
-        public bool Deleted { get; set; }
-        public Nullable<int> ModfiyID { get; set; }
-        public string URL { get; set; }
+        public int NotesID { get; set; }
+        public System.DateTime DateOfNotes { get; set; }
+        public int CameraModelID { get; set; }
+        public string Notes { get; set; }
     
-        public virtual ModelPeople ModelPeople { get; set; }
-        public virtual SocialSite SocialSite { get; set; }
+        public virtual CameraModel CameraModel { get; set; }
     }
 }

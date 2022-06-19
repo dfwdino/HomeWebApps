@@ -209,17 +209,19 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MilesID,Deleted,ModfiyID,AutoID,GasDate,TotalGallons,TotalPrice,TotalMilesDriven,EngineRunTime,StationID")] Mile mile)
+        public ActionResult Edit(Mile mile)
         {
+            
             if (ModelState.IsValid)
             {
                 db.Entry(mile).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Miles", new { id = mile.AutoID });
+                
             }
             ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID).Append(new SelectListItem() { Text = "Select Station", Selected = true, Value = "0" });
             ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", mile.ModfiyID);
-            return View(mile);
+            return RedirectToAction("Index");
         }
 
         // GET: Miles/Delete/5

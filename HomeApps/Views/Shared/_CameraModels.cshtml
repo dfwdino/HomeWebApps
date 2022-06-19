@@ -1,10 +1,16 @@
 ﻿<!DOCTYPE html>
+@using HomeApps.Models;
+@{
+
+
+    UserViewModel currentuser = this.Session["_CurrentUser"] as UserViewModel;
+}
+
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mate Tracker</title>
-
+    <title>Welcome to Shans's Home Apps</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -18,33 +24,37 @@
 
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="/">Home Apps</a>
+        <a class="navbar-brand" href="#">Home Apps</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
+            @if (this.Session["_CurrentUser"] != null)
+            {
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    @Html.ActionLink("Actions", "Index", "Actions", null, new { @class = "nav-link" })
+                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("CameraModels").Equals(true))
+                    {
+                        @Html.ActionLink("Gender Types", "GetGenderTypes", "CameraModels", null, new { @class = "nav-link" })
+                    }
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("People", "Index", "UsersPeoples", null, new { @class = "nav-link" })
+                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("CameraModels").Equals(true))
+                    {
+                        @Html.ActionLink("WebSite", "GetWebSite", "CameraModels", null, new { @class = "nav-link" })
+                    }
                 </li>
-                @*<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>*@
+                <li class="nav-item">
+                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("CameraModels").Equals(true))
+                    {
+                        @Html.ActionLink("Models", "Index", "CameraModels", null, new { @class = "nav-link" })
+                    }
+                </li>
+
             </ul>
 
-
-        </div>
+            }
     </nav>
 
 
@@ -69,3 +79,4 @@
         padding-top: 15px;
     }
 </style>
+

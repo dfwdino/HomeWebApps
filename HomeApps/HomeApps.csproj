@@ -217,12 +217,25 @@
     <Content Include="Unity.Mvc4.README.txt" />
     <Content Include="Views\Stores\Index.cshtml" />
     <Content Include="Web.config" />
-    <Content Include="Views\ModelPeoples\Create.cshtml" />
-    <Content Include="Views\ModelPeoples\Delete.cshtml" />
-    <Content Include="Views\ModelPeoples\Details.cshtml" />
-    <Content Include="Views\ModelPeoples\Edit.cshtml" />
-    <Content Include="Views\ModelPeoples\Index.cshtml" />
     <Content Include="Views\Actions\Edit.cshtml" />
+    <Content Include="Views\WeightTrackers\Create.cshtml" />
+    <Content Include="Views\WeightTrackers\Delete.cshtml" />
+    <Content Include="Views\WeightTrackers\Details.cshtml" />
+    <Content Include="Views\WeightTrackers\Edit.cshtml" />
+    <Content Include="Views\WeightTrackers\Index.cshtml" />
+    <Content Include="Views\Admin\AddSchema.cshtml" />
+    <Content Include="Views\CameraModels\Create.cshtml" />
+    <Content Include="Views\CameraModels\Delete.cshtml" />
+    <Content Include="Views\CameraModels\Details.cshtml" />
+    <Content Include="Views\CameraModels\Edit.cshtml" />
+    <Content Include="Views\CameraModels\Index.cshtml" />
+    <Content Include="Views\CameraModels\CreateGenderType.cshtml" />
+    <Content Include="Views\CameraModels\GetGenderTypes.cshtml" />
+    <Content Include="Views\CameraModels\GetWebSites.cshtml" />
+    <Content Include="Views\CameraModels\CreateWebSite.cshtml" />
+    <Content Include="Views\Shared\_GroceryLayout.cshtml" />
+    <Content Include="Views\CameraModels\CreateModelNotes.cshtml" />
+    <Content Include="Views\CameraModels\GetModelNotes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -239,16 +252,26 @@
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="CameraModel.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CameraModelNote.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\CameraModelsController.cs" />
+    <Compile Include="Model\EventCreateModel.cs" />
+    <Compile Include="Model\MilesAddModel.cs" />
+    <Compile Include="Model\MilesViewModel.cs" />
+    <Compile Include="Model\UserViewModel.cs" />
     <Compile Include="Controllers\ActionsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AutosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MilesController.cs" />
-    <Compile Include="Controllers\ModelPeoplesController.cs" />
-    <Compile Include="Controllers\SocialSitesController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Controllers\TheEventsController.cs" />
     <Compile Include="Controllers\UsersPeoplesController.cs" />
+    <Compile Include="Controllers\WeightTrackersController.cs" />
     <Compile Include="CreateModifyLog.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
@@ -256,6 +279,9 @@
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="Gender.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GenderType.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -285,33 +311,19 @@
     <Compile Include="Mile.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelImage.cs">
+    <Compile Include="ModelWebsite.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelPeople.cs">
-      <DependentUpon>HomeApps.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModelSocialSite.cs">
-      <DependentUpon>HomeApps.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CameraModels\AddModel.cs" />
-    <Compile Include="CameraModels\MilesAddModel.cs" />
-    <Compile Include="CameraModels\MilesViewModel.cs" />
-    <Compile Include="CameraModels\UserViewModel.cs" />
-    <Compile Include="Model\EventCreateModel.cs" />
-    <Compile Include="Model\ModelPeopleModel.cs" />
     <Compile Include="Model\TheEventAction.cs" />
     <Compile Include="Model\TheEventDetails.cs" />
     <Compile Include="Model\TheEventCreate.cs" />
+    <Compile Include="Model\WeightTrackerViewModel.cs" />
     <Compile Include="MyExceptionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="Schema.cs">
-      <DependentUpon>HomeApps.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SocialSite.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="Station.cs">
@@ -333,6 +345,12 @@
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="UsersPeople.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Website.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WeightTracker.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -373,7 +391,6 @@
     <Content Include="Views\Stations\Edit.cshtml" />
     <Content Include="Views\Stations\Index.cshtml" />
     <Content Include="Views\Shared\_GasLayout.cshtml" />
-    <Content Include="Views\Admin\AddSchema.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\SomeException.cshtml" />
     <Content Include="Views\SocialSites\Create.cshtml" />
@@ -404,7 +421,7 @@
     <Content Include="Views\Stores\Details.cshtml" />
     <Content Include="Views\Stores\Edit.cshtml" />
     <Content Include="Views\Stores\Index-WS.cshtml" />
-    <Content Include="Views\Shared\_GroceryLayout.cshtml" />
+    <Content Include="Views\Shared\_CameraModels.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

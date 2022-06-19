@@ -1,8 +1,8 @@
-﻿@model IEnumerable<HomeApps.Model>
+﻿@model IEnumerable<HomeApps.CameraModel>
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/PhotoCRM.cshtml";
+    Layout = "~/Views/Shared/_CameraModels.cshtml";
 }
 
 <h2>Index</h2>
@@ -10,43 +10,49 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CameraModelName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AllNudes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AllBonjour)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AllTFP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GenderType.GenderType1)
+        </th>
+        <th></th>
+    </tr>
 
-
-<table>
- 
-    @foreach (var item in Model)
-    {
-
-        <tr>
-            <th style="padding-right:10px;" ><img style="width:150px;height:150px;" src="~/uploads/@item.FileName" /></th>
-            <th>
-                @Html.ActionLink($"{item.FirstName} {item.LastName}", "edit", "CameraModels", new { id=item.ModelID},null)
-                 <br />@item.Gender<br />@item.PhoneNumber<br />@item.Email
-            <span class="NormalText">Nudes:</span> @item.AllNudes <br /><span class="NormalText">Boudoir:</span> @item.AllBoudoir <br /><span class="NormalText">Erotica:</span>
-                @item.AllErotica
-</th>
-            <th>
-                @foreach (var mss in item.ModelSocialSites)
-                {
-                    <a target="_blank" href="@mss.URL">@mss.SocialSite.SocalSiteName</a>
-                }
-            </th>
-        </tr>
-        <tr>
-            <td colspan="8">@Html.DisplayFor(modelItem => item.Notes)</td>
-        </tr>
-        <tr class="BlankRow"></tr>
-    }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CameraModelName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AllNudes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AllBonjour)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AllTFP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GenderType.GenderType1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CameraModelID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CameraModelID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CameraModelID })
+        </td>
+    </tr>
+}
 
 </table>
-
-
-<style>
-    .NormalText{
-        font-weight:300;
-    }
-
-    .BlankRow {
-       height:15px;
-    }
-</style>

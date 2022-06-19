@@ -69,6 +69,8 @@
     <Folder Include="ShanesGlassEyeCRM\Tables\" />
     <Folder Include="MateTracker\" />
     <Folder Include="MateTracker\Tables\" />
+    <Folder Include="Personal\" />
+    <Folder Include="Personal\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Template.sql" />
@@ -87,14 +89,11 @@
     <Build Include="Gas\Tables\Types_2.sql" />
     <Build Include="Gas\Tables\Autos_2.sql" />
     <Build Include="ShanesGlassEyeCRM\Tables\ModelImages_1.sql" />
-    <Build Include="ShanesGlassEyeCRM\Tables\ModelSocialSites_1.sql" />
-    <Build Include="ShanesGlassEyeCRM\Tables\SocialSites_1.sql" />
     <Build Include="Security\NT AUTHORITY_NETWORK SERVICE_2.sql" />
     <Build Include="Security\NT AUTHORITY_Local account_2.sql" />
     <Build Include="Security\RoleMemberships_3.sql" />
     <Build Include="Security\RoleMemberships_4.sql" />
     <Build Include="Security\ShanesGlassEyeCRM_2.sql" />
-    <Build Include="Security\Game_2.sql" />
     <Build Include="dbo\Tables\__EFMigrationsHistory.sql" />
     <Build Include="MateTracker\Tables\Actions.sql" />
     <Build Include="MateTracker\Tables\EventActions.sql" />
@@ -104,9 +103,15 @@
     <Build Include="MateTracker\Tables\Genders.sql" />
     <Build Include="ShanesGlassEyeCRM\Tables\ModelPeople.sql" />
     <Build Include="Security\Groceries.sql" />
+    <Build Include="ShanesGlassEyeCRM\Tables\Websites.sql" />
+    <Build Include="ShanesGlassEyeCRM\Tables\ModelWebsites.sql" />
+    <Build Include="ShanesGlassEyeCRM\Tables\GenderTypes.sql" />
+    <Build Include="ShanesGlassEyeCRM\Tables\CameraModels.sql" />
+    <Build Include="Personal\Tables\WeightTracker.sql" />
+    <Build Include="Security\Personal.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TouchMeToProjectHomeApp.scmp" />
-    <None Include="AgainToProject.scmp" />
+    <None Include="AgainAzuret.scmp" />
   </ItemGroup>
 </Project>

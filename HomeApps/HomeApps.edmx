@@ -151,51 +151,58 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Notes" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="ModelImages">
+        <EntityType Name="WeightTracker">
           <Key>
-            <PropertyRef Name="ModelImageID" />
+            <PropertyRef Name="WeightID" />
           </Key>
-          <Property Name="ModelImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ImageName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ImageFile" Type="image" Nullable="false" />
-          <Property Name="ModelPersonID" Type="int" />
+          <Property Name="WeightID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WeightAmout" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="WeightData" Type="datetime" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Deleted" Type="bit" />
         </EntityType>
-        <EntityType Name="ModelPeople">
+        <EntityType Name="CameraModelNotes">
           <Key>
-            <PropertyRef Name="ModelPersonID" />
+            <PropertyRef Name="NotesID" />
           </Key>
-          <Property Name="ModelPersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateOfNotes" Type="datetime" Nullable="false" />
+          <Property Name="CameraModelID" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CameraModels">
+          <Key>
+            <PropertyRef Name="CameraModelID" />
+          </Key>
+          <Property Name="CameraModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CameraModelName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CameraModelGender" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
-          <Property Name="ModfiyID" Type="int" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="AllNudes" Type="bit" />
-          <Property Name="AllBoudoir" Type="bit" />
-          <Property Name="AllErotica" Type="bit" />
-          <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="25" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="FileName" Type="nvarchar" MaxLength="255" />
+          <Property Name="AllBonjour" Type="bit" />
+          <Property Name="AllTFP" Type="bit" />
         </EntityType>
-        <EntityType Name="ModelSocialSites">
+        <EntityType Name="GenderTypes">
           <Key>
-            <PropertyRef Name="ModelSocialID" />
+            <PropertyRef Name="GenderID" />
           </Key>
-          <Property Name="ModelSocialID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SocialSiteID" Type="int" Nullable="false" />
-          <Property Name="ModelID" Type="int" Nullable="false" />
-          <Property Name="Deleted" Type="bit" Nullable="false" />
-          <Property Name="ModfiyID" Type="int" />
-          <Property Name="URL" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GenderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GenderType" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="SocialSites">
+        <EntityType Name="ModelWebsites">
           <Key>
-            <PropertyRef Name="SocalTypeID" />
+            <PropertyRef Name="ModelWebsitesID" />
           </Key>
-          <Property Name="SocalTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SocalSiteName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModelWebsitesID" Type="int" Nullable="false" />
+          <Property Name="WebsiteID" Type="int" Nullable="false" />
+          <Property Name="CameraModelID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Websites">
+          <Key>
+            <PropertyRef Name="WebsitesID" />
+          </Key>
+          <Property Name="WebsitesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WebsiteName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRoles">
           <Key>
@@ -238,6 +245,30 @@
             </Principal>
             <Dependent Role="Autos">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CameraModelNotes_CameraModels">
+          <End Role="CameraModels" Type="Self.CameraModels" Multiplicity="1" />
+          <End Role="CameraModelNotes" Type="Self.CameraModelNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CameraModels">
+              <PropertyRef Name="CameraModelID" />
+            </Principal>
+            <Dependent Role="CameraModelNotes">
+              <PropertyRef Name="CameraModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CameraModels_GenderTypes">
+          <End Role="GenderTypes" Type="Self.GenderTypes" Multiplicity="1" />
+          <End Role="CameraModels" Type="Self.CameraModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GenderTypes">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="CameraModels">
+              <PropertyRef Name="CameraModelGender" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -349,39 +380,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ModelImages_Models">
-          <End Role="ModelPeople" Type="Self.ModelPeople" Multiplicity="0..1" />
-          <End Role="ModelImages" Type="Self.ModelImages" Multiplicity="*" />
+        <Association Name="FK_ModelWebsites_CameraModels">
+          <End Role="CameraModels" Type="Self.CameraModels" Multiplicity="1" />
+          <End Role="ModelWebsites" Type="Self.ModelWebsites" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ModelPeople">
-              <PropertyRef Name="ModelPersonID" />
+            <Principal Role="CameraModels">
+              <PropertyRef Name="CameraModelID" />
             </Principal>
-            <Dependent Role="ModelImages">
-              <PropertyRef Name="ModelPersonID" />
+            <Dependent Role="ModelWebsites">
+              <PropertyRef Name="CameraModelID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ModelSocialSites_Models">
-          <End Role="ModelPeople" Type="Self.ModelPeople" Multiplicity="1" />
-          <End Role="ModelSocialSites" Type="Self.ModelSocialSites" Multiplicity="*" />
+        <Association Name="FK_ModelWebsites_Websites">
+          <End Role="Websites" Type="Self.Websites" Multiplicity="1" />
+          <End Role="ModelWebsites" Type="Self.ModelWebsites" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ModelPeople">
-              <PropertyRef Name="ModelPersonID" />
+            <Principal Role="Websites">
+              <PropertyRef Name="WebsitesID" />
             </Principal>
-            <Dependent Role="ModelSocialSites">
-              <PropertyRef Name="ModelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ModelSocialSites_SocalSites">
-          <End Role="SocialSites" Type="Self.SocialSites" Multiplicity="1" />
-          <End Role="ModelSocialSites" Type="Self.ModelSocialSites" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SocialSites">
-              <PropertyRef Name="SocalTypeID" />
-            </Principal>
-            <Dependent Role="ModelSocialSites">
-              <PropertyRef Name="SocialSiteID" />
+            <Dependent Role="ModelWebsites">
+              <PropertyRef Name="WebsiteID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -493,6 +512,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WeightTracker_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="WeightTracker" Type="Self.WeightTracker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WeightTracker">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HomeAppsModelStoreContainer">
           <EntitySet Name="Autos" EntityType="Self.Autos" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Miles" EntityType="Self.Miles" Schema="Gas" store:Type="Tables" />
@@ -508,10 +539,12 @@
           <EntitySet Name="Genders" EntityType="Self.Genders" Schema="MateTracker" store:Type="Tables" />
           <EntitySet Name="TheEvent" EntityType="Self.TheEvent" Schema="MateTracker" store:Type="Tables" />
           <EntitySet Name="UsersPeople" EntityType="Self.UsersPeople" Schema="MateTracker" store:Type="Tables" />
-          <EntitySet Name="ModelImages" EntityType="Self.ModelImages" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
-          <EntitySet Name="ModelPeople" EntityType="Self.ModelPeople" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
-          <EntitySet Name="ModelSocialSites" EntityType="Self.ModelSocialSites" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
-          <EntitySet Name="SocialSites" EntityType="Self.SocialSites" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
+          <EntitySet Name="WeightTracker" EntityType="Self.WeightTracker" Schema="Personal" store:Type="Tables" />
+          <EntitySet Name="CameraModelNotes" EntityType="Self.CameraModelNotes" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
+          <EntitySet Name="CameraModels" EntityType="Self.CameraModels" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
+          <EntitySet Name="GenderTypes" EntityType="Self.GenderTypes" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
+          <EntitySet Name="ModelWebsites" EntityType="Self.ModelWebsites" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
+          <EntitySet Name="Websites" EntityType="Self.Websites" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UserSchemas" EntityType="Self.UserSchemas" Schema="Users" store:Type="Tables" />
           <AssociationSet Name="FK_Auto_CreateModifyLog" Association="Self.FK_Auto_CreateModifyLog">
@@ -521,6 +554,14 @@
           <AssociationSet Name="FK_Auto_Users" Association="Self.FK_Auto_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Autos" EntitySet="Autos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CameraModelNotes_CameraModels" Association="Self.FK_CameraModelNotes_CameraModels">
+            <End Role="CameraModels" EntitySet="CameraModels" />
+            <End Role="CameraModelNotes" EntitySet="CameraModelNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CameraModels_GenderTypes" Association="Self.FK_CameraModels_GenderTypes">
+            <End Role="GenderTypes" EntitySet="GenderTypes" />
+            <End Role="CameraModels" EntitySet="CameraModels" />
           </AssociationSet>
           <AssociationSet Name="FK_EventActions_Actions" Association="Self.FK_EventActions_Actions">
             <End Role="Actions" EntitySet="Actions" />
@@ -558,17 +599,13 @@
             <End Role="Types" EntitySet="Types" />
             <End Role="Miles" EntitySet="Miles" />
           </AssociationSet>
-          <AssociationSet Name="FK_ModelImages_Models" Association="Self.FK_ModelImages_Models">
-            <End Role="ModelPeople" EntitySet="ModelPeople" />
-            <End Role="ModelImages" EntitySet="ModelImages" />
+          <AssociationSet Name="FK_ModelWebsites_CameraModels" Association="Self.FK_ModelWebsites_CameraModels">
+            <End Role="CameraModels" EntitySet="CameraModels" />
+            <End Role="ModelWebsites" EntitySet="ModelWebsites" />
           </AssociationSet>
-          <AssociationSet Name="FK_ModelSocialSites_Models" Association="Self.FK_ModelSocialSites_Models">
-            <End Role="ModelPeople" EntitySet="ModelPeople" />
-            <End Role="ModelSocialSites" EntitySet="ModelSocialSites" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ModelSocialSites_SocalSites" Association="Self.FK_ModelSocialSites_SocalSites">
-            <End Role="SocialSites" EntitySet="SocialSites" />
-            <End Role="ModelSocialSites" EntitySet="ModelSocialSites" />
+          <AssociationSet Name="FK_ModelWebsites_Websites" Association="Self.FK_ModelWebsites_Websites">
+            <End Role="Websites" EntitySet="Websites" />
+            <End Role="ModelWebsites" EntitySet="ModelWebsites" />
           </AssociationSet>
           <AssociationSet Name="FK_Roles_CreateModifyLog" Association="Self.FK_Roles_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
@@ -605,6 +642,10 @@
           <AssociationSet Name="FK_UsersPeople_Users" Association="Self.FK_UsersPeople_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersPeople" EntitySet="UsersPeople" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WeightTracker_Users" Association="Self.FK_WeightTracker_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="WeightTracker" EntitySet="WeightTracker" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -708,25 +749,35 @@
             <End Role="Schema" EntitySet="Schemas" />
             <End Role="UserSchema" EntitySet="UserSchemas" />
           </AssociationSet>
-          <EntitySet Name="ModelImages" EntityType="HomeAppsModel.ModelImage" />
-          <EntitySet Name="ModelPeoples" EntityType="HomeAppsModel.ModelPeople" />
-          <EntitySet Name="ModelSocialSites" EntityType="HomeAppsModel.ModelSocialSite" />
-          <EntitySet Name="SocialSites" EntityType="HomeAppsModel.SocialSite" />
-          <AssociationSet Name="FK_ModelImages_Models" Association="HomeAppsModel.FK_ModelImages_Models">
-            <End Role="ModelPeople" EntitySet="ModelPeoples" />
-            <End Role="ModelImage" EntitySet="ModelImages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ModelSocialSites_Models" Association="HomeAppsModel.FK_ModelSocialSites_Models">
-            <End Role="ModelPeople" EntitySet="ModelPeoples" />
-            <End Role="ModelSocialSite" EntitySet="ModelSocialSites" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ModelSocialSites_SocalSites" Association="HomeAppsModel.FK_ModelSocialSites_SocalSites">
-            <End Role="SocialSite" EntitySet="SocialSites" />
-            <End Role="ModelSocialSite" EntitySet="ModelSocialSites" />
-          </AssociationSet>
           <AssociationSet Name="FK_EventActions_TheEvent" Association="HomeAppsModel.FK_EventActions_TheEvent">
             <End Role="TheEvent" EntitySet="TheEvents" />
             <End Role="EventAction" EntitySet="EventActions" />
+          </AssociationSet>
+          <EntitySet Name="WeightTrackers" EntityType="HomeAppsModel.WeightTracker" />
+          <EntitySet Name="CameraModels" EntityType="HomeAppsModel.CameraModel" />
+          <EntitySet Name="GenderTypes" EntityType="HomeAppsModel.GenderType" />
+          <EntitySet Name="ModelWebsites" EntityType="HomeAppsModel.ModelWebsite" />
+          <EntitySet Name="Websites" EntityType="HomeAppsModel.Website" />
+          <AssociationSet Name="FK_WeightTracker_Users" Association="HomeAppsModel.FK_WeightTracker_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="WeightTracker" EntitySet="WeightTrackers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CameraModels_GenderTypes" Association="HomeAppsModel.FK_CameraModels_GenderTypes">
+            <End Role="GenderType" EntitySet="GenderTypes" />
+            <End Role="CameraModel" EntitySet="CameraModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModelWebsites_Websites" Association="HomeAppsModel.FK_ModelWebsites_Websites">
+            <End Role="Website" EntitySet="Websites" />
+            <End Role="ModelWebsite" EntitySet="ModelWebsites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModelWebsites_CameraModels" Association="HomeAppsModel.FK_ModelWebsites_CameraModels">
+            <End Role="CameraModel" EntitySet="CameraModels" />
+            <End Role="ModelWebsite" EntitySet="ModelWebsites" />
+          </AssociationSet>
+          <EntitySet Name="CameraModelNotes" EntityType="HomeAppsModel.CameraModelNote" />
+          <AssociationSet Name="FK_CameraModelNotes_CameraModels" Association="HomeAppsModel.FK_CameraModelNotes_CameraModels">
+            <End Role="CameraModel" EntitySet="CameraModels" />
+            <End Role="CameraModelNote" EntitySet="CameraModelNotes" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Auto">
@@ -840,6 +891,7 @@
           <NavigationProperty Name="UserSchemas" Relationship="HomeAppsModel.FK_UserSchemas_Users" FromRole="User" ToRole="UserSchema" />
           <NavigationProperty Name="UsersPeoples" Relationship="HomeAppsModel.FK_UsersPeople_Users" FromRole="User" ToRole="UsersPeople" />
           <NavigationProperty Name="EventActions" Relationship="HomeAppsModel.FK_EventActions_Users" FromRole="User" ToRole="EventAction" />
+          <NavigationProperty Name="WeightTrackers" Relationship="HomeAppsModel.FK_WeightTracker_Users" FromRole="User" ToRole="WeightTracker" />
           </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -1177,94 +1229,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ModelImage">
-          <Key>
-            <PropertyRef Name="ModelImageID" />
-          </Key>
-          <Property Name="ModelImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ImageName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ImageFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="ModelPersonID" Type="Int32" />
-          <NavigationProperty Name="ModelPeople" Relationship="HomeAppsModel.FK_ModelImages_Models" FromRole="ModelImage" ToRole="ModelPeople" />
-        </EntityType>
-        <EntityType Name="ModelPeople">
-          <Key>
-            <PropertyRef Name="ModelPersonID" />
-          </Key>
-          <Property Name="ModelPersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <Property Name="ModfiyID" Type="Int32" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AllNudes" Type="Boolean" />
-          <Property Name="AllBoudoir" Type="Boolean" />
-          <Property Name="AllErotica" Type="Boolean" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ModelImages" Relationship="HomeAppsModel.FK_ModelImages_Models" FromRole="ModelPeople" ToRole="ModelImage" />
-          <NavigationProperty Name="ModelSocialSites" Relationship="HomeAppsModel.FK_ModelSocialSites_Models" FromRole="ModelPeople" ToRole="ModelSocialSite" />
-        </EntityType>
-        <EntityType Name="ModelSocialSite">
-          <Key>
-            <PropertyRef Name="ModelSocialID" />
-          </Key>
-          <Property Name="ModelSocialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SocialSiteID" Type="Int32" Nullable="false" />
-          <Property Name="ModelID" Type="Int32" Nullable="false" />
-          <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <Property Name="ModfiyID" Type="Int32" />
-          <Property Name="URL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ModelPeople" Relationship="HomeAppsModel.FK_ModelSocialSites_Models" FromRole="ModelSocialSite" ToRole="ModelPeople" />
-          <NavigationProperty Name="SocialSite" Relationship="HomeAppsModel.FK_ModelSocialSites_SocalSites" FromRole="ModelSocialSite" ToRole="SocialSite" />
-        </EntityType>
-        <EntityType Name="SocialSite">
-          <Key>
-            <PropertyRef Name="SocalTypeID" />
-          </Key>
-          <Property Name="SocalTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SocalSiteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ModelSocialSites" Relationship="HomeAppsModel.FK_ModelSocialSites_SocalSites" FromRole="SocialSite" ToRole="ModelSocialSite" />
-        </EntityType>
-        <Association Name="FK_ModelImages_Models">
-          <End Type="HomeAppsModel.ModelPeople" Role="ModelPeople" Multiplicity="0..1" />
-          <End Type="HomeAppsModel.ModelImage" Role="ModelImage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ModelPeople">
-              <PropertyRef Name="ModelPersonID" />
-            </Principal>
-            <Dependent Role="ModelImage">
-              <PropertyRef Name="ModelPersonID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ModelSocialSites_Models">
-          <End Type="HomeAppsModel.ModelPeople" Role="ModelPeople" Multiplicity="1" />
-          <End Type="HomeAppsModel.ModelSocialSite" Role="ModelSocialSite" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ModelPeople">
-              <PropertyRef Name="ModelPersonID" />
-            </Principal>
-            <Dependent Role="ModelSocialSite">
-              <PropertyRef Name="ModelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ModelSocialSites_SocalSites">
-          <End Type="HomeAppsModel.SocialSite" Role="SocialSite" Multiplicity="1" />
-          <End Type="HomeAppsModel.ModelSocialSite" Role="ModelSocialSite" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SocialSite">
-              <PropertyRef Name="SocalTypeID" />
-            </Principal>
-            <Dependent Role="ModelSocialSite">
-              <PropertyRef Name="SocialSiteID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EventActions_TheEvent">
           <End Type="HomeAppsModel.TheEvent" Role="TheEvent" Multiplicity="1" />
           <End Type="HomeAppsModel.EventAction" Role="EventAction" Multiplicity="*" />
@@ -1274,6 +1238,128 @@
             </Principal>
             <Dependent Role="EventAction">
               <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WeightTracker">
+          <Key>
+            <PropertyRef Name="WeightID" />
+          </Key>
+          <Property Name="WeightID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WeightAmout" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="WeightData" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_WeightTracker_Users" FromRole="WeightTracker" ToRole="User" />
+        </EntityType>
+        <EntityType Name="CameraModel">
+          <Key>
+            <PropertyRef Name="CameraModelID" />
+          </Key>
+          <Property Name="CameraModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CameraModelName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CameraModelGender" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="AllNudes" Type="Boolean" />
+          <Property Name="AllBonjour" Type="Boolean" />
+          <Property Name="AllTFP" Type="Boolean" />
+          <NavigationProperty Name="GenderType" Relationship="HomeAppsModel.FK_CameraModels_GenderTypes" FromRole="CameraModel" ToRole="GenderType" />
+          <NavigationProperty Name="ModelWebsites" Relationship="HomeAppsModel.FK_ModelWebsites_CameraModels" FromRole="CameraModel" ToRole="ModelWebsite" />
+          <NavigationProperty Name="CameraModelNotes" Relationship="HomeAppsModel.FK_CameraModelNotes_CameraModels" FromRole="CameraModel" ToRole="CameraModelNote" />
+        </EntityType>
+        <EntityType Name="GenderType">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <Property Name="GenderType1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CameraModels" Relationship="HomeAppsModel.FK_CameraModels_GenderTypes" FromRole="GenderType" ToRole="CameraModel" />
+        </EntityType>
+        <EntityType Name="ModelWebsite">
+          <Key>
+            <PropertyRef Name="ModelWebsitesID" />
+          </Key>
+          <Property Name="ModelWebsitesID" Type="Int32" Nullable="false" />
+          <Property Name="WebsiteID" Type="Int32" Nullable="false" />
+          <Property Name="CameraModelID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Website" Relationship="HomeAppsModel.FK_ModelWebsites_Websites" FromRole="ModelWebsite" ToRole="Website" />
+          <NavigationProperty Name="CameraModel" Relationship="HomeAppsModel.FK_ModelWebsites_CameraModels" FromRole="ModelWebsite" ToRole="CameraModel" />
+        </EntityType>
+        <EntityType Name="Website">
+          <Key>
+            <PropertyRef Name="WebsitesID" />
+          </Key>
+          <Property Name="WebsitesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WebsiteName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ModelWebsites" Relationship="HomeAppsModel.FK_ModelWebsites_Websites" FromRole="Website" ToRole="ModelWebsite" />
+        </EntityType>
+        <Association Name="FK_WeightTracker_Users">
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HomeAppsModel.WeightTracker" Role="WeightTracker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WeightTracker">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CameraModels_GenderTypes">
+          <End Type="HomeAppsModel.GenderType" Role="GenderType" Multiplicity="1" />
+          <End Type="HomeAppsModel.CameraModel" Role="CameraModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GenderType">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="CameraModel">
+              <PropertyRef Name="CameraModelGender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModelWebsites_Websites">
+          <End Type="HomeAppsModel.Website" Role="Website" Multiplicity="1" />
+          <End Type="HomeAppsModel.ModelWebsite" Role="ModelWebsite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Website">
+              <PropertyRef Name="WebsitesID" />
+            </Principal>
+            <Dependent Role="ModelWebsite">
+              <PropertyRef Name="WebsiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModelWebsites_CameraModels">
+          <End Type="HomeAppsModel.CameraModel" Role="CameraModel" Multiplicity="1" />
+          <End Type="HomeAppsModel.ModelWebsite" Role="ModelWebsite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CameraModel">
+              <PropertyRef Name="CameraModelID" />
+            </Principal>
+            <Dependent Role="ModelWebsite">
+              <PropertyRef Name="CameraModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CameraModelNote">
+          <Key>
+            <PropertyRef Name="NotesID" />
+          </Key>
+          <Property Name="NotesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateOfNotes" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CameraModelID" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CameraModel" Relationship="HomeAppsModel.FK_CameraModelNotes_CameraModels" FromRole="CameraModelNote" ToRole="CameraModel" />
+        </EntityType>
+        <Association Name="FK_CameraModelNotes_CameraModels">
+          <End Type="HomeAppsModel.CameraModel" Role="CameraModel" Multiplicity="1" />
+          <End Type="HomeAppsModel.CameraModelNote" Role="CameraModelNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CameraModel">
+              <PropertyRef Name="CameraModelID" />
+            </Principal>
+            <Dependent Role="CameraModelNote">
+              <PropertyRef Name="CameraModelID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1465,53 +1551,62 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ModelImages">
-            <EntityTypeMapping TypeName="HomeAppsModel.ModelImage">
-              <MappingFragment StoreEntitySet="ModelImages">
-                <ScalarProperty Name="ModelPersonID" ColumnName="ModelPersonID" />
-                <ScalarProperty Name="ImageFile" ColumnName="ImageFile" />
-                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ModelImageID" ColumnName="ModelImageID" />
+          <EntitySetMapping Name="WeightTrackers">
+            <EntityTypeMapping TypeName="HomeAppsModel.WeightTracker">
+              <MappingFragment StoreEntitySet="WeightTracker">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="WeightData" ColumnName="WeightData" />
+                <ScalarProperty Name="WeightAmout" ColumnName="WeightAmout" />
+                <ScalarProperty Name="WeightID" ColumnName="WeightID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ModelPeoples">
-            <EntityTypeMapping TypeName="HomeAppsModel.ModelPeople">
-              <MappingFragment StoreEntitySet="ModelPeople">
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="AllErotica" ColumnName="AllErotica" />
-                <ScalarProperty Name="AllBoudoir" ColumnName="AllBoudoir" />
+          <EntitySetMapping Name="CameraModels">
+            <EntityTypeMapping TypeName="HomeAppsModel.CameraModel">
+              <MappingFragment StoreEntitySet="CameraModels">
+                <ScalarProperty Name="AllTFP" ColumnName="AllTFP" />
+                <ScalarProperty Name="AllBonjour" ColumnName="AllBonjour" />
                 <ScalarProperty Name="AllNudes" ColumnName="AllNudes" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="ModelPersonID" ColumnName="ModelPersonID" />
+                <ScalarProperty Name="CameraModelGender" ColumnName="CameraModelGender" />
+                <ScalarProperty Name="CameraModelName" ColumnName="CameraModelName" />
+                <ScalarProperty Name="CameraModelID" ColumnName="CameraModelID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ModelSocialSites">
-            <EntityTypeMapping TypeName="HomeAppsModel.ModelSocialSite">
-              <MappingFragment StoreEntitySet="ModelSocialSites">
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="ModfiyID" ColumnName="ModfiyID" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
-                <ScalarProperty Name="SocialSiteID" ColumnName="SocialSiteID" />
-                <ScalarProperty Name="ModelSocialID" ColumnName="ModelSocialID" />
+          <EntitySetMapping Name="GenderTypes">
+            <EntityTypeMapping TypeName="HomeAppsModel.GenderType">
+              <MappingFragment StoreEntitySet="GenderTypes">
+                <ScalarProperty Name="GenderType1" ColumnName="GenderType" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SocialSites">
-            <EntityTypeMapping TypeName="HomeAppsModel.SocialSite">
-              <MappingFragment StoreEntitySet="SocialSites">
-                <ScalarProperty Name="SocalSiteName" ColumnName="SocalSiteName" />
-                <ScalarProperty Name="SocalTypeID" ColumnName="SocalTypeID" />
+          <EntitySetMapping Name="ModelWebsites">
+            <EntityTypeMapping TypeName="HomeAppsModel.ModelWebsite">
+              <MappingFragment StoreEntitySet="ModelWebsites">
+                <ScalarProperty Name="CameraModelID" ColumnName="CameraModelID" />
+                <ScalarProperty Name="WebsiteID" ColumnName="WebsiteID" />
+                <ScalarProperty Name="ModelWebsitesID" ColumnName="ModelWebsitesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Websites">
+            <EntityTypeMapping TypeName="HomeAppsModel.Website">
+              <MappingFragment StoreEntitySet="Websites">
+                <ScalarProperty Name="WebsiteName" ColumnName="WebsiteName" />
+                <ScalarProperty Name="WebsitesID" ColumnName="WebsitesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CameraModelNotes">
+            <EntityTypeMapping TypeName="HomeAppsModel.CameraModelNote">
+              <MappingFragment StoreEntitySet="CameraModelNotes">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="CameraModelID" ColumnName="CameraModelID" />
+                <ScalarProperty Name="DateOfNotes" ColumnName="DateOfNotes" />
+                <ScalarProperty Name="NotesID" ColumnName="NotesID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

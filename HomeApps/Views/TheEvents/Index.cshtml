@@ -16,23 +16,30 @@
             @Html.Label("Date")
         </th>
         <th>
-            @Html.Label("Title")
+            @Html.Label("Title") - People
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
+    {
+        List<string> people = item.EventActions.GroupBy(m => m.UsersPeople.PersonName).Select(m => m.Key).ToList();
+        people.AddRange(item.EventActions.GroupBy(m => m.UsersPeople1.PersonName).Select(m => m.Key).ToList());
+
+
+
     <tr>
         <td>
             @Html.ActionLink(item.DateOfEvent.ToShortDateString(), "Details", new { id = item.EventID })
         </td>
         <td>
-            @Html.ActionLink(item.EventName, "Edit", new { id = item.EventID })
+            @Html.ActionLink(item.EventName, "Edit", new { id = item.EventID }) -  @string.Join(",", people.Distinct())
         </td>
         <td>
             @Html.ActionLink("Delete", "Delete", new { id=item.EventID })
         </td>
-    </tr>
+    </tr> 
+    }
 }
 
 </table>

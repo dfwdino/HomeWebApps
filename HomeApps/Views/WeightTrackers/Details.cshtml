@@ -1,0 +1,51 @@
+﻿@model HomeApps.WeightTracker
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>WeightTracker</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WeightAmout)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeightAmout)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeightData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeightData)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Deleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WeightID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

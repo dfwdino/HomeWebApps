@@ -12,14 +12,13 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class ModelImage
+    public partial class ModelWebsite
     {
-        public int ModelImageID { get; set; }
-        public string Title { get; set; }
-        public string ImageName { get; set; }
-        public byte[] ImageFile { get; set; }
-        public Nullable<int> ModelPersonID { get; set; }
+        public int ModelWebsitesID { get; set; }
+        public int WebsiteID { get; set; }
+        public int CameraModelID { get; set; }
     
-        public virtual ModelPeople ModelPeople { get; set; }
+        public virtual Website Website { get; set; }
+        public virtual CameraModel CameraModel { get; set; }
     }
 }

@@ -12,32 +12,27 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class ModelPeople
+    public partial class CameraModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ModelPeople()
+        public CameraModel()
         {
-            this.ModelImages = new HashSet<ModelImage>();
-            this.ModelSocialSites = new HashSet<ModelSocialSite>();
+            this.ModelWebsites = new HashSet<ModelWebsite>();
+            this.CameraModelNotes = new HashSet<CameraModelNote>();
         }
     
-        public int ModelPersonID { get; set; }
+        public int CameraModelID { get; set; }
+        public string CameraModelName { get; set; }
+        public int CameraModelGender { get; set; }
         public bool Deleted { get; set; }
-        public Nullable<int> ModfiyID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Gender { get; set; }
         public Nullable<bool> AllNudes { get; set; }
-        public Nullable<bool> AllBoudoir { get; set; }
-        public Nullable<bool> AllErotica { get; set; }
-        public string Notes { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string FileName { get; set; }
+        public Nullable<bool> AllBonjour { get; set; }
+        public Nullable<bool> AllTFP { get; set; }
     
+        public virtual GenderType GenderType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ModelImage> ModelImages { get; set; }
+        public virtual ICollection<ModelWebsite> ModelWebsites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ModelSocialSite> ModelSocialSites { get; set; }
+        public virtual ICollection<CameraModelNote> CameraModelNotes { get; set; }
     }
 }

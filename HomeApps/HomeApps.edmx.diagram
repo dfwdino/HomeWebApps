@@ -41,14 +41,18 @@
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople" />
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople1" />
         <AssociationConnector Association="HomeAppsModel.FK_UserSchemas_Schemas" />
-        <EntityTypeShape EntityType="HomeAppsModel.ModelImage" Width="1.5" PointX="3" PointY="16.75" />
-        <EntityTypeShape EntityType="HomeAppsModel.ModelPeople" Width="1.5" PointX="0.75" PointY="15.875" />
-        <EntityTypeShape EntityType="HomeAppsModel.ModelSocialSite" Width="1.5" PointX="6" PointY="17.5" />
-        <EntityTypeShape EntityType="HomeAppsModel.SocialSite" Width="1.5" PointX="3.75" PointY="20" />
-        <AssociationConnector Association="HomeAppsModel.FK_ModelImages_Models" />
-        <AssociationConnector Association="HomeAppsModel.FK_ModelSocialSites_Models" />
-        <AssociationConnector Association="HomeAppsModel.FK_ModelSocialSites_SocalSites" />
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_TheEvent" />
+        <EntityTypeShape EntityType="HomeAppsModel.WeightTracker" Width="1.5" PointX="7.875" PointY="21.625" />
+        <EntityTypeShape EntityType="HomeAppsModel.CameraModel" Width="1.5" PointX="8" PointY="1" />
+        <EntityTypeShape EntityType="HomeAppsModel.GenderType" Width="1.5" PointX="5.75" PointY="1.375" />
+        <EntityTypeShape EntityType="HomeAppsModel.ModelWebsite" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="HomeAppsModel.Website" Width="1.5" PointX="0.75" PointY="1" />
+        <AssociationConnector Association="HomeAppsModel.FK_WeightTracker_Users" />
+        <AssociationConnector Association="HomeAppsModel.FK_CameraModels_GenderTypes" />
+        <AssociationConnector Association="HomeAppsModel.FK_ModelWebsites_Websites" />
+        <AssociationConnector Association="HomeAppsModel.FK_ModelWebsites_CameraModels" />
+        <EntityTypeShape EntityType="HomeAppsModel.CameraModelNote" Width="1.5" PointX="10.25" PointY="1.5" />
+        <AssociationConnector Association="HomeAppsModel.FK_CameraModelNotes_CameraModels" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

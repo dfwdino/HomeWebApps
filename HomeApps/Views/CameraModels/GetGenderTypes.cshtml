@@ -1,0 +1,34 @@
+﻿@model IEnumerable<HomeApps.GenderType>
+
+@{
+    ViewBag.Title = "GetGenderTypes";
+    Layout = "~/Views/Shared/_CameraModels.cshtml";
+}
+
+<h2>GetGenderTypes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateGenderType")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GenderType1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GenderType1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.GenderID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.GenderID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.GenderID })
+        </td>
+    </tr>
+}
+
+</table>

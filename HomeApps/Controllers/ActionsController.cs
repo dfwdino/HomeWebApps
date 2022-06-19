@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using HomeApps;
@@ -53,8 +55,11 @@ namespace HomeApps.Controllers
         {
             if (ModelState.IsValid)
             {
+                CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+                TextInfo textInfo = cultureInfo.TextInfo;
+
                 Action newaction = new Action();
-                newaction.Name = action;
+                newaction.Name = textInfo.ToTitleCase(action);
 
                 this.db.Actions.Add(newaction);
                 this.db.SaveChanges();
@@ -97,7 +102,10 @@ namespace HomeApps.Controllers
             {
                 Action action = db.Actions.Find(theeventaction.ActionID);
 
-                action.Name = theeventaction.ActionName;
+                CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+                TextInfo textInfo = cultureInfo.TextInfo;
+
+                action.Name = textInfo.ToTitleCase(theeventaction.ActionName);
 
                 db.Entry(action).State = EntityState.Modified;
                 db.SaveChanges();

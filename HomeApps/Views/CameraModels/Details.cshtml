@@ -1,54 +1,30 @@
-﻿@model HomeApps.Model
+﻿@model HomeApps.CameraModel
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_CameraModels.cshtml";
 }
 
 <h2>Details</h2>
 
 <div>
-    <h4>Model</h4>
+    <h4>CameraModel</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CameraModelName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CameraModelName)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Deleted)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Deleted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModfiyID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModfiyID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
         </dd>
 
         <dt>
@@ -60,48 +36,32 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AllBoudoir)
+            @Html.DisplayNameFor(model => model.AllBonjour)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AllBoudoir)
+            @Html.DisplayFor(model => model.AllBonjour)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AllErotica)
+            @Html.DisplayNameFor(model => model.AllTFP)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AllErotica)
+            @Html.DisplayFor(model => model.AllTFP)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Notes)
+            @Html.DisplayNameFor(model => model.GenderType.GenderType1)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
+            @Html.DisplayFor(model => model.GenderType.GenderType1)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ModelID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CameraModelID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

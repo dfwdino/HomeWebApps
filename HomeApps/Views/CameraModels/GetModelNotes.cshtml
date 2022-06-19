@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HomeApps.CameraModelNote>
+
+@{
+    ViewBag.Title = "GetModelNotes";
+    Layout = "~/Views/Shared/_CameraModels.cshtml";
+}
+
+<h2>GetModelNotes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfNotes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CameraModel.CameraModelName)
+            <br />
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfNotes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CameraModel.CameraModelName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.NotesID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.NotesID })
+        </td>
+    </tr>
+}
+
+</table>

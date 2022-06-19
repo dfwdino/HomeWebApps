@@ -1,0 +1,44 @@
+﻿@using HomeApps.Model
+
+@model WeightTrackerViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Weight For @Model.FirstName</h2>
+<br />
+
+<div>In the last 30 days your max weight was <b>@Model.MaxWeight</b> and min weight was <b>@Model.MiniWeight</b></div>
+
+<br />
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Weight")
+        </th>
+        <th>
+            @Html.DisplayName("Date")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.BodyWeights) {
+    <tr>
+        <td>
+            @Html.ActionLink(@item.WeightAmout.ToString(), "Edit", new { id = item.WeightID })
+        </td>
+        <td>
+            @Html.Label(item.WeightData?.ToString("MM/dd/yyyy"))
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id=item.WeightID })
+        </td>
+    </tr>
+}
+
+</table>

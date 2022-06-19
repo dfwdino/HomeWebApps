@@ -41,9 +41,11 @@ namespace HomeApps
         public virtual DbSet<UsersPeople> UsersPeoples { get; set; }
         public virtual DbSet<Action> Actions { get; set; }
         public virtual DbSet<EventAction> EventActions { get; set; }
-        public virtual DbSet<ModelImage> ModelImages { get; set; }
-        public virtual DbSet<ModelPeople> ModelPeoples { get; set; }
-        public virtual DbSet<ModelSocialSite> ModelSocialSites { get; set; }
-        public virtual DbSet<SocialSite> SocialSites { get; set; }
+        public virtual DbSet<WeightTracker> WeightTrackers { get; set; }
+        public virtual DbSet<CameraModel> CameraModels { get; set; }
+        public virtual DbSet<GenderType> GenderTypes { get; set; }
+        public virtual DbSet<ModelWebsite> ModelWebsites { get; set; }
+        public virtual DbSet<Website> Websites { get; set; }
+        public virtual DbSet<CameraModelNote> CameraModelNotes { get; set; }
     }
 }

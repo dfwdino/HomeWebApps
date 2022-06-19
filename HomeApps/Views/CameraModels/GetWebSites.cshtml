@@ -1,0 +1,34 @@
+﻿@model IEnumerable<HomeApps.Website>
+
+@{
+    ViewBag.Title = "GetWebSites";
+    Layout = "~/Views/Shared/_CameraModels.cshtml";
+}
+
+<h2>GetWebSites</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.WebsiteName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.WebsiteName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.WebsitesID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.WebsitesID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.WebsitesID })
+        </td>
+    </tr>
+}
+
+</table>

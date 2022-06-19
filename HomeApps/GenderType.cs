@@ -12,18 +12,18 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class SocialSite
+    public partial class GenderType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SocialSite()
+        public GenderType()
         {
-            this.ModelSocialSites = new HashSet<ModelSocialSite>();
+            this.CameraModels = new HashSet<CameraModel>();
         }
     
-        public int SocalTypeID { get; set; }
-        public string SocalSiteName { get; set; }
+        public int GenderID { get; set; }
+        public string GenderType1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ModelSocialSite> ModelSocialSites { get; set; }
+        public virtual ICollection<CameraModel> CameraModels { get; set; }
     }
 }
