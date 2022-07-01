@@ -19,6 +19,7 @@ namespace HomeApps
         public Nullable<System.DateTime> WeightData { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<bool> Deleted { get; set; }
+        public string Notes { get; set; }
     
         public virtual User User { get; set; }
     }

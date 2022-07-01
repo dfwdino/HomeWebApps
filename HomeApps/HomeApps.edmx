@@ -160,6 +160,7 @@
           <Property Name="WeightData" Type="datetime" />
           <Property Name="UserID" Type="int" />
           <Property Name="Deleted" Type="bit" />
+          <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="CameraModelNotes">
           <Key>
@@ -1251,6 +1252,7 @@
           <Property Name="UserID" Type="Int32" />
           <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_WeightTracker_Users" FromRole="WeightTracker" ToRole="User" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CameraModel">
           <Key>
@@ -1554,6 +1556,7 @@
           <EntitySetMapping Name="WeightTrackers">
             <EntityTypeMapping TypeName="HomeAppsModel.WeightTracker">
               <MappingFragment StoreEntitySet="WeightTracker">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="WeightData" ColumnName="WeightData" />

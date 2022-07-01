@@ -30,9 +30,14 @@ namespace HomeApps.Controllers
             
             weightTrackerViewModel.BodyWeights = db.WeightTrackers.Include(w => w.User).Where(m => m.UserID == user.UserID).OrderByDescending(m => m.WeightData).ToList();
 
-            weightTrackerViewModel.MiniWeight = weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Min(m => m.WeightAmout);
+            if (weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Count() > 0)
+            {
+                weightTrackerViewModel.MiniWeight = weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Min(m => m.WeightAmout);
 
-            weightTrackerViewModel.MaxWeight = weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Max(m => m.WeightAmout);
+                weightTrackerViewModel.MaxWeight = weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Max(m => m.WeightAmout);
+
+                weightTrackerViewModel.AvgWeight = (int)weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Average(m => m.WeightAmout);
+            }
 
             weightTrackerViewModel.FirstName = weightTrackerViewModel.BodyWeights.FirstOrDefault()?.User.FirstName;
 
@@ -66,7 +71,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted")] WeightTracker weightTracker)
+        public ActionResult Create([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes")] WeightTracker weightTracker)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +109,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted")] WeightTracker weightTracker)
+        public ActionResult Edit([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes")] WeightTracker weightTracker)
         {
             if (ModelState.IsValid)
             {
