@@ -18,22 +18,19 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayName("Weight")
-        </th>
-        <th>
-            @Html.DisplayName("Date")
+        <th style="text-align:center">
+            @Html.DisplayName("Weight") - @Html.DisplayName("Date")
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model.BodyWeights) {
     <tr>
-        <td>
-            @Html.ActionLink(@item.WeightAmout.ToString(), "Edit", new { id = item.WeightID })
-        </td>
-        <td>
-            @Html.Label(item.WeightData?.ToString("MM/dd/yyyy"))
+        <td style="text-align:center">
+            @Html.ActionLink(@item.WeightAmout.ToString(), "Edit", new { id = item.WeightID }) -  @Html.Label(item.WeightData?.ToString("MM/dd/yyyy"))
+            @if (item.Notes != null) {
+                <br/> @item.Notes
+            }
         </td>
         <td>
             @Html.ActionLink("Delete", "Delete", new { id=item.WeightID })

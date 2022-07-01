@@ -12,5 +12,6 @@ namespace HomeApps.Model
         public Nullable<decimal> MiniWeight { get; set; }
         public string FirstName { get; set; }
         public int AvgWeight { get; internal set; }
+
     }
 }
