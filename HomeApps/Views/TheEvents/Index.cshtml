@@ -16,7 +16,7 @@
             @Html.Label("Date")
         </th>
         <th>
-            @Html.Label("Title") - People
+            @Html.Label("Title") - People - Notes
         </th>
         <th></th>
     </tr>
@@ -33,7 +33,7 @@
             @Html.ActionLink(item.DateOfEvent.ToShortDateString(), "Details", new { id = item.EventID })
         </td>
         <td>
-            @Html.ActionLink(item.EventName, "Edit", new { id = item.EventID }) -  @string.Join(",", people.Distinct())
+            @Html.ActionLink(item.EventName, "Edit", new { id = item.EventID }) -  @string.Join(",", people.Distinct()) - @item.Notes
         </td>
         <td>
             @Html.ActionLink("Delete", "Delete", new { id=item.EventID })

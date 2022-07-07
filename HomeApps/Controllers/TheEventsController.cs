@@ -106,7 +106,7 @@ namespace HomeApps.Controllers
                 }
 
 
-                TheEvent currentEvent = new TheEvent { EventName = theEvent.EventName, DateOfEvent = Convert.ToDateTime(theEvent.DateOfEvent) };
+                TheEvent currentEvent = new TheEvent { EventName = theEvent.EventName, DateOfEvent = Convert.ToDateTime(theEvent.DateOfEvent), Notes = theEvent.Notes };
 
                 db.TheEvents.Add(currentEvent);
                 db.SaveChanges();

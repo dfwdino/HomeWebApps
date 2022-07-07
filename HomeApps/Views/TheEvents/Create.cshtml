@@ -11,28 +11,36 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>TheEvent</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateOfEvent, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfEvent, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateOfEvent, "", new { @class = "text-danger" })
-            </div>
+<div class="form-horizontal">
+    <h4>TheEvent</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateOfEvent, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DateOfEvent, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DateOfEvent, "", new { @class = "text-danger" })
         </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
-                @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
     </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+            @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Notes,5,40, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off"} })
+            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
 
 
     <div id="EventActions">
@@ -43,12 +51,12 @@
 
     <div id="SchemaAction" hidden>
 
-        
-            <div class="col-md-12"> 
-            @Html.Label("They Did", htmlAttributes: new { @class = "control-label" }): 
+
+        <div class="col-md-12">
+            @Html.Label("They Did", htmlAttributes: new { @class = "control-label" }):
             @Html.DropDownList("EventActions[X].GivingPersonID", (SelectList)ViewBag.People, htmlAttributes: new { @id = "EventActions[X].GivingPersonID", @class = "form-control" })
-            </div>
-        
+        </div>
+
         <div class="row">
             <div class="col-md-5"> </div>
         </div>
@@ -79,16 +87,16 @@
                 @Html.DropDownList("EventActions[X].ReveivingPersonID", (SelectList)ViewBag.People, htmlAttributes: new { @id = "EventActions[X].ReveivingPersonID", @class = "form-control" })
             </div>
         </div>
-        
+
         <div style="padding-bottom:40px"></div>
-    </div>   
-    
+    </div>
+
     <hr />
-    
-   
+
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create Event" class="btn btn-primary" /> -   @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Create Event" class="btn btn-primary" /> - @Html.ActionLink("Back to List", "Index")
         </div>
     </div>
 
@@ -100,7 +108,7 @@
 <script>
     var CurrentActionGroup = 0;
     var NumberOrActionList = 1;
-    
+
     $(function () {
         AddNewAction();
     });

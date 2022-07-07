@@ -140,6 +140,7 @@
           <Property Name="DateofEventOffSet" Type="datetimeoffset" Precision="7" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="EventName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="UsersPeople">
           <Key>
@@ -1106,6 +1107,7 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="EventName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EventActions" Relationship="HomeAppsModel.FK_EventActions_TheEvent" FromRole="TheEvent" ToRole="EventAction" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UsersPeople">
           <Key>
@@ -1513,6 +1515,7 @@
           <EntitySetMapping Name="TheEvents">
             <EntityTypeMapping TypeName="HomeAppsModel.TheEvent">
               <MappingFragment StoreEntitySet="TheEvent">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="EventName" ColumnName="EventName" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="DateofEventOffSet" ColumnName="DateofEventOffSet" />
