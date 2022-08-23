@@ -47,5 +47,10 @@ namespace HomeApps
         public virtual DbSet<ModelWebsite> ModelWebsites { get; set; }
         public virtual DbSet<Website> Websites { get; set; }
         public virtual DbSet<CameraModelNote> CameraModelNotes { get; set; }
+        public virtual DbSet<Price> Prices { get; set; }
+        public virtual DbSet<ItemList> ItemLists { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<SizeType> SizeTypes { get; set; }
+        public virtual DbSet<Store> Stores { get; set; }
     }
 }

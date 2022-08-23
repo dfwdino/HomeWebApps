@@ -53,6 +53,14 @@
         <AssociationConnector Association="HomeAppsModel.FK_ModelWebsites_CameraModels" />
         <EntityTypeShape EntityType="HomeAppsModel.CameraModelNote" Width="1.5" PointX="10.25" PointY="1.5" />
         <AssociationConnector Association="HomeAppsModel.FK_CameraModelNotes_CameraModels" />
+        <EntityTypeShape EntityType="HomeAppsModel.Price" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HomeAppsModel.ItemList" Width="1.5" PointX="3" PointY="15" />
+        <EntityTypeShape EntityType="HomeAppsModel.Item" Width="1.5" PointX="0.75" PointY="12.375" />
+        <EntityTypeShape EntityType="HomeAppsModel.SizeType" Width="1.5" PointX="0.75" PointY="18.875" />
+        <EntityTypeShape EntityType="HomeAppsModel.Store" Width="1.5" PointX="0.75" PointY="15.5" />
+        <AssociationConnector Association="HomeAppsModel.FK_ItemList_Items" />
+        <AssociationConnector Association="HomeAppsModel.FK_ItemList_SizeType" />
+        <AssociationConnector Association="HomeAppsModel.FK_ItemList_Stores" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

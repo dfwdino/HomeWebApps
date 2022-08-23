@@ -21,9 +21,9 @@
     <br />
 }
 
-@if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Grocery").Equals(true))
+@if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
 {
-    <div>@Html.ActionLink("Grocery", "Index", "Grocery", null, new { })</div>
+    <div>@Html.ActionLink("Groceries", "Index", "GroceriesItemLists", null, new { })</div>
     <br />
 }
 

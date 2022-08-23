@@ -1,0 +1,101 @@
+﻿@model IEnumerable<HomeApps.ItemList>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_GrocerieLayouts.cshtml";
+    int colorCounter = 0;
+    string color = string.Empty;
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfItems)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item.ItemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SizeType.SizeTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Store.StoreName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        switch (colorCounter)
+        {
+            case 0:
+                color = "lightyellow";
+                colorCounter = 1;
+                break;
+            case 1:
+                color = "lightgrey";
+                colorCounter = 0;
+                break;
+
+        }
+
+        <tr id="FullItem{@item.ItemListID}">
+            <div class="row item"  style="background-color: @color;border-width:1px;border-style:solid; text-align:center">
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfItems)
+            </td>
+            <td>
+                <span class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
+                    @Html.DisplayFor(modelItem => item.Item.ItemName)
+                </span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SizeType.SizeTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Store.StoreName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ItemListID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ItemListID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ItemListID })
+            </td>
+            </div>
+        </tr>
+    }
+
+</table>
+
+<script src="~/Scripts/jquery-3.0.0.js"></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('span.got-link').click(OnGotClick);
+    });
+
+    function OnGotClick(e) {
+        var itemID = e.target.id;
+        
+
+        var div = document.getElementById('FullItem{' + itemID + '}');
+        div.outerHTML = "";
+        
+
+        var url = $(this).data('request-url');
+        
+        $.post(url, { ItemListID: itemID }, function (data) {
+
+
+        });
+    }
+
+</script>

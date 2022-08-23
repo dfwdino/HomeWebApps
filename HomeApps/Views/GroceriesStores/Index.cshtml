@@ -1,0 +1,46 @@
+﻿@model IEnumerable<HomeApps.Store>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_GrocerieLayouts.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StoreName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StoreAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deleted)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StoreName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StoreAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.StoreID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.StoreID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.StoreID })
+        </td>
+    </tr>
+}
+
+</table>

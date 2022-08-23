@@ -60,7 +60,7 @@
                 <li class="nav-item">
                     @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
                     {
-                        @Html.ActionLink("Grocery", "Index", "Grocery/Index", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Groceries", "Index", "GroceriesItemLists", null, new { @class = "nav-link" })
                     }
                 </li>
             </ul>

@@ -49,6 +49,53 @@
           <Property Name="ModfiyID" Type="int" />
           <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="ItemList">
+          <Key>
+            <PropertyRef Name="ItemListID" />
+          </Key>
+          <Property Name="ItemListID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="StoreID" Type="int" />
+          <Property Name="GotItem" Type="bit" Nullable="false" />
+          <Property Name="NumberOfItems" Type="int" />
+          <Property Name="SizeTypeID" Type="int" />
+          <Property Name="DateAdded" Type="date" Nullable="false" />
+          <Property Name="DateGot" Type="date" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prices">
+          <Key>
+            <PropertyRef Name="PriceID" />
+          </Key>
+          <Property Name="PriceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemPrice" Type="money" />
+          <Property Name="PriceDate" Type="date" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="SizeType">
+          <Key>
+            <PropertyRef Name="SizeTypeID" />
+          </Key>
+          <Property Name="SizeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SizeTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stores">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StoreAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="CreateModifyLog">
           <Key>
             <PropertyRef Name="CreateModifyID" />
@@ -334,6 +381,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ItemList_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="ItemList" Type="Self.ItemList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="ItemList">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemList_SizeType">
+          <End Role="SizeType" Type="Self.SizeType" Multiplicity="0..1" />
+          <End Role="ItemList" Type="Self.ItemList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SizeType">
+              <PropertyRef Name="SizeTypeID" />
+            </Principal>
+            <Dependent Role="ItemList">
+              <PropertyRef Name="SizeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemList_Stores">
+          <End Role="Stores" Type="Self.Stores" Multiplicity="0..1" />
+          <End Role="ItemList" Type="Self.ItemList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stores">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="ItemList">
+              <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Miles_Auto">
           <End Role="Autos" Type="Self.Autos" Multiplicity="1" />
           <End Role="Miles" Type="Self.Miles" Multiplicity="*" />
@@ -531,6 +614,11 @@
           <EntitySet Name="Miles" EntityType="Self.Miles" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Stations" EntityType="Self.Stations" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Types" EntityType="Self.Types" Schema="Gas" store:Type="Tables" />
+          <EntitySet Name="ItemList" EntityType="Self.ItemList" Schema="Groceries" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="Groceries" store:Type="Tables" />
+          <EntitySet Name="Prices" EntityType="Self.Prices" Schema="Groceries" store:Type="Tables" />
+          <EntitySet Name="SizeType" EntityType="Self.SizeType" Schema="Groceries" store:Type="Tables" />
+          <EntitySet Name="Stores" EntityType="Self.Stores" Schema="Groceries" store:Type="Tables" />
           <EntitySet Name="CreateModifyLog" EntityType="Self.CreateModifyLog" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Logging" EntityType="Self.Logging" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="HomeApp" store:Type="Tables" />
@@ -584,6 +672,18 @@
           <AssociationSet Name="FK_EventActions_UsersPeople1" Association="Self.FK_EventActions_UsersPeople1">
             <End Role="UsersPeople" EntitySet="UsersPeople" />
             <End Role="EventActions" EntitySet="EventActions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemList_Items" Association="Self.FK_ItemList_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemList" EntitySet="ItemList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemList_SizeType" Association="Self.FK_ItemList_SizeType">
+            <End Role="SizeType" EntitySet="SizeType" />
+            <End Role="ItemList" EntitySet="ItemList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemList_Stores" Association="Self.FK_ItemList_Stores">
+            <End Role="Stores" EntitySet="Stores" />
+            <End Role="ItemList" EntitySet="ItemList" />
           </AssociationSet>
           <AssociationSet Name="FK_Miles_Auto" Association="Self.FK_Miles_Auto">
             <End Role="Autos" EntitySet="Autos" />
@@ -780,6 +880,23 @@
           <AssociationSet Name="FK_CameraModelNotes_CameraModels" Association="HomeAppsModel.FK_CameraModelNotes_CameraModels">
             <End Role="CameraModel" EntitySet="CameraModels" />
             <End Role="CameraModelNote" EntitySet="CameraModelNotes" />
+          </AssociationSet>
+          <EntitySet Name="Prices" EntityType="HomeAppsModel.Price" />
+          <EntitySet Name="ItemLists" EntityType="HomeAppsModel.ItemList" />
+          <EntitySet Name="Items" EntityType="HomeAppsModel.Item" />
+          <EntitySet Name="SizeTypes" EntityType="HomeAppsModel.SizeType" />
+          <EntitySet Name="Stores" EntityType="HomeAppsModel.Store" />
+          <AssociationSet Name="FK_ItemList_Items" Association="HomeAppsModel.FK_ItemList_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="ItemList" EntitySet="ItemLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemList_SizeType" Association="HomeAppsModel.FK_ItemList_SizeType">
+            <End Role="SizeType" EntitySet="SizeTypes" />
+            <End Role="ItemList" EntitySet="ItemLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemList_Stores" Association="HomeAppsModel.FK_ItemList_Stores">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="ItemList" EntitySet="ItemLists" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Auto">
@@ -1367,6 +1484,95 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="PriceID" />
+          </Key>
+          <Property Name="PriceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PriceDate" Type="DateTime" Precision="0" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ItemList">
+          <Key>
+            <PropertyRef Name="ItemListID" />
+          </Key>
+          <Property Name="ItemListID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="StoreID" Type="Int32" />
+          <Property Name="GotItem" Type="Boolean" Nullable="false" />
+          <Property Name="NumberOfItems" Type="Int32" />
+          <Property Name="SizeTypeID" Type="Int32" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateGot" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Item" Relationship="HomeAppsModel.FK_ItemList_Items" FromRole="ItemList" ToRole="Item" />
+          <NavigationProperty Name="SizeType" Relationship="HomeAppsModel.FK_ItemList_SizeType" FromRole="ItemList" ToRole="SizeType" />
+          <NavigationProperty Name="Store" Relationship="HomeAppsModel.FK_ItemList_Stores" FromRole="ItemList" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ItemLists" Relationship="HomeAppsModel.FK_ItemList_Items" FromRole="Item" ToRole="ItemList" />
+        </EntityType>
+        <EntityType Name="SizeType">
+          <Key>
+            <PropertyRef Name="SizeTypeID" />
+          </Key>
+          <Property Name="SizeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SizeTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ItemLists" Relationship="HomeAppsModel.FK_ItemList_SizeType" FromRole="SizeType" ToRole="ItemList" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StoreAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ItemLists" Relationship="HomeAppsModel.FK_ItemList_Stores" FromRole="Store" ToRole="ItemList" />
+        </EntityType>
+        <Association Name="FK_ItemList_Items">
+          <End Type="HomeAppsModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="HomeAppsModel.ItemList" Role="ItemList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="ItemList">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemList_SizeType">
+          <End Type="HomeAppsModel.SizeType" Role="SizeType" Multiplicity="0..1" />
+          <End Type="HomeAppsModel.ItemList" Role="ItemList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SizeType">
+              <PropertyRef Name="SizeTypeID" />
+            </Principal>
+            <Dependent Role="ItemList">
+              <PropertyRef Name="SizeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemList_Stores">
+          <End Type="HomeAppsModel.Store" Role="Store" Multiplicity="0..1" />
+          <End Type="HomeAppsModel.ItemList" Role="ItemList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="ItemList">
+              <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1613,6 +1819,58 @@
                 <ScalarProperty Name="CameraModelID" ColumnName="CameraModelID" />
                 <ScalarProperty Name="DateOfNotes" ColumnName="DateOfNotes" />
                 <ScalarProperty Name="NotesID" ColumnName="NotesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prices">
+            <EntityTypeMapping TypeName="HomeAppsModel.Price">
+              <MappingFragment StoreEntitySet="Prices">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="PriceDate" ColumnName="PriceDate" />
+                <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
+                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemLists">
+            <EntityTypeMapping TypeName="HomeAppsModel.ItemList">
+              <MappingFragment StoreEntitySet="ItemList">
+                <ScalarProperty Name="DateGot" ColumnName="DateGot" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="SizeTypeID" ColumnName="SizeTypeID" />
+                <ScalarProperty Name="NumberOfItems" ColumnName="NumberOfItems" />
+                <ScalarProperty Name="GotItem" ColumnName="GotItem" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="ItemListID" ColumnName="ItemListID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="HomeAppsModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SizeTypes">
+            <EntityTypeMapping TypeName="HomeAppsModel.SizeType">
+              <MappingFragment StoreEntitySet="SizeType">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="SizeTypeName" ColumnName="SizeTypeName" />
+                <ScalarProperty Name="SizeTypeID" ColumnName="SizeTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="HomeAppsModel.Store">
+              <MappingFragment StoreEntitySet="Stores">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="StoreAddress" ColumnName="StoreAddress" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
