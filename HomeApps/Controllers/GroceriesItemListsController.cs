@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,9 +18,20 @@ namespace HomeApps.Controllers
         // GET: GroceriesItemLists
         public ActionResult Index()
         {
-            var itemLists = db.ItemLists.Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store);
+            var itemLists = db.ItemLists.Where(f => f.GotItem == false).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store);
             return View(itemLists.ToList());
         }
+
+        public ActionResult ShowAllItems(bool sortbydate = false)
+        {
+            List<ItemList> itemLists = db.ItemLists.Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store).ToList()
+                .GroupBy(f => f.Item.ItemName).Select(f => f.First()).Select(f => f).Distinct().ToList();
+          
+
+          
+            return View(itemLists.ToList());
+        }
+
 
         // GET: GroceriesItemLists/Details/5
         public ActionResult Details(int? id)
@@ -52,30 +64,32 @@ namespace HomeApps.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ItemList itemList)
         {
-
-            var FoundItem = db.Items.Where(f => f.ItemName == itemList.Item.ItemName).FirstOrDefault();
-
-            if (FoundItem == null)
+            try
             {
-                Item newitem = new Item();
-                newitem.ItemName = itemList.Item.ItemName;
-                db.Items.Add(newitem);
+                var FoundItem = db.Items.Where(f => f.ItemName == itemList.Item.ItemName).FirstOrDefault();
+
+                if (FoundItem == null)
+                {
+                    itemList.Item.ItemName = itemList.Item.ItemName.ToTileCase();
+                }
+                else
+                {
+                    itemList.Item = FoundItem;
+                }
+
+                itemList.DateAdded = DateTime.Now;
+                db.ItemLists.Add(itemList);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            else
+            catch (Exception ex)
             {
-                itemList.Item = FoundItem;
+
+                ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", itemList.ItemID);
+                ViewBag.SizeTypeID = new SelectList(db.SizeTypes, "SizeTypeID", "SizeTypeName", itemList.SizeTypeID);
+                ViewBag.StoreID = new SelectList(db.Stores, "StoreID", "StoreName", itemList.StoreID);
+                return View(itemList);
             }
-
-           
-            db.ItemLists.Add(itemList);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-           
-
-            ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", itemList.ItemID);
-            ViewBag.SizeTypeID = new SelectList(db.SizeTypes, "SizeTypeID", "SizeTypeName", itemList.SizeTypeID);
-            ViewBag.StoreID = new SelectList(db.Stores, "StoreID", "StoreName", itemList.StoreID);
-            return View(itemList);
         }
 
         // GET: GroceriesItemLists/Edit/5

@@ -255,6 +255,7 @@
     <Content Include="Views\GroceriesItems\Details.cshtml" />
     <Content Include="Views\GroceriesItems\Edit.cshtml" />
     <Content Include="Views\GroceriesItems\Index.cshtml" />
+    <Content Include="Views\GroceriesItemLists\ShowAllItems.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -281,6 +282,7 @@
     <Compile Include="Controllers\GroceriesItemListsController.cs" />
     <Compile Include="Controllers\GroceriesItemsController.cs" />
     <Compile Include="Controllers\GroceriesStoresController.cs" />
+    <Compile Include="Model\ItemListModel.cs" />
     <Compile Include="Controllers\SizeTypesController.cs" />
     <Compile Include="CreateModifyLog.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
@@ -348,6 +350,7 @@
     <Compile Include="Model\TheEventCreate.cs" />
     <Compile Include="Model\WeightTrackerViewModel.cs" />
     <Compile Include="MyExceptionHandler.cs" />
+    <Compile Include="MyExtensions.cs" />
     <Compile Include="Price.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>

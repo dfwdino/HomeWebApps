@@ -44,7 +44,7 @@
                     <li class="nav-item">
                         @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
                         {
-                            @Html.ActionLink("Size", "Index", "GroceriesItemLists", null, new { @class = "nav-link" })
+                            @Html.ActionLink("Size", "Index", "SizeTypes", null, new { @class = "nav-link" })
                         }
                     </li>
                 </ul>
@@ -56,15 +56,26 @@
                         }
                     </li>
                 </ul>
+
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
                         {
-                            @Html.ActionLink("Items", "Index", "GroceriesItems", null, new { @class = "nav-link" })
+                            @Html.ActionLink("All Items", "ShowAllItems", "GroceriesItemLists", null, new { @class = "nav-link" })
                         }
                     </li>
                 </ul>
-            }
+                
+
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
+                {
+                    @Html.ActionLink("Items", "Index", "GroceriesItems", null, new { @class = "nav-link" })
+                }
+            </li>
+        </ul>
+    }
 </nav>
 
 

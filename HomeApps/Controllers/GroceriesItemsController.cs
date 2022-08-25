@@ -17,7 +17,7 @@ namespace HomeApps.Controllers
         // GET: GroceriesItems
         public ActionResult Index()
         {
-            return View(db.Items.ToList());
+            return View(db.Items.Where(f => f.IsDeleted == false).ToList());
         }
 
         // GET: GroceriesItems/Details/5
@@ -50,6 +50,7 @@ namespace HomeApps.Controllers
         {
             if (ModelState.IsValid)
             {
+                item.ItemName = item.ItemName.ToTileCase();
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -137,6 +138,7 @@ namespace HomeApps.Controllers
             var gotitem = db.ItemLists.Where(f => f.ItemListID == ItemListID).First();
 
             gotitem.GotItem = gotitem.GotItem ? false : true;
+            gotitem.DateGot = DateTime.Now;
             db.SaveChanges();
         }
 

@@ -53,7 +53,7 @@
           <Key>
             <PropertyRef Name="ItemListID" />
           </Key>
-          <Property Name="ItemListID" Type="int" Nullable="false" />
+          <Property Name="ItemListID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ItemID" Type="int" Nullable="false" />
           <Property Name="StoreID" Type="int" />
           <Property Name="GotItem" Type="bit" Nullable="false" />
@@ -1497,7 +1497,7 @@
           <Key>
             <PropertyRef Name="ItemListID" />
           </Key>
-          <Property Name="ItemListID" Type="Int32" Nullable="false" />
+          <Property Name="ItemListID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ItemID" Type="Int32" Nullable="false" />
           <Property Name="StoreID" Type="Int32" />
           <Property Name="GotItem" Type="Boolean" Nullable="false" />
