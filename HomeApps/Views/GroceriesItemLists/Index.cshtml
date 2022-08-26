@@ -3,14 +3,13 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_GrocerieLayouts.cshtml";
-    int colorCounter = 0;
-    string color = string.Empty;
+
 }
 
 <h2>Items Needed</h2>
 
 <p>
-    @Html.ActionLink("Add Item", "Create")
+    @Html.ActionLink("Add Item", "Create") - @Html.ActionLink("All Items", "ShowAllItems")
 </p>
 
 <table id="ItemList" class="display">
@@ -22,7 +21,6 @@
             <th>
                 @Html.DisplayName("StoreName")
             </th>
-            <th></th>
         </tr>
     </thead>
 
@@ -30,21 +28,8 @@
         @foreach (var item in Model)
         {
 
-            switch (colorCounter)
-            {
-                case 0:
-                    color = "lightyellow";
-                    colorCounter = 1;
-                    break;
-                case 1:
-                    color = "lightgrey";
-                    colorCounter = 0;
-                    break;
-
-            }
-
             <tr id="FullItem{@item.ItemListID}">
-                <div class="row item" style="background-color: @color;border-width:1px;border-style:solid; text-align:center">
+                <div class="row item" style="background-color: border-width:1px;border-style:solid; text-align:center">
                 <td>
                     <span class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
 
@@ -52,17 +37,19 @@
                         {
                             <span>@item.NumberOfItems - </span>
                         }
-                        @if(item.SizeType?.SizeTypeName != null)
+                        @if (item.SizeType?.SizeTypeName != null)
                         {
                             <span>@item.SizeType.SizeTypeName of</span>
                         }
                         @Html.DisplayFor(modelItem => item.Item.ItemName)
+
                     </span>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Store.StoreName)
-                </td>
-                <td>
+                    @if (item.Store != null)
+                    {
+                        <sapn>@Html.DisplayFor(modelItem => item.Store.StoreName) - </sapn>
+                    }
                     @Html.ActionLink("Edit", "Edit", new { id = item.ItemListID })
                 </td>
                 </div>

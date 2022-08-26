@@ -5,8 +5,11 @@
     Layout = "~/Views/Shared/_GrocerieLayouts.cshtml";
 }
 
-<h2>All Items Needed</h2>
+<h2>All Items</h2>
 
+<p>
+    @Html.ActionLink("Need Items", "Index")
+</p>
 
 <table id="ItemList" class="display">
     <thead>
@@ -20,13 +23,12 @@
             <th>
                 @Html.DisplayName("StoreName")
             </th>
-            <th></th>
         </tr>
     </thead>
 
     <tbody>
         @foreach (var item in Model)
-        {  
+        {
 
             <tr id="FullItem{@item.ItemListID}">
                 <div class="row item" style="background-color: border-width:1px;border-style:solid; text-align:center">
@@ -34,28 +36,32 @@
                     <span class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
 
                         @if (item.NumberOfItems != null)
-                {
-                    <span>@item.NumberOfItems - </span>
-                }
-                @if (item.SizeType?.SizeTypeName != null)
-                {
-                    <span>@item.SizeType.SizeTypeName of</span>
-                }
+                        {
+                            <span>@item.NumberOfItems - </span>
+                        }
+                        @if (item.SizeType?.SizeTypeName != null)
+                        {
+                            <span>@item.SizeType.SizeTypeName of</span>
+                        }
                         @item.Item.ItemName
                     </span>
                 </td>
                 <td>
-                    @if(item.DateGot.HasValue) {
+                    @if (item.DateGot.HasValue)
+                    {
                         @item.DateGot.Value.ToShortDateString()
                     }
 
                 </td>
                 <td>
-                    @if (item.Store != null) {
-                   @item.Store.StoreName}
+                    @if (item.Store != null)
+                    {
+                        <span>@item.Store.StoreName - </span>
+                    }
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ItemListID })
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ItemListID })
                 </td>
                 </div>
             </tr>
