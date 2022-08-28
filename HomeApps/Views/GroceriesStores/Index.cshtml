@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<HomeApps.Store>
 
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_GrocerieLayouts.cshtml";
 }
 
@@ -13,13 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StoreName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StoreAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Deleted)
+            @Html.DisplayName("Store Name")
         </th>
         <th></th>
     </tr>
@@ -28,16 +21,11 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.StoreName)
-        </td>
-        <td>
+            <br />
             @Html.DisplayFor(modelItem => item.StoreAddress)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Deleted)
-        </td>
-        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.StoreID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.StoreID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.StoreID })
         </td>
     </tr>

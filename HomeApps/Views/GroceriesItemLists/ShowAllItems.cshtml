@@ -31,7 +31,6 @@
         {
 
             <tr id="FullItem{@item.ItemListID}">
-                <div class="row item" style="background-color: border-width:1px;border-style:solid; text-align:center">
                 <td>
                     <span class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
 
@@ -61,9 +60,6 @@
 
                     @Html.ActionLink("Edit", "Edit", new { id = item.ItemListID })
                 </td>
-                <td>
-                </td>
-                </div>
             </tr>
         }
     </tbody>
