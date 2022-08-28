@@ -8,9 +8,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HomeApps;
+using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
+
+    [Access]
     public class GroceriesItemListsController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
@@ -24,7 +27,7 @@ namespace HomeApps.Controllers
 
         public ActionResult ShowAllItems(bool sortbydate = false)
         {
-            List<ItemList> itemLists = db.ItemLists.Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store).ToList()
+            List<ItemList> itemLists = db.ItemLists.OrderByDescending(f => f.DateGot).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store).ToList()
                 .GroupBy(f => f.Item.ItemName).Select(f => f.First()).Select(f => f).Distinct().ToList();
           
 
@@ -86,8 +89,8 @@ namespace HomeApps.Controllers
             {
 
                 ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", itemList.ItemID);
-                ViewBag.SizeTypeID = new SelectList(db.SizeTypes, "SizeTypeID", "SizeTypeName", itemList.SizeTypeID);
-                ViewBag.StoreID = new SelectList(db.Stores, "StoreID", "StoreName", itemList.StoreID);
+                ViewBag.SizeTypeID = new SelectList(db.SizeTypes.OrderByDescending(f => f.SizeTypeName), "SizeTypeID", "SizeTypeName", itemList.SizeTypeID);
+                ViewBag.StoreID = new SelectList(db.Stores.OrderByDescending(f => f.StoreName), "StoreID", "StoreName", itemList.StoreID);
                 return View(itemList);
             }
         }
@@ -124,8 +127,8 @@ namespace HomeApps.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", itemList.ItemID);
-            ViewBag.SizeTypeID = new SelectList(db.SizeTypes, "SizeTypeID", "SizeTypeName", itemList.SizeTypeID);
-            ViewBag.StoreID = new SelectList(db.Stores, "StoreID", "StoreName", itemList.StoreID);
+            ViewBag.SizeTypeID = new SelectList(db.SizeTypes.OrderByDescending(f => f.SizeTypeName), "SizeTypeID", "SizeTypeName", itemList.SizeTypeID);
+            ViewBag.StoreID = new SelectList(db.Stores.OrderByDescending(f => f.StoreName), "StoreID", "StoreName", itemList.StoreID);
             return View(itemList);
         }
 

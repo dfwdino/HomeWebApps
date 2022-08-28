@@ -256,6 +256,7 @@
     <Content Include="Views\GroceriesItems\Edit.cshtml" />
     <Content Include="Views\GroceriesItems\Index.cshtml" />
     <Content Include="Views\GroceriesItemLists\ShowAllItems.cshtml" />
+    <Content Include="Views\Admin\AllUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

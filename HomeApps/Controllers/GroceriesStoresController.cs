@@ -7,9 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HomeApps;
+using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
+
+    [Access]
     public class GroceriesStoresController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();

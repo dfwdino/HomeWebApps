@@ -34,6 +34,13 @@ namespace HomeApps.Controllers
             return View(allusers);
         }
 
+        public ActionResult AllUsers()
+        {
+            List<User> allusers = _db.Users.ToList();
+
+            return View(allusers);
+        }
+
         public ActionResult Schemas()
         {
             List<Schema> schema = _db.Schemas.Include(m => m.UserSchema).Include(m => m.UserSchema.User).ToList();
