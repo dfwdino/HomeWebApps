@@ -21,7 +21,7 @@ namespace HomeApps.Controllers
         // GET: GroceriesItemLists
         public ActionResult Index()
         {
-            var itemLists = db.ItemLists.Where(f => f.GotItem == false).OrderByDescending(f => f.DateGot).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store);
+            var itemLists = db.ItemLists.Where(f => f.GotItem == false).OrderBy(f => f.Item.ItemName).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store);
             return View(itemLists.ToList());
         }
 

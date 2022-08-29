@@ -79,7 +79,7 @@
 
     $(document).ready(function () {
         $('span.got-link').click(OnGotClick);
-        $('#ItemList').DataTable({ searching: false, paging: false, info: false });
+        $('#ItemList').DataTable({ searching: false, paging: false, info: false, order: [] });
     });
 
     function OnGotClick(e) {

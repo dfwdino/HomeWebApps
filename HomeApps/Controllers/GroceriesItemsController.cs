@@ -20,7 +20,7 @@ namespace HomeApps.Controllers
         // GET: GroceriesItems
         public ActionResult Index()
         {
-            return View(db.Items.Where(f => f.IsDeleted == false).ToList());
+            return View(db.Items.Where(f => f.IsDeleted == false).OrderBy(f => f.ItemName).ToList());
         }
 
         // GET: GroceriesItems/Details/5
@@ -56,7 +56,9 @@ namespace HomeApps.Controllers
                 item.ItemName = item.ItemName.ToTileCase();
                 db.Items.Add(item);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.CreatedItem = true;
+                return RedirectToAction("Create");
+                //return RedirectToAction("Index");
             }
 
             return View(item);
