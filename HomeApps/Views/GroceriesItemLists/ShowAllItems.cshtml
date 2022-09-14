@@ -30,20 +30,21 @@
         @foreach (var item in Model)
         {
 
-            <tr id="FullItem{@item.ItemListID}">
-                <td>
-                    <span class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
+            <tr name="FullItem{@item.ItemListID}">
+                <td class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
 
-                        @if (item.NumberOfItems != null)
-                        {
-                            <span>@item.NumberOfItems - </span>
-                        }
+                        @*@if (item.NumberOfItems != null)
+        {
+            <span>@item.NumberOfItems - </span>
+        }*@
+                        @item.Item.ItemName
+
                         @if (item.SizeType?.SizeTypeName != null)
                         {
-                            <span>@item.SizeType.SizeTypeName of</span>
+                            <span> - @item.SizeType.SizeTypeName</span>
                         }
-                        @item.Item.ItemName
-                    </span>
+
+                    
                 </td>
                 <td>
                     @if (item.DateGot.HasValue)
@@ -78,7 +79,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $('span.got-link').click(OnGotClick);
+        $('td.got-link').click(OnGotClick);
         $('#ItemList').DataTable({ searching: false, paging: false, info: false, order: [] });
     });
 
@@ -86,8 +87,8 @@
         var itemID = e.target.id;
 
 
-        var div = document.getElementById('FullItem{' + itemID + '}');
-        div.outerHTML = "";
+        var div = document.getElementsByName('FullItem{' + itemID + '}');
+        div[0].outerHTML = "";
 
 
         var url = $(this).data('request-url');

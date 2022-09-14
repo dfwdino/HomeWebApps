@@ -28,11 +28,9 @@
         @foreach (var item in Model)
         {
 
-            <tr id="FullItem{@item.ItemListID}">
-                <div>
-                <td>
-                    <span class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
-
+            <tr name="FullItem{@item.ItemListID}" >
+                <td class="got-link" id=@item.ItemListID data-request-url="@Url.Action("GotItem", "GroceriesItems")">
+                 
                         @if (item.NumberOfItems != null)
                         {
                             <span>@item.NumberOfItems - </span>
@@ -42,9 +40,9 @@
                             <span>@item.SizeType.SizeTypeName of</span>
                         }
                         @Html.DisplayFor(modelItem => item.Item.ItemName)
-
-                    </span>
+                    
                 </td>
+              
                 <td>
                     @if (item.Store != null)
                     {
@@ -71,16 +69,18 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $('span.got-link').click(OnGotClick);
+        $('td.got-link').click(OnGotClick);
         $('#ItemList').DataTable({ searching: false, paging: false, info: false, order: [] });
     });
 
     function OnGotClick(e) {
         var itemID = e.target.id;
+        console.log(itemID)
 
-
-        var div = document.getElementById('FullItem{' + itemID + '}');
-        div.outerHTML = "";
+        var div = document.getElementsByName('FullItem{' + itemID + '}');
+        console.log(div);
+        div[0].outerHTML = "";
+        //div.remove();
 
 
         var url = $(this).data('request-url');
