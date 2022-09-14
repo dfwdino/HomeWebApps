@@ -33,18 +33,21 @@
             <tr name="FullItem{@item.ItemListID}">
                 <td class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
 
-                        @*@if (item.NumberOfItems != null)
-        {
-            <span>@item.NumberOfItems - </span>
-        }*@
+                    <span>
                         @item.Item.ItemName
+                    </span>
 
-                        @if (item.SizeType?.SizeTypeName != null)
-                        {
-                            <span> - @item.SizeType.SizeTypeName</span>
-                        }
+                    @if (item.NumberOfItems != null)
+                    {
+                        <span> - @item.NumberOfItems - </span>
+                    }
 
-                    
+                    @if (item.SizeType?.SizeTypeName != null)
+                    {
+                        <span> - @item.SizeType.SizeTypeName</span>
+                    }
+
+
                 </td>
                 <td>
                     @if (item.DateGot.HasValue)
