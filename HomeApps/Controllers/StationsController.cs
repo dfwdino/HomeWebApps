@@ -18,7 +18,7 @@ namespace HomeApps.Controllers
         // GET: Stations
         public ActionResult Index()
         {
-            var stations = db.Stations.Where(m => m.Deleted == false).Include(s => s.CreateModifyLog);
+            var stations = db.Stations.Where(m => m.Deleted == false).OrderBy(m => m.Name).Include(s => s.CreateModifyLog);
             return View(stations.ToList());
         }
 

@@ -16,6 +16,9 @@
     <thead>
         <tr>
             <th>
+
+            </th>
+            <th>
                 @Html.DisplayName("Items")
             </th>
             <th>
@@ -28,21 +31,23 @@
         @foreach (var item in Model)
         {
 
-            <tr name="FullItem{@item.ItemListID}" >
-                <td class="got-link" id=@item.ItemListID data-request-url="@Url.Action("GotItem", "GroceriesItems")">
-                 
-                        @if (item.NumberOfItems != null)
-                        {
-                            <span>@item.NumberOfItems - </span>
-                        }
-                        @if (item.SizeType?.SizeTypeName != null)
-                        {
-                            <span>@item.SizeType.SizeTypeName of</span>
-                        }
-                        @Html.DisplayFor(modelItem => item.Item.ItemName)
-                    
+            <tr name="FullItem{@item.ItemListID}">
+                <td>
+                    @if (item.NumberOfItems != null)
+                    {
+                        <span>@item.NumberOfItems</span>
+                    }
                 </td>
-              
+                <td class="got-link" id=@item.ItemListID data-request-url="@Url.Action("GotItem", "GroceriesItems")"
+                    @if (item.SizeType?.SizeTypeName != null)
+                    {
+                        <span>@item.SizeType.SizeTypeName of</span>
+                    }
+
+                    @Html.DisplayFor(modelItem => item.Item.ItemName)
+
+                </td>
+
                 <td>
                     @if (item.Store != null)
                     {

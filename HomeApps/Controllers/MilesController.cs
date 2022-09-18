@@ -21,7 +21,7 @@ namespace HomeApps.Controllers
             MilesViewModel Miles = new MilesViewModel();
 
             var tempmils = db.Miles.OrderBy(m => m.GasDate).Where(m => m.AutoID == id).ToList();//.Include(m => m.Station).Include(m => m.Auto).ToList();
-
+            Miles.AutoName = db.Autos.Where(s => s.AutoID == id).FirstOrDefault()?.AutoName;
 
             foreach (Mile item in tempmils)
             {

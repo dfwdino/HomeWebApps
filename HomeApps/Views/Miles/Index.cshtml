@@ -21,7 +21,7 @@
 
 else
 {
-    <h2>Miles for @sessionuser.FirstName - @Model.Miles.First().AutoID</h2>
+    <h2>Miles for @sessionuser.FirstName - @Model.AutoName</h2>
 
     <div id="HideShowSummaryMiles" style="padding-bottom:10px;">Hide/Show SummaryMiles</div>
 
@@ -86,7 +86,7 @@ else
 
         </tr>
 
-        @foreach (var item in Model.Miles.OrderByDescending(m => m.GasDate))
+        @foreach (var item in Model.Miles.OrderByDescending(m => m.GasDate).Take(20))
         {
             <tr>
                 <td>
