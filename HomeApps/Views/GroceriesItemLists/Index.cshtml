@@ -75,10 +75,10 @@
 
     function OnGotClick(e) {
         var itemID = e.target.id;
-        console.log(itemID)
+
 
         var div = document.getElementsByName('FullItem{' + itemID + '}');
-        console.log(div);
+        
         div[0].outerHTML = "";
         //div.remove();
 

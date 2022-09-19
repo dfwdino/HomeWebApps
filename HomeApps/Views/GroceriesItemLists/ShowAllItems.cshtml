@@ -33,18 +33,18 @@
             <tr name="FullItem{@item.ItemListID}">
                 <td class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
 
-                    <span>
-                        @item.Item.ItemName
-                    </span>
+                    
+                    @item.Item.ItemName
+                    
 
                     @if (item.NumberOfItems != null)
                     {
-                        <span> - @item.NumberOfItems - </span>
+                        <span> - </span> @item.NumberOfItems
                     }
 
                     @if (item.SizeType?.SizeTypeName != null)
                     {
-                        <span> - @item.SizeType.SizeTypeName</span>
+                        <span> - </span> @item.SizeType.SizeTypeName
                     }
 
 
@@ -88,9 +88,10 @@
 
     function OnGotClick(e) {
         var itemID = e.target.id;
-
-
+        
+        
         var div = document.getElementsByName('FullItem{' + itemID + '}');
+        
         div[0].outerHTML = "";
 
 
