@@ -17,7 +17,7 @@ namespace HomeApps.Controllers
         // GET: SizeTypes
         public ActionResult Index()
         {
-            return View(db.SizeTypes.ToList());
+            return View(db.SizeTypes.OrderBy(mm => mm.SizeTypeName).ToList());
         }
 
         // GET: SizeTypes/Details/5

@@ -116,7 +116,8 @@ namespace HomeApps.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Item item = db.Items.Find(id);
-            db.Items.Remove(item);
+            //db.Items.Remove(item);
+            item.IsDeleted = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

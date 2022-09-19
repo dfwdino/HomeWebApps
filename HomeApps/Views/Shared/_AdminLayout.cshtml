@@ -1,4 +1,11 @@
 ﻿<!DOCTYPE html>
+@using HomeApps.Models;
+
+@{
+
+
+    UserViewModel currentuser = this.Session["_CurrentUser"] as UserViewModel;
+}
 <html>
 <head>
     <meta charset="utf-8" />
@@ -26,21 +33,27 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    @Html.ActionLink("Schemas", "AddSchema", "Admin", null, new { @class = "nav-link" })
+                    @if (currentuser.IsAdmin)
+                    {
+                        @Html.ActionLink("Schemas", "AddSchema", "Admin", null, new { @class = "nav-link" })
+                    }
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Users", "AllUsers", "Admin", null, new { @class = "nav-link" })
+                    @if (currentuser.IsAdmin)
+                    {
+                        @Html.ActionLink("Users", "AllUsers", "Admin", null, new { @class = "nav-link" })
+                    }
                 </li>
                 @*<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>*@
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>*@
             </ul>
 
 

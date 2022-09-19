@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Groceries</title>
+    <title>Groceries</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -24,7 +24,7 @@
 
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Home Apps</a>
+        @Html.ActionLink("Home Apps", "Index", "AppList", null, new { @class = "navbar-brand" })
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -65,18 +65,18 @@
                         }
                     </li>
                 </ul>
-                
 
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
-                {
-                    @Html.ActionLink("Items", "Index", "GroceriesItems", null, new { @class = "nav-link" })
-                }
-            </li>
-        </ul>
-    }
-</nav>
+
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
+                        {
+                            @Html.ActionLink("Items", "Index", "GroceriesItems", null, new { @class = "nav-link" })
+                        }
+                    </li>
+                </ul>
+            }
+    </nav>
 
 
     <div class="container body-content" id="RenderBody">
