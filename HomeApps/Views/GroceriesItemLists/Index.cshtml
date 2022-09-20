@@ -15,7 +15,7 @@
 <table id="ItemList" class="display">
     <thead>
         <tr>
-            <th>
+            <th style="width:5px">
 
             </th>
             <th>
@@ -30,7 +30,6 @@
     <tbody>
         @foreach (var item in Model)
         {
-
             <tr name="FullItem{@item.ItemListID}">
                 <td>
                     @if (item.NumberOfItems != null)
@@ -38,25 +37,25 @@
                         <span>@item.NumberOfItems</span>
                     }
                 </td>
+
                 <td class="got-link" id=@item.ItemListID data-request-url="@Url.Action("GotItem", "GroceriesItems")"
-                    @if (item.SizeType?.SizeTypeName != null)
-                    {
-                        <span>@item.SizeType.SizeTypeName of</span>
+                    @if (item.SizeType?.SizeTypeName != null) {<span>@item.SizeType.SizeTypeName of</span>
                     }
 
                     @Html.DisplayFor(modelItem => item.Item.ItemName)
 
-                </td>
 
                 <td>
                     @if (item.Store != null)
                     {
                         <sapn>@Html.DisplayFor(modelItem => item.Store.StoreName) - </sapn>
                     }
+
                     @Html.ActionLink("Edit", "Edit", new { id = item.ItemListID })
                 </td>
 
             </tr>
+
         }
     </tbody>
 
@@ -83,7 +82,7 @@
 
 
         var div = document.getElementsByName('FullItem{' + itemID + '}');
-        
+
         div[0].outerHTML = "";
         //div.remove();
 

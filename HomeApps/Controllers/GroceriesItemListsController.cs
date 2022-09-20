@@ -27,11 +27,9 @@ namespace HomeApps.Controllers
 
         public ActionResult ShowAllItems(bool sortbydate = false)
         {
-            List<ItemList> itemLists = db.ItemLists.OrderByDescending(f => f.DateGot).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store).Where(ff => ff.GotItem == false).ToList()
+            List<ItemList> itemLists = db.ItemLists.OrderByDescending(f => f.DateGot).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store).ToList()
                 .GroupBy(f => f.Item.ItemName).Select(f => f.First()).Select(f => f).Distinct().ToList();
-          
 
-          
             return View(itemLists.ToList());
         }
 
