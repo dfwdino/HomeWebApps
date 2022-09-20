@@ -24,7 +24,7 @@
 
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Home App</a>
+        @Html.ActionLink("Home App", "AppList", "Home", null, new { @class = "navbar-brand" })
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,38 +32,38 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             @if (this.Session["_CurrentUser"] != null)
             {
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Auto").Equals(true))
-                    {
-                        @Html.ActionLink("Gas", "Index", "Autos", null, new { @class = "nav-link" })
-                    }
-                </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
-                    {
-                        @Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { @class = "nav-link" })
-                    }
-                </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin)
-                    {
-                        @Html.ActionLink("Admin", "Index", "Admin/Index", null, new { @class = "nav-link" })
-                    }
-                </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
-                    {
-                        @Html.ActionLink("Event", "Index", "TheEvent/Index", null, new { @class = "nav-link" })
-                    }
-                </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
-                    {
-                        @Html.ActionLink("Groceries", "Index", "GroceriesItemLists", null, new { @class = "nav-link" })
-                    }
-                </li>
-            </ul>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Auto").Equals(true))
+                        {
+                            @Html.ActionLink("Gas", "Index", "Autos", null, new { @class = "nav-link" })
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
+                        {
+                            @Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { @class = "nav-link" })
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (currentuser.IsAdmin)
+                        {
+                            @Html.ActionLink("Admin", "Index", "Admin/Index", null, new { @class = "nav-link" })
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
+                        {
+                            @Html.ActionLink("Event", "Index", "TheEvent/Index", null, new { @class = "nav-link" })
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
+                        {
+                            @Html.ActionLink("Groceries", "Index", "GroceriesItemLists", null, new { @class = "nav-link" })
+                        }
+                    </li>
+                </ul>
             }
     </nav>
 

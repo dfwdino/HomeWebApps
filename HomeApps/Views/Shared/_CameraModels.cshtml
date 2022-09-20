@@ -24,7 +24,7 @@
 
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Home App</a>
+        @Html.ActionLink("Home App", "AppList", "Home", null, new { @class = "navbar-brand" })
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,27 +32,27 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             @if (this.Session["_CurrentUser"] != null)
             {
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("CameraModels").Equals(true))
-                    {
-                        @Html.ActionLink("Gender Types", "GetGenderTypes", "CameraModels", null, new { @class = "nav-link" })
-                    }
-                </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("CameraModels").Equals(true))
-                    {
-                        @Html.ActionLink("WebSite", "GetWebSite", "CameraModels", null, new { @class = "nav-link" })
-                    }
-                </li>
-                <li class="nav-item">
-                    @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("CameraModels").Equals(true))
-                    {
-                        @Html.ActionLink("Models", "Index", "CameraModels", null, new { @class = "nav-link" })
-                    }
-                </li>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("CameraModels").Equals(true))
+                        {
+                            @Html.ActionLink("Gender Types", "GetGenderTypes", "CameraModels", null, new { @class = "nav-link" })
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("CameraModels").Equals(true))
+                        {
+                            @Html.ActionLink("WebSite", "GetWebSite", "CameraModels", null, new { @class = "nav-link" })
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("CameraModels").Equals(true))
+                        {
+                            @Html.ActionLink("Models", "Index", "CameraModels", null, new { @class = "nav-link" })
+                        }
+                    </li>
 
-            </ul>
+                </ul>
 
             }
     </nav>
