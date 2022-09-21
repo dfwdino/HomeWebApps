@@ -22,6 +22,7 @@ namespace HomeApps
         public Nullable<int> SizeTypeID { get; set; }
         public System.DateTime DateAdded { get; set; }
         public Nullable<System.DateTime> DateGot { get; set; }
+        public string Notes { get; set; }
     
         public virtual Item Item { get; set; }
         public virtual SizeType SizeType { get; set; }

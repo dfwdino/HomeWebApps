@@ -1,0 +1,3 @@
+﻿CREATE SCHEMA [Gym]
+    AUTHORIZATION [dbo];
+

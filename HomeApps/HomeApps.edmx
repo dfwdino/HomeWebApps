@@ -53,7 +53,7 @@
           <Key>
             <PropertyRef Name="ItemListID" />
           </Key>
-          <Property Name="ItemListID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ItemListID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemID" Type="int" Nullable="false" />
           <Property Name="StoreID" Type="int" />
           <Property Name="GotItem" Type="bit" Nullable="false" />
@@ -61,6 +61,7 @@
           <Property Name="SizeTypeID" Type="int" />
           <Property Name="DateAdded" Type="date" Nullable="false" />
           <Property Name="DateGot" Type="date" />
+          <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Items">
           <Key>
@@ -95,6 +96,25 @@
           <Property Name="StoreName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="StoreAddress" Type="nvarchar" MaxLength="255" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Machines">
+          <Key>
+            <PropertyRef Name="MachineID" />
+            <PropertyRef Name="WorkedOutDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="MachineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MachineName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Time" Type="int" />
+          <Property Name="Reps" Type="int" />
+          <Property Name="Weight" Type="int" />
+          <Property Name="ResistanceLevel" Type="int" />
+          <Property Name="WorkedOutDate" Type="date" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CreateModifyLog">
           <Key>
@@ -417,6 +437,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Machines_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Machines" Type="Self.Machines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Machines">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Miles_Auto">
           <End Role="Autos" Type="Self.Autos" Multiplicity="1" />
           <End Role="Miles" Type="Self.Miles" Multiplicity="*" />
@@ -637,6 +669,19 @@
           <EntitySet Name="Websites" EntityType="Self.Websites" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UserSchemas" EntityType="Self.UserSchemas" Schema="Users" store:Type="Tables" />
+          <EntitySet Name="Machines" EntityType="Self.Machines" store:Type="Tables" store:Schema="Gym">
+            <DefiningQuery>SELECT 
+    [Machines].[MachineID] AS [MachineID], 
+    [Machines].[MachineName] AS [MachineName], 
+    [Machines].[Time] AS [Time], 
+    [Machines].[Reps] AS [Reps], 
+    [Machines].[Weight] AS [Weight], 
+    [Machines].[ResistanceLevel] AS [ResistanceLevel], 
+    [Machines].[WorkedOutDate] AS [WorkedOutDate], 
+    [Machines].[IsDeleted] AS [IsDeleted], 
+    [Machines].[UserID] AS [UserID]
+    FROM [Gym].[Machines] AS [Machines]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Auto_CreateModifyLog" Association="Self.FK_Auto_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
             <End Role="Autos" EntitySet="Autos" />
@@ -684,6 +729,10 @@
           <AssociationSet Name="FK_ItemList_Stores" Association="Self.FK_ItemList_Stores">
             <End Role="Stores" EntitySet="Stores" />
             <End Role="ItemList" EntitySet="ItemList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Machines_Users" Association="Self.FK_Machines_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Machines" EntitySet="Machines" />
           </AssociationSet>
           <AssociationSet Name="FK_Miles_Auto" Association="Self.FK_Miles_Auto">
             <End Role="Autos" EntitySet="Autos" />
@@ -898,6 +947,11 @@
             <End Role="Store" EntitySet="Stores" />
             <End Role="ItemList" EntitySet="ItemLists" />
           </AssociationSet>
+          <EntitySet Name="Machines" EntityType="HomeAppsModel.Machine" />
+          <AssociationSet Name="FK_Machines_Users" Association="HomeAppsModel.FK_Machines_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Machine" EntitySet="Machines" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Auto">
           <Key>
@@ -1011,6 +1065,7 @@
           <NavigationProperty Name="UsersPeoples" Relationship="HomeAppsModel.FK_UsersPeople_Users" FromRole="User" ToRole="UsersPeople" />
           <NavigationProperty Name="EventActions" Relationship="HomeAppsModel.FK_EventActions_Users" FromRole="User" ToRole="EventAction" />
           <NavigationProperty Name="WeightTrackers" Relationship="HomeAppsModel.FK_WeightTracker_Users" FromRole="User" ToRole="WeightTracker" />
+          <NavigationProperty Name="Machines" Relationship="HomeAppsModel.FK_Machines_Users" FromRole="User" ToRole="Machine" />
           </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -1508,6 +1563,7 @@
           <NavigationProperty Name="Item" Relationship="HomeAppsModel.FK_ItemList_Items" FromRole="ItemList" ToRole="Item" />
           <NavigationProperty Name="SizeType" Relationship="HomeAppsModel.FK_ItemList_SizeType" FromRole="ItemList" ToRole="SizeType" />
           <NavigationProperty Name="Store" Relationship="HomeAppsModel.FK_ItemList_Stores" FromRole="ItemList" ToRole="Store" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -1570,6 +1626,36 @@
             </Principal>
             <Dependent Role="ItemList">
               <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Machine">
+          <Key>
+            <PropertyRef Name="MachineID" />
+            <PropertyRef Name="WorkedOutDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="MachineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MachineName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="Int32" />
+          <Property Name="Reps" Type="Int32" />
+          <Property Name="Weight" Type="Int32" />
+          <Property Name="ResistanceLevel" Type="Int32" />
+          <Property Name="WorkedOutDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_Machines_Users" FromRole="Machine" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Machines_Users">
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeAppsModel.Machine" Role="Machine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Machine">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1835,6 +1921,7 @@
           <EntitySetMapping Name="ItemLists">
             <EntityTypeMapping TypeName="HomeAppsModel.ItemList">
               <MappingFragment StoreEntitySet="ItemList">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="DateGot" ColumnName="DateGot" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="SizeTypeID" ColumnName="SizeTypeID" />
@@ -1871,6 +1958,21 @@
                 <ScalarProperty Name="StoreAddress" ColumnName="StoreAddress" />
                 <ScalarProperty Name="StoreName" ColumnName="StoreName" />
                 <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Machines">
+            <EntityTypeMapping TypeName="HomeAppsModel.Machine">
+              <MappingFragment StoreEntitySet="Machines">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="WorkedOutDate" ColumnName="WorkedOutDate" />
+                <ScalarProperty Name="ResistanceLevel" ColumnName="ResistanceLevel" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Reps" ColumnName="Reps" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="MachineID" ColumnName="MachineID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

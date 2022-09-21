@@ -257,6 +257,11 @@
     <Content Include="Views\GroceriesItems\Index.cshtml" />
     <Content Include="Views\GroceriesItemLists\ShowAllItems.cshtml" />
     <Content Include="Views\Admin\AllUsers.cshtml" />
+    <Content Include="Views\Machines\Create.cshtml" />
+    <Content Include="Views\Machines\Delete.cshtml" />
+    <Content Include="Views\Machines\Details.cshtml" />
+    <Content Include="Views\Machines\Edit.cshtml" />
+    <Content Include="Views\Machines\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -283,6 +288,10 @@
     <Compile Include="Controllers\GroceriesItemListsController.cs" />
     <Compile Include="Controllers\GroceriesItemsController.cs" />
     <Compile Include="Controllers\GroceriesStoresController.cs" />
+    <Compile Include="Controllers\MachinesController.cs" />
+    <Compile Include="Machine.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ItemListModel.cs" />
     <Compile Include="Controllers\SizeTypesController.cs" />
     <Compile Include="CreateModifyLog.cs">

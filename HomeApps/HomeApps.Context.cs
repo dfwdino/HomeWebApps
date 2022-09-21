@@ -52,5 +52,6 @@ namespace HomeApps
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<SizeType> SizeTypes { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<Machine> Machines { get; set; }
     }
 }

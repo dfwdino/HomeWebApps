@@ -61,6 +61,8 @@
         <AssociationConnector Association="HomeAppsModel.FK_ItemList_Items" />
         <AssociationConnector Association="HomeAppsModel.FK_ItemList_SizeType" />
         <AssociationConnector Association="HomeAppsModel.FK_ItemList_Stores" />
+        <EntityTypeShape EntityType="HomeAppsModel.Machine" Width="1.5" PointX="13.375" PointY="3" />
+        <AssociationConnector Association="HomeAppsModel.FK_Machines_Users" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

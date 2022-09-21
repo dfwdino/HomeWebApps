@@ -23,6 +23,7 @@ namespace HomeApps
             this.UsersPeoples = new HashSet<UsersPeople>();
             this.EventActions = new HashSet<EventAction>();
             this.WeightTrackers = new HashSet<WeightTracker>();
+            this.Machines = new HashSet<Machine>();
         }
     
         public int UserID { get; set; }
@@ -48,5 +49,7 @@ namespace HomeApps
         public virtual ICollection<EventAction> EventActions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WeightTracker> WeightTrackers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Machine> Machines { get; set; }
     }
 }
