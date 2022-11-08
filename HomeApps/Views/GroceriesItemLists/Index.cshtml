@@ -42,7 +42,16 @@
                     @if (item.SizeType?.SizeTypeName != null) {<span>@item.SizeType.SizeTypeName of</span>
                     }
 
-                    @Html.DisplayFor(modelItem => item.Item.ItemName)
+                <span>@Html.DisplayFor(modelItem => item.Item.ItemName)</span>
+                @if(item.Item.IsMSGFree != null && item.Item.IsMSGFree == true)
+                {
+                    <span> - Is MSG Free</span>
+                }
+
+                @if(item.Notes != null)
+                {
+                    <span><br/>@item.Notes</span>
+                }
 
 
                 <td>

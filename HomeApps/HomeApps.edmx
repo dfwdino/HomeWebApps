@@ -5,6 +5,62 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HomeAppsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChoreDayTimeType">
+          <Key>
+            <PropertyRef Name="ChoreDayTimeTypeID" />
+          </Key>
+          <Property Name="ChoreDayTimeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DayTimeType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Chores">
+          <Key>
+            <PropertyRef Name="ChoreID" />
+          </Key>
+          <Property Name="ChoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChoreName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChoreTimeType">
+          <Key>
+            <PropertyRef Name="ChoreTimeTypeID" />
+          </Key>
+          <Property Name="ChoreTimeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChoreTime" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersChores">
+          <Key>
+            <PropertyRef Name="UserChoreID" />
+          </Key>
+          <Property Name="UserChoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ChoreID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="ChoreTimeTypeID" Type="int" Nullable="false" />
+          <Property Name="StartDateChore" Type="date" Nullable="false" />
+          <Property Name="IsDone" Type="bit" Nullable="false" />
+          <Property Name="EndDateChore" Type="date" />
+          <Property Name="ChoreDayTimeTypeID" Type="int" Nullable="false" />
+          <Property Name="AllowanceAmount" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersDoneChores">
+          <Key>
+            <PropertyRef Name="UsersDoneChoresID" />
+          </Key>
+          <Property Name="UsersDoneChoresID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="DateDone" Type="date" Nullable="false" />
+          <Property Name="UserChoreID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Autos">
           <Key>
             <PropertyRef Name="AutoID" />
@@ -70,6 +126,7 @@
           <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="IsMSGFree" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Prices">
           <Key>
@@ -97,14 +154,9 @@
           <Property Name="StoreAddress" Type="nvarchar" MaxLength="255" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Machines">
           <Key>
             <PropertyRef Name="MachineID" />
-            <PropertyRef Name="WorkedOutDate" />
-            <PropertyRef Name="IsDeleted" />
-            <PropertyRef Name="UserID" />
           </Key>
           <Property Name="MachineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MachineName" Type="nvarchar" MaxLength="50" />
@@ -158,7 +210,7 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           <Property Name="ModfiyID" Type="int" Nullable="false" />
           <Property Name="SchemaName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Users">
+        <EntityType Name="Users1">
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
@@ -306,10 +358,10 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Auto_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users1" Type="Self.Users1" Multiplicity="1" />
           <End Role="Autos" Type="Self.Autos" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Users1">
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="Autos">
@@ -366,10 +418,10 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EventActions_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users1" Type="Self.Users1" Multiplicity="1" />
           <End Role="EventActions" Type="Self.EventActions" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Users1">
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="EventActions">
@@ -438,10 +490,10 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Machines_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users1" Type="Self.Users1" Multiplicity="1" />
           <End Role="Machines" Type="Self.Machines" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Users1">
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="Machines">
@@ -546,10 +598,10 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRoles_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users1" Type="Self.Users1" Multiplicity="1" />
           <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Users1">
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="UserRoles">
@@ -559,24 +611,24 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
         </Association>
         <Association Name="FK_Users_CreateModifyLog">
           <End Role="CreateModifyLog" Type="Self.CreateModifyLog" Multiplicity="1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <End Role="Users1" Type="Self.Users1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CreateModifyLog">
               <PropertyRef Name="CreateModifyID" />
             </Principal>
-            <Dependent Role="Users">
+            <Dependent Role="Users1">
               <PropertyRef Name="CreateModifyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <End Role="Users1" Type="Self.Users1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
               <PropertyRef Name="RoleID" />
             </Principal>
-            <Dependent Role="Users">
+            <Dependent Role="Users1">
               <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
@@ -594,14 +646,74 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserSchemas_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users1" Type="Self.Users1" Multiplicity="1" />
           <End Role="UserSchemas" Type="Self.UserSchemas" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Users1">
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="UserSchemas">
               <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersChores_ChoreDayTimeType">
+          <End Role="ChoreDayTimeType" Type="Self.ChoreDayTimeType" Multiplicity="1" />
+          <End Role="UsersChores" Type="Self.UsersChores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChoreDayTimeType">
+              <PropertyRef Name="ChoreDayTimeTypeID" />
+            </Principal>
+            <Dependent Role="UsersChores">
+              <PropertyRef Name="ChoreDayTimeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersChores_Chores">
+          <End Role="Chores" Type="Self.Chores" Multiplicity="1" />
+          <End Role="UsersChores" Type="Self.UsersChores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chores">
+              <PropertyRef Name="ChoreID" />
+            </Principal>
+            <Dependent Role="UsersChores">
+              <PropertyRef Name="ChoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersChores_ChoreTimeType">
+          <End Role="ChoreTimeType" Type="Self.ChoreTimeType" Multiplicity="1" />
+          <End Role="UsersChores" Type="Self.UsersChores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChoreTimeType">
+              <PropertyRef Name="ChoreTimeTypeID" />
+            </Principal>
+            <Dependent Role="UsersChores">
+              <PropertyRef Name="ChoreTimeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersChores_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersChores" Type="Self.UsersChores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersChores">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersDoneChores_UsersChores">
+          <End Role="UsersChores" Type="Self.UsersChores" Multiplicity="1" />
+          <End Role="UsersDoneChores" Type="Self.UsersDoneChores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersChores">
+              <PropertyRef Name="UserChoreID" />
+            </Principal>
+            <Dependent Role="UsersDoneChores">
+              <PropertyRef Name="UserChoreID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -618,10 +730,10 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UsersPeople_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users1" Type="Self.Users1" Multiplicity="1" />
           <End Role="UsersPeople" Type="Self.UsersPeople" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Users1">
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="UsersPeople">
@@ -630,10 +742,10 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_WeightTracker_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Users1" Type="Self.Users1" Multiplicity="0..1" />
           <End Role="WeightTracker" Type="Self.WeightTracker" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Users1">
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="WeightTracker">
@@ -642,6 +754,12 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HomeAppsModelStoreContainer">
+          <EntitySet Name="ChoreDayTimeType" EntityType="Self.ChoreDayTimeType" Schema="ChoreList" store:Type="Tables" />
+          <EntitySet Name="Chores" EntityType="Self.Chores" Schema="ChoreList" store:Type="Tables" />
+          <EntitySet Name="ChoreTimeType" EntityType="Self.ChoreTimeType" Schema="ChoreList" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="ChoreList" store:Type="Tables" />
+          <EntitySet Name="UsersChores" EntityType="Self.UsersChores" Schema="ChoreList" store:Type="Tables" />
+          <EntitySet Name="UsersDoneChores" EntityType="Self.UsersDoneChores" Schema="ChoreList" store:Type="Tables" />
           <EntitySet Name="Autos" EntityType="Self.Autos" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Miles" EntityType="Self.Miles" Schema="Gas" store:Type="Tables" />
           <EntitySet Name="Stations" EntityType="Self.Stations" Schema="Gas" store:Type="Tables" />
@@ -651,11 +769,12 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           <EntitySet Name="Prices" EntityType="Self.Prices" Schema="Groceries" store:Type="Tables" />
           <EntitySet Name="SizeType" EntityType="Self.SizeType" Schema="Groceries" store:Type="Tables" />
           <EntitySet Name="Stores" EntityType="Self.Stores" Schema="Groceries" store:Type="Tables" />
+          <EntitySet Name="Machines" EntityType="Self.Machines" Schema="Gym" store:Type="Tables" />
           <EntitySet Name="CreateModifyLog" EntityType="Self.CreateModifyLog" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Logging" EntityType="Self.Logging" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Schemas" EntityType="Self.Schemas" Schema="HomeApp" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="HomeApp" store:Type="Tables" />
+          <EntitySet Name="Users1" EntityType="Self.Users1" Schema="HomeApp" Table="Users" store:Type="Tables" />
           <EntitySet Name="Actions" EntityType="Self.Actions" Schema="MateTracker" store:Type="Tables" />
           <EntitySet Name="EventActions" EntityType="Self.EventActions" Schema="MateTracker" store:Type="Tables" />
           <EntitySet Name="Genders" EntityType="Self.Genders" Schema="MateTracker" store:Type="Tables" />
@@ -669,25 +788,12 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           <EntitySet Name="Websites" EntityType="Self.Websites" Schema="ShanesGlassEyeCRM" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="Users" store:Type="Tables" />
           <EntitySet Name="UserSchemas" EntityType="Self.UserSchemas" Schema="Users" store:Type="Tables" />
-          <EntitySet Name="Machines" EntityType="Self.Machines" store:Type="Tables" store:Schema="Gym">
-            <DefiningQuery>SELECT 
-    [Machines].[MachineID] AS [MachineID], 
-    [Machines].[MachineName] AS [MachineName], 
-    [Machines].[Time] AS [Time], 
-    [Machines].[Reps] AS [Reps], 
-    [Machines].[Weight] AS [Weight], 
-    [Machines].[ResistanceLevel] AS [ResistanceLevel], 
-    [Machines].[WorkedOutDate] AS [WorkedOutDate], 
-    [Machines].[IsDeleted] AS [IsDeleted], 
-    [Machines].[UserID] AS [UserID]
-    FROM [Gym].[Machines] AS [Machines]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Auto_CreateModifyLog" Association="Self.FK_Auto_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
             <End Role="Autos" EntitySet="Autos" />
           </AssociationSet>
           <AssociationSet Name="FK_Auto_Users" Association="Self.FK_Auto_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users1" />
             <End Role="Autos" EntitySet="Autos" />
           </AssociationSet>
           <AssociationSet Name="FK_CameraModelNotes_CameraModels" Association="Self.FK_CameraModelNotes_CameraModels">
@@ -707,7 +813,7 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
             <End Role="EventActions" EntitySet="EventActions" />
           </AssociationSet>
           <AssociationSet Name="FK_EventActions_Users" Association="Self.FK_EventActions_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users1" />
             <End Role="EventActions" EntitySet="EventActions" />
           </AssociationSet>
           <AssociationSet Name="FK_EventActions_UsersPeople" Association="Self.FK_EventActions_UsersPeople">
@@ -731,7 +837,7 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
             <End Role="ItemList" EntitySet="ItemList" />
           </AssociationSet>
           <AssociationSet Name="FK_Machines_Users" Association="Self.FK_Machines_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users1" />
             <End Role="Machines" EntitySet="Machines" />
           </AssociationSet>
           <AssociationSet Name="FK_Miles_Auto" Association="Self.FK_Miles_Auto">
@@ -767,35 +873,55 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
             <End Role="Stations" EntitySet="Stations" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRoles_Users" Association="Self.FK_UserRoles_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users1" />
             <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_CreateModifyLog" Association="Self.FK_Users_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
-            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users1" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
             <End Role="Roles" EntitySet="Roles" />
-            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users1" />
           </AssociationSet>
           <AssociationSet Name="FK_UserSchemas_Schemas" Association="Self.FK_UserSchemas_Schemas">
             <End Role="Schemas" EntitySet="Schemas" />
             <End Role="UserSchemas" EntitySet="UserSchemas" />
           </AssociationSet>
           <AssociationSet Name="FK_UserSchemas_Users" Association="Self.FK_UserSchemas_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users1" />
             <End Role="UserSchemas" EntitySet="UserSchemas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersChores_ChoreDayTimeType" Association="Self.FK_UsersChores_ChoreDayTimeType">
+            <End Role="ChoreDayTimeType" EntitySet="ChoreDayTimeType" />
+            <End Role="UsersChores" EntitySet="UsersChores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersChores_Chores" Association="Self.FK_UsersChores_Chores">
+            <End Role="Chores" EntitySet="Chores" />
+            <End Role="UsersChores" EntitySet="UsersChores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersChores_ChoreTimeType" Association="Self.FK_UsersChores_ChoreTimeType">
+            <End Role="ChoreTimeType" EntitySet="ChoreTimeType" />
+            <End Role="UsersChores" EntitySet="UsersChores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersChores_Users" Association="Self.FK_UsersChores_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersChores" EntitySet="UsersChores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersDoneChores_UsersChores" Association="Self.FK_UsersDoneChores_UsersChores">
+            <End Role="UsersChores" EntitySet="UsersChores" />
+            <End Role="UsersDoneChores" EntitySet="UsersDoneChores" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersPeople_Genders" Association="Self.FK_UsersPeople_Genders">
             <End Role="Genders" EntitySet="Genders" />
             <End Role="UsersPeople" EntitySet="UsersPeople" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersPeople_Users" Association="Self.FK_UsersPeople_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users1" />
             <End Role="UsersPeople" EntitySet="UsersPeople" />
           </AssociationSet>
           <AssociationSet Name="FK_WeightTracker_Users" Association="Self.FK_WeightTracker_Users">
-            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users1" />
             <End Role="WeightTracker" EntitySet="WeightTracker" />
           </AssociationSet>
         </EntityContainer>
@@ -951,6 +1077,32 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           <AssociationSet Name="FK_Machines_Users" Association="HomeAppsModel.FK_Machines_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Machine" EntitySet="Machines" />
+          </AssociationSet>
+          <EntitySet Name="User1" EntityType="HomeAppsModel.User1" />
+          <EntitySet Name="ChoreDayTimeTypes" EntityType="HomeAppsModel.ChoreDayTimeType" />
+          <EntitySet Name="Chores" EntityType="HomeAppsModel.Chore" />
+          <EntitySet Name="ChoreTimeTypes" EntityType="HomeAppsModel.ChoreTimeType" />
+          <EntitySet Name="UsersChores" EntityType="HomeAppsModel.UsersChore" />
+          <EntitySet Name="UsersDoneChores" EntityType="HomeAppsModel.UsersDoneChore" />
+          <AssociationSet Name="FK_UsersChores_Chores" Association="HomeAppsModel.FK_UsersChores_Chores">
+            <End Role="Chore" EntitySet="Chores" />
+            <End Role="UsersChore" EntitySet="UsersChores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersChores_ChoreTimeType" Association="HomeAppsModel.FK_UsersChores_ChoreTimeType">
+            <End Role="ChoreTimeType" EntitySet="ChoreTimeTypes" />
+            <End Role="UsersChore" EntitySet="UsersChores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersChores_Users" Association="HomeAppsModel.FK_UsersChores_Users">
+            <End Role="User1" EntitySet="User1" />
+            <End Role="UsersChore" EntitySet="UsersChores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersDoneChores_UsersChores" Association="HomeAppsModel.FK_UsersDoneChores_UsersChores">
+            <End Role="UsersChore" EntitySet="UsersChores" />
+            <End Role="UsersDoneChore" EntitySet="UsersDoneChores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersChores_ChoreDayTimeType" Association="HomeAppsModel.FK_UsersChores_ChoreDayTimeType">
+            <End Role="ChoreDayTimeType" EntitySet="ChoreDayTimeTypes" />
+            <End Role="UsersChore" EntitySet="UsersChores" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Auto">
@@ -1573,6 +1725,7 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           <Property Name="ItemName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ItemLists" Relationship="HomeAppsModel.FK_ItemList_Items" FromRole="Item" ToRole="ItemList" />
+          <Property Name="IsMSGFree" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="SizeType">
           <Key>
@@ -1632,9 +1785,6 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
         <EntityType Name="Machine">
           <Key>
             <PropertyRef Name="MachineID" />
-            <PropertyRef Name="WorkedOutDate" />
-            <PropertyRef Name="IsDeleted" />
-            <PropertyRef Name="UserID" />
           </Key>
           <Property Name="MachineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MachineName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1656,6 +1806,132 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
             </Principal>
             <Dependent Role="Machine">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User1">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UsersChores" Relationship="HomeAppsModel.FK_UsersChores_Users" FromRole="User1" ToRole="UsersChore" />
+        </EntityType>
+        <EntityType Name="ChoreDayTimeType">
+          <Key>
+            <PropertyRef Name="ChoreDayTimeTypeID" />
+          </Key>
+          <Property Name="ChoreDayTimeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DayTimeType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UsersChores" Relationship="HomeAppsModel.FK_UsersChores_ChoreDayTimeType" FromRole="ChoreDayTimeType" ToRole="UsersChore" />
+        </EntityType>
+        <EntityType Name="Chore">
+          <Key>
+            <PropertyRef Name="ChoreID" />
+          </Key>
+          <Property Name="ChoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChoreName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UsersChores" Relationship="HomeAppsModel.FK_UsersChores_Chores" FromRole="Chore" ToRole="UsersChore" />
+        </EntityType>
+        <EntityType Name="ChoreTimeType">
+          <Key>
+            <PropertyRef Name="ChoreTimeTypeID" />
+          </Key>
+          <Property Name="ChoreTimeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChoreTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UsersChores" Relationship="HomeAppsModel.FK_UsersChores_ChoreTimeType" FromRole="ChoreTimeType" ToRole="UsersChore" />
+        </EntityType>
+        <EntityType Name="UsersChore">
+          <Key>
+            <PropertyRef Name="UserChoreID" />
+          </Key>
+          <Property Name="UserChoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ChoreID" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="ChoreTimeTypeID" Type="Int32" Nullable="false" />
+          <Property Name="StartDateChore" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsDone" Type="Boolean" Nullable="false" />
+          <Property Name="EndDateChore" Type="DateTime" Precision="0" />
+          <Property Name="ChoreDayTimeTypeID" Type="Int32" Nullable="false" />
+          <Property Name="AllowanceAmount" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <NavigationProperty Name="Chore" Relationship="HomeAppsModel.FK_UsersChores_Chores" FromRole="UsersChore" ToRole="Chore" />
+          <NavigationProperty Name="ChoreTimeType" Relationship="HomeAppsModel.FK_UsersChores_ChoreTimeType" FromRole="UsersChore" ToRole="ChoreTimeType" />
+          <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_UsersChores_Users" FromRole="UsersChore" ToRole="User1" />
+          <NavigationProperty Name="UsersDoneChores" Relationship="HomeAppsModel.FK_UsersDoneChores_UsersChores" FromRole="UsersChore" ToRole="UsersDoneChore" />
+          <NavigationProperty Name="ChoreDayTimeType" Relationship="HomeAppsModel.FK_UsersChores_ChoreDayTimeType" FromRole="UsersChore" ToRole="ChoreDayTimeType" />
+        </EntityType>
+        <EntityType Name="UsersDoneChore">
+          <Key>
+            <PropertyRef Name="UsersDoneChoresID" />
+          </Key>
+          <Property Name="UsersDoneChoresID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DateDone" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UserChoreID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UsersChore" Relationship="HomeAppsModel.FK_UsersDoneChores_UsersChores" FromRole="UsersDoneChore" ToRole="UsersChore" />
+        </EntityType>
+        <Association Name="FK_UsersChores_Chores">
+          <End Type="HomeAppsModel.Chore" Role="Chore" Multiplicity="1" />
+          <End Type="HomeAppsModel.UsersChore" Role="UsersChore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chore">
+              <PropertyRef Name="ChoreID" />
+            </Principal>
+            <Dependent Role="UsersChore">
+              <PropertyRef Name="ChoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersChores_ChoreTimeType">
+          <End Type="HomeAppsModel.ChoreTimeType" Role="ChoreTimeType" Multiplicity="1" />
+          <End Type="HomeAppsModel.UsersChore" Role="UsersChore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChoreTimeType">
+              <PropertyRef Name="ChoreTimeTypeID" />
+            </Principal>
+            <Dependent Role="UsersChore">
+              <PropertyRef Name="ChoreTimeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersChores_Users">
+          <End Type="HomeAppsModel.User1" Role="User1" Multiplicity="1" />
+          <End Type="HomeAppsModel.UsersChore" Role="UsersChore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User1">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersChore">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersDoneChores_UsersChores">
+          <End Type="HomeAppsModel.UsersChore" Role="UsersChore" Multiplicity="1" />
+          <End Type="HomeAppsModel.UsersDoneChore" Role="UsersDoneChore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersChore">
+              <PropertyRef Name="UserChoreID" />
+            </Principal>
+            <Dependent Role="UsersDoneChore">
+              <PropertyRef Name="UserChoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersChores_ChoreDayTimeType">
+          <End Type="HomeAppsModel.ChoreDayTimeType" Role="ChoreDayTimeType" Multiplicity="1" />
+          <End Type="HomeAppsModel.UsersChore" Role="UsersChore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChoreDayTimeType">
+              <PropertyRef Name="ChoreDayTimeTypeID" />
+            </Principal>
+            <Dependent Role="UsersChore">
+              <PropertyRef Name="ChoreDayTimeTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1747,7 +2023,7 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="HomeAppsModel.User">
-              <MappingFragment StoreEntitySet="Users">
+              <MappingFragment StoreEntitySet="Users1">
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
@@ -1936,6 +2212,7 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="HomeAppsModel.Item">
               <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="IsMSGFree" ColumnName="IsMSGFree" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
@@ -1973,6 +2250,68 @@ warning 6002: The table/view 'HomeApps.Gym.Machines' does not have a primary key
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="MachineName" ColumnName="MachineName" />
                 <ScalarProperty Name="MachineID" ColumnName="MachineID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User1">
+            <EntityTypeMapping TypeName="HomeAppsModel.User1">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChoreDayTimeTypes">
+            <EntityTypeMapping TypeName="HomeAppsModel.ChoreDayTimeType">
+              <MappingFragment StoreEntitySet="ChoreDayTimeType">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DayTimeType" ColumnName="DayTimeType" />
+                <ScalarProperty Name="ChoreDayTimeTypeID" ColumnName="ChoreDayTimeTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chores">
+            <EntityTypeMapping TypeName="HomeAppsModel.Chore">
+              <MappingFragment StoreEntitySet="Chores">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ChoreName" ColumnName="ChoreName" />
+                <ScalarProperty Name="ChoreID" ColumnName="ChoreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChoreTimeTypes">
+            <EntityTypeMapping TypeName="HomeAppsModel.ChoreTimeType">
+              <MappingFragment StoreEntitySet="ChoreTimeType">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ChoreTime" ColumnName="ChoreTime" />
+                <ScalarProperty Name="ChoreTimeTypeID" ColumnName="ChoreTimeTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersChores">
+            <EntityTypeMapping TypeName="HomeAppsModel.UsersChore">
+              <MappingFragment StoreEntitySet="UsersChores">
+                <ScalarProperty Name="AllowanceAmount" ColumnName="AllowanceAmount" />
+                <ScalarProperty Name="ChoreDayTimeTypeID" ColumnName="ChoreDayTimeTypeID" />
+                <ScalarProperty Name="EndDateChore" ColumnName="EndDateChore" />
+                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
+                <ScalarProperty Name="StartDateChore" ColumnName="StartDateChore" />
+                <ScalarProperty Name="ChoreTimeTypeID" ColumnName="ChoreTimeTypeID" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ChoreID" ColumnName="ChoreID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserChoreID" ColumnName="UserChoreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersDoneChores">
+            <EntityTypeMapping TypeName="HomeAppsModel.UsersDoneChore">
+              <MappingFragment StoreEntitySet="UsersDoneChores">
+                <ScalarProperty Name="UserChoreID" ColumnName="UserChoreID" />
+                <ScalarProperty Name="DateDone" ColumnName="DateDone" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UsersDoneChoresID" ColumnName="UsersDoneChoresID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

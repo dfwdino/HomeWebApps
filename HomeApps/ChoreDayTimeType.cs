@@ -12,20 +12,19 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class Item
+    public partial class ChoreDayTimeType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Item()
+        public ChoreDayTimeType()
         {
-            this.ItemLists = new HashSet<ItemList>();
+            this.UsersChores = new HashSet<UsersChore>();
         }
     
-        public int ItemID { get; set; }
-        public string ItemName { get; set; }
+        public int ChoreDayTimeTypeID { get; set; }
+        public string DayTimeType { get; set; }
         public bool IsDeleted { get; set; }
-        public bool IsMSGFree { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItemList> ItemLists { get; set; }
+        public virtual ICollection<UsersChore> UsersChores { get; set; }
     }
 }

@@ -17,7 +17,10 @@ namespace HomeApps.Controllers
         // GET: Machines
         public ActionResult Index()
         {
-            var machines = db.Machines.Include(m => m.User);
+
+            User user = ((User)this.Session["_CurrentUser"]);
+
+            var machines = db.Machines.Include(m => m.User).Where(m => m.UserID == user.UserID);
             return View(machines.ToList());
         }
 
@@ -40,7 +43,7 @@ namespace HomeApps.Controllers
         public ActionResult Create()
         {
             ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName");
-            return View();
+            return View(new Machine { WorkedOutDate = DateTime.Now });
         }
 
         // POST: Machines/Create
@@ -48,10 +51,15 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MachineID,MachineName,Time,Reps,Weight,ResistanceLevel,WorkedOutDate,IsDeleted,UserID")] Machine machine)
+        public ActionResult Create([Bind(Include = "MachineID,MachineName,Time,Reps,Weight,ResistanceLevel,WorkedOutDate")] Machine machine)
         {
             if (ModelState.IsValid)
             {
+
+                User user = ((User)this.Session["_CurrentUser"]);
+
+                machine.UserID = user.UserID;
+
                 db.Machines.Add(machine);
                 db.SaveChanges();
                 return RedirectToAction("Index");

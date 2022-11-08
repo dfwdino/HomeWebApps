@@ -2,6 +2,7 @@
 using HomeApps.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Linq.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -75,17 +76,29 @@ namespace HomeApps.Controllers
         [HttpPost]
         public ActionResult AddSchema([Bind(Include = "Schema,UserID")] int UserID, string Schema)
         {
-            Schema FoundSchema = _db.Schemas.FirstOrDefault(m => m.SchemaName == Schema);
+            Schema FoundSchema = _db.Schemas.ToList().Where(m => m.SchemaName.Contains(Schema)).FirstOrDefault();
+            
+            User user = ((User)this.Session["_CurrentUser"]);
+
+            if (FoundSchema == null)
+            {
+                _db.Schemas.Add(new Schema { SchemaName = Schema, ModfiyID = user.UserID });
+                _db.SaveChanges();
+
+                FoundSchema = _db.Schemas.ToList().Where(m => m.SchemaName.Contains(Schema)).FirstOrDefault();
+            }
+
             UserSchema FoundUserSchema = _db.UserSchemas.FirstOrDefault(m => m.SchemaID == FoundSchema.SchemaID);
 
-            if (FoundSchema != null && FoundUserSchema != null)
+            if (FoundSchema != null && FoundUserSchema == null)
             {
                 UserViewModel currentuser = (UserViewModel)this.Session["_CurrentUser"];
 
-                _db.UserSchemas.Add(new UserSchema { SchemaID = FoundSchema.SchemaID, UsersID = UserID, ModfiyID = currentuser.UserID });
+                _db.UserSchemas.Add(new UserSchema { SchemaID = FoundSchema.SchemaID, UsersID = UserID, ModfiyID = currentuser.UserID, Deleted = false });
+                _db.SaveChanges();
             }
 
-            User user = ((User)this.Session["_CurrentUser"]);
+            
 
             return RedirectToAction("Index");
         }

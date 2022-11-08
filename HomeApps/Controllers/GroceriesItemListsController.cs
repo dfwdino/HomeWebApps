@@ -21,13 +21,13 @@ namespace HomeApps.Controllers
         // GET: GroceriesItemLists
         public ActionResult Index()
         {
-            var itemLists = db.ItemLists.Where(f => f.GotItem == false).OrderBy(f => f.Item.ItemName).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store);
-            return View(itemLists.ToList());
+            var itemLists = db.ItemLists.OrderBy(f => f.Item.ItemName).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store);
+            return View(itemLists.Where(f => f.GotItem == false).ToList());
         }
 
         public ActionResult ShowAllItems(bool sortbydate = false)
         {
-            List<ItemList> itemLists = db.ItemLists.OrderByDescending(f => f.DateGot).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store).ToList()
+            List<ItemList> itemLists = db.ItemLists.OrderByDescending(f => f.DateGot).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store).Where(f => f.Item.IsDeleted == false && f.GotItem == true).ToList()
                 .GroupBy(f => f.Item.ItemName).Select(f => f.First()).Select(f => f).Distinct().ToList();
 
             return View(itemLists.ToList());

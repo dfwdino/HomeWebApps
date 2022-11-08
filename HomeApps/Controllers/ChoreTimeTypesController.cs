@@ -2,123 +2,115 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HomeApps;
-using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
-
-    [Access]
-    public class GroceriesItemsController : Controller
+    public class ChoreTimeTypesController : Controller
     {
         private HomeAppsEntities db = new HomeAppsEntities();
 
-        // GET: GroceriesItems
+        // GET: ChoreTimeTypes
         public ActionResult Index()
         {
-            return View(db.Items.Where(f => f.IsDeleted == false).OrderBy(f => f.ItemName).ToList());
+            return View(db.ChoreTimeTypes.ToList());
         }
 
-        // GET: GroceriesItems/Details/5
+        // GET: ChoreTimeTypes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Items.Find(id);
-            if (item == null)
+            ChoreTimeType choreTimeType = db.ChoreTimeTypes.Find(id);
+            if (choreTimeType == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            return View(choreTimeType);
         }
 
-        // GET: GroceriesItems/Create
+        // GET: ChoreTimeTypes/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: GroceriesItems/Create
+        // POST: ChoreTimeTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,ItemName,IsDeleted,Notes,IsMSGFree")] Item item)
+        public ActionResult Create([Bind(Include = "ChoreTimeTypeID,ChoreTime,IsDeleted")] ChoreTimeType choreTimeType)
         {
             if (ModelState.IsValid)
             {
-                item.ItemName = item.ItemName.ToTileCase();
-                db.Items.Add(item);
+                db.ChoreTimeTypes.Add(choreTimeType);
                 db.SaveChanges();
-                ViewBag.CreatedItem = true;
-                return RedirectToAction("Create");
-                //return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
 
-            return View(item);
+            return View(choreTimeType);
         }
 
-        // GET: GroceriesItems/Edit/5
+        // GET: ChoreTimeTypes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Items.Find(id);
-            if (item == null)
+            ChoreTimeType choreTimeType = db.ChoreTimeTypes.Find(id);
+            if (choreTimeType == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            return View(choreTimeType);
         }
 
-        // POST: GroceriesItems/Edit/5
+        // POST: ChoreTimeTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemID,ItemName,IsDeleted,IsMSGFree")] Item item)
+        public ActionResult Edit([Bind(Include = "ChoreTimeTypeID,ChoreTime,IsDeleted")] ChoreTimeType choreTimeType)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(item).State = EntityState.Modified;
+                db.Entry(choreTimeType).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(item);
+            return View(choreTimeType);
         }
 
-        // GET: GroceriesItems/Delete/5
+        // GET: ChoreTimeTypes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Items.Find(id);
-            if (item == null)
+            ChoreTimeType choreTimeType = db.ChoreTimeTypes.Find(id);
+            if (choreTimeType == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            return View(choreTimeType);
         }
 
-        // POST: GroceriesItems/Delete/5
+        // POST: ChoreTimeTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Item item = db.Items.Find(id);
-            //db.Items.Remove(item);
-            item.IsDeleted = true;
+            ChoreTimeType choreTimeType = db.ChoreTimeTypes.Find(id);
+            db.ChoreTimeTypes.Remove(choreTimeType);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -131,34 +123,5 @@ namespace HomeApps.Controllers
             }
             base.Dispose(disposing);
         }
-
-
-        public JsonResult LookUpFoodItem(string term)
-        {
-            return Json(db.Items.Where(m => m.ItemName.Contains(term)).Select(m => new { value = m.ItemName, m.ItemID }).OrderBy(m => m.value),
-                   JsonRequestBehavior.AllowGet);
-
-        }
-
-        public void GotItem(int ItemListID)
-        {
-            var gotitem = db.ItemLists.Where(f => f.ItemListID == ItemListID).OrderByDescending(f => f.DateGot).First();
-
-            if(gotitem.DateGot != null)
-            {
-                DateTime dateTime = DateTime.Now;
-
-                db.ItemLists.Add(new ItemList { ItemID = gotitem.ItemID, DateAdded = dateTime });
-            }
-            else
-            {
-                gotitem.GotItem = true;
-                gotitem.DateGot = DateTime.Now;
-            }
-
-           
-            db.SaveChanges();
-        }
-
     }
 }

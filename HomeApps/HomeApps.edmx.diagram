@@ -61,8 +61,19 @@
         <AssociationConnector Association="HomeAppsModel.FK_ItemList_Items" />
         <AssociationConnector Association="HomeAppsModel.FK_ItemList_SizeType" />
         <AssociationConnector Association="HomeAppsModel.FK_ItemList_Stores" />
-        <EntityTypeShape EntityType="HomeAppsModel.Machine" Width="1.5" PointX="13.375" PointY="3" />
+        <EntityTypeShape EntityType="HomeAppsModel.Machine" Width="1.5" PointX="7.5" PointY="17.25" />
         <AssociationConnector Association="HomeAppsModel.FK_Machines_Users" />
+        <EntityTypeShape EntityType="HomeAppsModel.User1" Width="1.5" PointX="12.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HomeAppsModel.ChoreDayTimeType" Width="1.5" PointX="14.375" PointY="17.75" />
+        <EntityTypeShape EntityType="HomeAppsModel.Chore" Width="1.5" PointX="12.375" PointY="18.5" />
+        <EntityTypeShape EntityType="HomeAppsModel.ChoreTimeType" Width="1.5" PointX="12.375" PointY="21" />
+        <EntityTypeShape EntityType="HomeAppsModel.UsersChore" Width="1.5" PointX="14.625" PointY="3.625" />
+        <EntityTypeShape EntityType="HomeAppsModel.UsersDoneChore" Width="1.5" PointX="16.875" PointY="14.625" />
+        <AssociationConnector Association="HomeAppsModel.FK_UsersChores_Chores" />
+        <AssociationConnector Association="HomeAppsModel.FK_UsersChores_ChoreTimeType" />
+        <AssociationConnector Association="HomeAppsModel.FK_UsersChores_Users" />
+        <AssociationConnector Association="HomeAppsModel.FK_UsersDoneChores_UsersChores" />
+        <AssociationConnector Association="HomeAppsModel.FK_UsersChores_ChoreDayTimeType" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

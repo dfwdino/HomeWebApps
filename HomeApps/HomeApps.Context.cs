@@ -53,5 +53,11 @@ namespace HomeApps
         public virtual DbSet<SizeType> SizeTypes { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
         public virtual DbSet<Machine> Machines { get; set; }
+        public virtual DbSet<User1> User1 { get; set; }
+        public virtual DbSet<ChoreDayTimeType> ChoreDayTimeTypes { get; set; }
+        public virtual DbSet<Chore> Chores { get; set; }
+        public virtual DbSet<ChoreTimeType> ChoreTimeTypes { get; set; }
+        public virtual DbSet<UsersChore> UsersChores { get; set; }
+        public virtual DbSet<UsersDoneChore> UsersDoneChores { get; set; }
     }
 }

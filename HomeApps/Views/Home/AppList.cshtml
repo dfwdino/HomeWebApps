@@ -4,46 +4,64 @@
     HomeApps.Models.UserViewModel currentuser = this.Session["_CurrentUser"] as HomeApps.Models.UserViewModel;
 }
 
-@if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Auto").Equals(true))
+@if (currentuser != null)
 {
-    <div>@Html.ActionLink("Auto", "Index", "Autos", null, new { })</div>
-    <br />
-}
-@if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
-{
-    <div>@Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { })</div>
-    <br />
-}
 
-@if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Event").Equals(true))
-{
-    <div>@Html.ActionLink("Mate Tracker", "Index", "TheEvents/Index", null, new { })</div>
-    <br />
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Auto").Equals(true))
+    {
+        <div>@Html.ActionLink("Auto", "Index", "Autos", null, new { })</div>
+        <br />
+    }
+
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Models").Equals(true))
+    {
+        <div>@Html.ActionLink("Models", "Index", "CameraModels/Index", null, new { })</div>
+        <br />
+    }
+
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Event").Equals(true))
+    {
+        <div>@Html.ActionLink("Mate Tracker", "Index", "TheEvents/Index", null, new { })</div>
+        <br />
+    }
+
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
+    {
+        <div>@Html.ActionLink("Groceries", "Index", "GroceriesItemLists", null, new { })</div>
+        <br />
+    }
+
+
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("WeightTrackers").Equals(true))
+    {
+        <div>@Html.ActionLink("Weight", "Index", "WeightTrackers", null, new { })</div>
+        <br />
+    }
+
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Machines").Equals(true))
+    {
+        <div>@Html.ActionLink("Machines", "Index", "Machines", null, new { })</div>
+        <br />
+    }
+
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Chores").Equals(true))
+    {
+        <div>@Html.ActionLink("Chores", "Index", "UserSChores", null, new { })</div>
+        <br />
+    }
+
+
+    if (currentuser.IsAdmin)
+    {
+        <div>@Html.ActionLink("Admin", "Index", "Admin", null, new { })</div>
+        <br />
+    }
+
 }
-
-@if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
-{
-    <div>@Html.ActionLink("Groceries", "Index", "GroceriesItemLists", null, new { })</div>
-    <br />
-}
-
-
-@if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("WeightTrackers").Equals(true))
-{
-    <div>@Html.ActionLink("Weight", "Index", "WeightTrackers", null, new { })</div>
-    <br />
-}
-
-@if (currentuser.IsAdmin)
-{
-    <div>@Html.ActionLink("Admin", "Index", "Admin", null, new { })</div>
-    <br />
-}
-
 <br />
 
 <h2>Old Links</h2>
-<br/>
+<br />
 
 <p>
     <a href="http://dfwdino.dyndns.org/SDNWebApps/Baby/DoneThings/Index">Kids Link</a>

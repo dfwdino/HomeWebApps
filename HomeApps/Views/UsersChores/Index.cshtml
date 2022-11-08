@@ -1,0 +1,103 @@
+﻿@using HomeApps.Model
+
+@model List<PersonChore>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ChorsesLayout.cshtml";
+    string lastusername = String.Empty;
+    bool ShowenDaily = false;
+    bool ShowenWeekly = false;
+    string lineunderline = string.Empty;
+    DateTime StartOfTheWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+
+    @foreach (var item in Model)
+    {
+
+        {
+
+            if(item.ChoreDone != null && item.ChoreDone.Value.Date.Equals(DateTime.Now.Date)
+                || ((item.ChoreDone != null || item.ChoreDone >= StartOfTheWeek) && item.ChoreTimeType == "Weekly"))
+                
+            {
+                lineunderline = "line-through";
+            }
+            else
+            {
+                lineunderline = string.Empty;
+            }
+
+        }
+
+        if (!item.PersonName.Equals(lastusername))
+        {
+            <tr><td><h2>@item.PersonName</h2></td></tr>
+            lastusername = item.PersonName;
+            ShowenDaily = false;
+        }
+        if (item.ChoreTimeType == "Daily" && ShowenDaily == false)
+        {
+            <tr><td><h4>Due Today</h4></td></tr>
+            ShowenDaily = true;
+        }
+        else if (item.ChoreTimeType == "Weekly" && ShowenWeekly == false)
+        {
+            <tr><td><h3>Due This Week</h3></td></tr>
+            ShowenWeekly = true;
+
+        }
+        <tr>
+            <td>
+                <div class="ChoreDone" id="@item.UserChoreID" style="text-decoration:@lineunderline">
+                    @item.ChoreName
+                </div>
+
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ChoreTimeType)  @Html.DisplayFor(modelItem => item.ChoreDayTimeType)
+
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.UserChoreID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.UserChoreID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.UserChoreID })
+            </td>
+        </tr>
+
+    }
+
+</table>
+
+
+<script>
+
+    $('div.ChoreDone').click(OnGotClick);
+
+    function OnGotClick(e) {
+
+        var itemID = e.target.id;
+
+        console.log('value is ' + itemID);
+
+        var url = '@Url.Action("FinishChore", "UsersChores")';
+
+        var div = document.getElementById(itemID);
+
+        div.style.setProperty("text-decoration", "line-through");
+    
+
+        $.post(url, { choreUserID: itemID }, function (data) {});
+    }
+
+</script>

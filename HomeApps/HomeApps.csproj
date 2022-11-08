@@ -17,7 +17,7 @@
     <AssemblyName>Shanes App</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -82,6 +82,7 @@
       <HintPath>..\packages\StyleCop.6.2.0\lib\net40\StyleCop.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
@@ -262,6 +263,27 @@
     <Content Include="Views\Machines\Details.cshtml" />
     <Content Include="Views\Machines\Edit.cshtml" />
     <Content Include="Views\Machines\Index.cshtml" />
+    <Content Include="Views\Chores\Create.cshtml" />
+    <Content Include="Views\Chores\Delete.cshtml" />
+    <Content Include="Views\Chores\Details.cshtml" />
+    <Content Include="Views\Chores\Edit.cshtml" />
+    <Content Include="Views\Chores\Index.cshtml" />
+    <Content Include="Views\ChoreTimeTypes\Create.cshtml" />
+    <Content Include="Views\ChoreTimeTypes\Delete.cshtml" />
+    <Content Include="Views\ChoreTimeTypes\Details.cshtml" />
+    <Content Include="Views\ChoreTimeTypes\Edit.cshtml" />
+    <Content Include="Views\ChoreTimeTypes\Index.cshtml" />
+    <Content Include="Views\User1\Create.cshtml" />
+    <Content Include="Views\User1\Delete.cshtml" />
+    <Content Include="Views\User1\Details.cshtml" />
+    <Content Include="Views\User1\Edit.cshtml" />
+    <Content Include="Views\User1\Index.cshtml" />
+    <Content Include="Views\UsersChores\Create.cshtml" />
+    <Content Include="Views\UsersChores\Delete.cshtml" />
+    <Content Include="Views\UsersChores\Details.cshtml" />
+    <Content Include="Views\UsersChores\Edit.cshtml" />
+    <Content Include="Views\UsersChores\Index.cshtml" />
+    <Content Include="Views\Shared\_ChorsesLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -284,16 +306,24 @@
     <Compile Include="CameraModelNote.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
+    <Compile Include="Chore.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ChoreDayTimeType.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ChoreTimeType.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\CameraModelsController.cs" />
+    <Compile Include="Controllers\ChoresController.cs" />
+    <Compile Include="Controllers\ChoreTimeTypesController.cs" />
     <Compile Include="Controllers\GroceriesItemListsController.cs" />
     <Compile Include="Controllers\GroceriesItemsController.cs" />
     <Compile Include="Controllers\GroceriesStoresController.cs" />
     <Compile Include="Controllers\MachinesController.cs" />
-    <Compile Include="Machine.cs">
-      <DependentUpon>HomeApps.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ItemListModel.cs" />
-    <Compile Include="Controllers\SizeTypesController.cs" />
+    <Compile Include="Controllers\User1Controller.cs" />
+    <Compile Include="Controllers\UsersChoresController.cs" />
     <Compile Include="CreateModifyLog.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
@@ -315,15 +345,21 @@
     <Compile Include="Logging.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
+    <Compile Include="Machine.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
     <Compile Include="Mile.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelWebsite.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ItemListModel.cs" />
+    <Compile Include="Controllers\SizeTypesController.cs" />
     <Compile Include="Model\EventCreateModel.cs" />
     <Compile Include="Model\MilesAddModel.cs" />
     <Compile Include="Model\MilesViewModel.cs" />
+    <Compile Include="Model\PersonChore.cs" />
     <Compile Include="Model\UserViewModel.cs" />
     <Compile Include="Controllers\ActionsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -389,10 +425,19 @@
     <Compile Include="User.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
+    <Compile Include="User1.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserRole.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="UserSchema.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsersChore.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsersDoneChore.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="UsersPeople.cs">
@@ -500,16 +545,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>59091</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:59091/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

@@ -1,0 +1,75 @@
+﻿@model HomeApps.UsersChore
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_GrocerieLayouts.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UsersChore</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDateChore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDateChore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDateChore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDateChore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Chore.ChoreName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Chore.ChoreName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChoreTimeType.ChoreTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChoreTimeType.ChoreTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserChoreID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

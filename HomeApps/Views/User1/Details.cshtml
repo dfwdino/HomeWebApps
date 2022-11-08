@@ -1,0 +1,35 @@
+﻿@model HomeApps.User1
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_GrocerieLayouts.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User1</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
