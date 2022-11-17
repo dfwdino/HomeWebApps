@@ -284,6 +284,7 @@
     <Content Include="Views\UsersChores\Edit.cshtml" />
     <Content Include="Views\UsersChores\Index.cshtml" />
     <Content Include="Views\Shared\_ChorsesLayout.cshtml" />
+    <Content Include="Views\Admin\CreateUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

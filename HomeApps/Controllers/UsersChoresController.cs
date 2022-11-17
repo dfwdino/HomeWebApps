@@ -85,7 +85,11 @@ namespace HomeApps.Controllers
             ViewBag.ChoreTimeTypeID = new SelectList(db.ChoreTimeTypes, "ChoreTimeTypeID", "ChoreTime");
             ViewBag.ChoreDayTimeTypeID = new SelectList(db.ChoreDayTimeTypes, "ChoreDayTimeTypeID", "DayTimeType");
             ViewBag.UserID = new SelectList(db.User1, "UserID", "Name");
-            return View();
+
+            UsersChore usersChore = new UsersChore();
+            usersChore.StartDateChore = DateTime.Now;
+
+            return View(usersChore);
         }
 
         // POST: UsersChores/Create

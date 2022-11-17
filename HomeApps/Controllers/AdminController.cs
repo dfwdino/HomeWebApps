@@ -18,6 +18,12 @@ namespace HomeApps.Controllers
         {
         }
 
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
+
+
         // GET: Admin
         public ActionResult Index()
         {
@@ -90,7 +96,7 @@ namespace HomeApps.Controllers
 
             UserSchema FoundUserSchema = _db.UserSchemas.FirstOrDefault(m => m.SchemaID == FoundSchema.SchemaID);
 
-            if (FoundSchema != null && FoundUserSchema == null)
+            if (FoundSchema != null && FoundUserSchema != null)
             {
                 UserViewModel currentuser = (UserViewModel)this.Session["_CurrentUser"];
 

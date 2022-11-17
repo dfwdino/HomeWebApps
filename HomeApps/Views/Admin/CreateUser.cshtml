@@ -1,0 +1,40 @@
+﻿@model Users
+
+@{
+    ViewBag.Title = "AddSchema";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>AddSchema</h2>
+
+
+@using (Html.BeginForm())
+{
+    <div>
+        <div>
+            @Html.Label("Schema Name:")
+            @Html.DropDownList("Schema", (SelectList)ViewBag.Schema, htmlAttributes: new { @id = "Schema", @class = "form-control" })
+        </div>
+        <br />
+        <div>
+            @Html.Label("Username")
+            @Html.DropDownList("UserID", (SelectList)ViewBag.People, htmlAttributes: new { @id = "UserID", @class = "form-control" })
+        </div>
+    </div>
+
+    <br/>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+   
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
