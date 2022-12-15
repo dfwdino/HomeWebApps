@@ -1,0 +1,3 @@
+﻿CREATE SCHEMA [ChoreList]
+    AUTHORIZATION [dbo];
+

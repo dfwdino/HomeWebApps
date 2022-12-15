@@ -77,6 +77,8 @@
     <Folder Include="Gym\Tables\" />
     <Folder Include="HomeApp\Synonyms\" />
     <Folder Include="dbo\Synonyms\" />
+    <Folder Include="ChoreList\" />
+    <Folder Include="ChoreList\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Template.sql" />
@@ -123,6 +125,15 @@
     <Build Include="Security\Gym.sql" />
     <Build Include="HomeApp\Synonyms\FullHomeUser.sql" />
     <Build Include="dbo\Synonyms\HomeAppUsers.sql" />
+    <Build Include="dbo\Tables\UsersCLs.sql" />
+    <Build Include="dbo\Tables\__MigrationHistory.sql" />
+    <Build Include="ChoreList\Tables\UsersChores.sql" />
+    <Build Include="ChoreList\Tables\ChoreTimeType.sql" />
+    <Build Include="ChoreList\Tables\Chores.sql" />
+    <Build Include="ChoreList\Tables\Users.sql" />
+    <Build Include="ChoreList\Tables\UsersDoneChores.sql" />
+    <Build Include="ChoreList\Tables\ChoreDayTimeType.sql" />
+    <Build Include="Security\ChoreList.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TouchMeToProjectHomeApp.scmp" />
