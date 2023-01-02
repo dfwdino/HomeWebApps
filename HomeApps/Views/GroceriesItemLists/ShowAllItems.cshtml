@@ -6,12 +6,12 @@
 }
 
 <h2>All Items</h2>
-
-<p>
-    @Html.ActionLink("Grocery List", "Index") -   @Html.ActionLink("Add Item", "Create")
-</p>
-
-<table id="ItemList" class="display">
+<div>
+    <nav class="floating-menu">
+        @Html.ActionLink("Grocery List", "Index") -   @Html.ActionLink("Add Item", "Create")
+    </nav>
+</div>
+<table id="ItemList" class="display" style="padding-top:30px;">
     <thead>
         <tr>
             <th>
@@ -104,3 +104,25 @@
     }
 
 </script>
+
+<style>
+
+    .floating-menu {
+        font-family: sans-serif;
+        background-color: white;
+        padding: 5px;
+        ;
+        /*width: 130px;*/
+        z-index: 100;
+        position: fixed;
+    }
+
+        .floating-menu a,
+        .floating-menu h3 {
+            /* font-size: 0.9em;
+        display: block;
+        margin: 0 0.5em;
+        color: white;*/
+        }
+
+</style>
