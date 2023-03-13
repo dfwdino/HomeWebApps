@@ -50,7 +50,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,ItemName,IsDeleted,Notes,IsMSGFree")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,ItemName,IsDeleted,Notes,IsMSGFree,KidsStillLike")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemID,ItemName,IsDeleted,IsMSGFree")] Item item)
+        public ActionResult Edit([Bind(Include = "ItemID,ItemName,IsDeleted,IsMSGFree,KidsStillLike")] Item item)
         {
             if (ModelState.IsValid)
             {

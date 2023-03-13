@@ -59,5 +59,7 @@ namespace HomeApps
         public virtual DbSet<ChoreTimeType> ChoreTimeTypes { get; set; }
         public virtual DbSet<UsersChore> UsersChores { get; set; }
         public virtual DbSet<UsersDoneChore> UsersDoneChores { get; set; }
+        public virtual DbSet<PlacesToGo> PlacesToGoes { get; set; }
+        public virtual DbSet<WhoPicked> WhoPickeds { get; set; }
     }
 }

@@ -79,6 +79,8 @@ namespace HomeApps.Controllers
                 }
 
                 itemList.DateAdded = DateTime.Now;
+                itemList.Item.KidsStillLike= true;
+
                 db.ItemLists.Add(itemList);
                 db.SaveChanges();
                 return RedirectToAction("Index");

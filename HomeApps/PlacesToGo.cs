@@ -12,21 +12,19 @@ namespace HomeApps
     using System;
     using System.Collections.Generic;
     
-    public partial class Item
+    public partial class PlacesToGo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Item()
+        public PlacesToGo()
         {
-            this.ItemLists = new HashSet<ItemList>();
+            this.WhoPickeds = new HashSet<WhoPicked>();
         }
     
-        public int ItemID { get; set; }
-        public string ItemName { get; set; }
+        public int PlacesToGoID { get; set; }
+        public string Name { get; set; }
         public bool IsDeleted { get; set; }
-        public bool IsMSGFree { get; set; }
-        public bool KidsStillLike { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItemList> ItemLists { get; set; }
+        public virtual ICollection<WhoPicked> WhoPickeds { get; set; }
     }
 }

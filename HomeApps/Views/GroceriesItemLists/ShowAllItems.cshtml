@@ -33,9 +33,9 @@
             <tr name="FullItem{@item.ItemListID}">
                 <td class="got-link" data-request-url="@Url.Action("GotItem", "GroceriesItems")" id=@item.ItemListID>
 
-                    
+
                     @item.Item.ItemName
-                    
+
 
                     @if (item.NumberOfItems != null)
                     {
@@ -46,6 +46,17 @@
                     {
                         <span> - </span> @item.SizeType.SizeTypeName
                     }
+
+                    @if (item.Item.IsMSGFree != null && item.Item.IsMSGFree == true)
+                    {
+                        <span> - MSG Free</span>
+                    }
+
+                    @if (item.Item.KidsStillLike.Equals(false))
+                    {
+                        <span style="color:darkgreen">- Kids Dont Like</span>
+                    }
+
 
 
                 </td>

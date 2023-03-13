@@ -1,6 +1,5 @@
 using HomeApps.Infrastructure;
 using System;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -20,13 +19,11 @@ namespace HomeApps
 
         protected void Session_Start(Object sender, EventArgs e)
         {
-            
         }
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new PageViewLoggingAttribute());
         }
-
     }
 }

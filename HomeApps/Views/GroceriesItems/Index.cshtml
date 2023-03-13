@@ -23,6 +23,14 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.ItemName)
+            @if (item.IsMSGFree.Equals(true))
+            {
+                <span style="color:brown">- MSG Free</span>
+            }
+            @if (item.KidsStillLike.Equals(false))
+            {
+                <span style="color:darkgreen">- Kids Dont Like</span>
+            }
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ItemID }) |

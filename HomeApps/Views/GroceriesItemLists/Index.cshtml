@@ -45,8 +45,13 @@
                 <span>@Html.DisplayFor(modelItem => item.Item.ItemName)</span>
                 @if(item.Item.IsMSGFree != null && item.Item.IsMSGFree == true)
                 {
-                    <span> - Is MSG Free</span>
+                    <span> - MSG Free</span>
                 }
+             
+            @if (item.Item.KidsStillLike.Equals(false))
+            {
+                <span style="color:darkgreen">- Kids Dont Like</span>
+            }
 
                 @if(item.Notes != null)
                 {

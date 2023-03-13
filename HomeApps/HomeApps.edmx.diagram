@@ -74,6 +74,10 @@
         <AssociationConnector Association="HomeAppsModel.FK_UsersChores_Users" />
         <AssociationConnector Association="HomeAppsModel.FK_UsersDoneChores_UsersChores" />
         <AssociationConnector Association="HomeAppsModel.FK_UsersChores_ChoreDayTimeType" />
+        <EntityTypeShape EntityType="HomeAppsModel.PlacesToGo" Width="1.5" PointX="13.25" PointY="26.375" />
+        <EntityTypeShape EntityType="HomeAppsModel.WhoPicked" Width="1.5" PointX="15.5" PointY="0.75" />
+        <AssociationConnector Association="HomeAppsModel.FK_WhoPicked_Users" />
+        <AssociationConnector Association="HomeAppsModel.FK_WhoPicked_PlacesToGo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

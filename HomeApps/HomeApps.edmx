@@ -127,6 +127,7 @@
           <Property Name="ItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="IsMSGFree" Type="bit" Nullable="false" />
+          <Property Name="KidsStillLike" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Prices">
           <Key>
@@ -222,6 +223,24 @@
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="PlacesToGo">
+          <Key>
+            <PropertyRef Name="PlacesToGoID" />
+          </Key>
+          <Property Name="PlacesToGoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WhoPicked">
+          <Key>
+            <PropertyRef Name="WhoPickedAppID" />
+          </Key>
+          <Property Name="WhoPickedAppID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlacePickedID" Type="int" Nullable="false" />
+          <Property Name="PersonPickedID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Actions">
           <Key>
@@ -753,6 +772,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WhoPicked_PlacesToGo">
+          <End Role="PlacesToGo" Type="Self.PlacesToGo" Multiplicity="1" />
+          <End Role="WhoPicked" Type="Self.WhoPicked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlacesToGo">
+              <PropertyRef Name="PlacesToGoID" />
+            </Principal>
+            <Dependent Role="WhoPicked">
+              <PropertyRef Name="PlacePickedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WhoPicked_Users">
+          <End Role="Users1" Type="Self.Users1" Multiplicity="1" />
+          <End Role="WhoPicked" Type="Self.WhoPicked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users1">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WhoPicked">
+              <PropertyRef Name="PersonPickedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HomeAppsModelStoreContainer">
           <EntitySet Name="ChoreDayTimeType" EntityType="Self.ChoreDayTimeType" Schema="ChoreList" store:Type="Tables" />
           <EntitySet Name="Chores" EntityType="Self.Chores" Schema="ChoreList" store:Type="Tables" />
@@ -775,6 +818,8 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Schemas" EntityType="Self.Schemas" Schema="HomeApp" store:Type="Tables" />
           <EntitySet Name="Users1" EntityType="Self.Users1" Schema="HomeApp" Table="Users" store:Type="Tables" />
+          <EntitySet Name="PlacesToGo" EntityType="Self.PlacesToGo" Schema="LastPersonPicked" store:Type="Tables" />
+          <EntitySet Name="WhoPicked" EntityType="Self.WhoPicked" Schema="LastPersonPicked" store:Type="Tables" />
           <EntitySet Name="Actions" EntityType="Self.Actions" Schema="MateTracker" store:Type="Tables" />
           <EntitySet Name="EventActions" EntityType="Self.EventActions" Schema="MateTracker" store:Type="Tables" />
           <EntitySet Name="Genders" EntityType="Self.Genders" Schema="MateTracker" store:Type="Tables" />
@@ -923,6 +968,14 @@
           <AssociationSet Name="FK_WeightTracker_Users" Association="Self.FK_WeightTracker_Users">
             <End Role="Users1" EntitySet="Users1" />
             <End Role="WeightTracker" EntitySet="WeightTracker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WhoPicked_PlacesToGo" Association="Self.FK_WhoPicked_PlacesToGo">
+            <End Role="PlacesToGo" EntitySet="PlacesToGo" />
+            <End Role="WhoPicked" EntitySet="WhoPicked" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WhoPicked_Users" Association="Self.FK_WhoPicked_Users">
+            <End Role="Users1" EntitySet="Users1" />
+            <End Role="WhoPicked" EntitySet="WhoPicked" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1104,6 +1157,16 @@
             <End Role="ChoreDayTimeType" EntitySet="ChoreDayTimeTypes" />
             <End Role="UsersChore" EntitySet="UsersChores" />
           </AssociationSet>
+          <EntitySet Name="PlacesToGoes" EntityType="HomeAppsModel.PlacesToGo" />
+          <EntitySet Name="WhoPickeds" EntityType="HomeAppsModel.WhoPicked" />
+          <AssociationSet Name="FK_WhoPicked_Users" Association="HomeAppsModel.FK_WhoPicked_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="WhoPicked" EntitySet="WhoPickeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WhoPicked_PlacesToGo" Association="HomeAppsModel.FK_WhoPicked_PlacesToGo">
+            <End Role="PlacesToGo" EntitySet="PlacesToGoes" />
+            <End Role="WhoPicked" EntitySet="WhoPickeds" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Auto">
           <Key>
@@ -1218,6 +1281,7 @@
           <NavigationProperty Name="EventActions" Relationship="HomeAppsModel.FK_EventActions_Users" FromRole="User" ToRole="EventAction" />
           <NavigationProperty Name="WeightTrackers" Relationship="HomeAppsModel.FK_WeightTracker_Users" FromRole="User" ToRole="WeightTracker" />
           <NavigationProperty Name="Machines" Relationship="HomeAppsModel.FK_Machines_Users" FromRole="User" ToRole="Machine" />
+          <NavigationProperty Name="WhoPickeds" Relationship="HomeAppsModel.FK_WhoPicked_Users" FromRole="User" ToRole="WhoPicked" />
           </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -1726,6 +1790,7 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ItemLists" Relationship="HomeAppsModel.FK_ItemList_Items" FromRole="Item" ToRole="ItemList" />
           <Property Name="IsMSGFree" Type="Boolean" Nullable="false" />
+          <Property Name="KidsStillLike" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="SizeType">
           <Key>
@@ -1932,6 +1997,51 @@
             </Principal>
             <Dependent Role="UsersChore">
               <PropertyRef Name="ChoreDayTimeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PlacesToGo">
+          <Key>
+            <PropertyRef Name="PlacesToGoID" />
+          </Key>
+          <Property Name="PlacesToGoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="WhoPickeds" Relationship="HomeAppsModel.FK_WhoPicked_PlacesToGo" FromRole="PlacesToGo" ToRole="WhoPicked" />
+        </EntityType>
+        <EntityType Name="WhoPicked">
+          <Key>
+            <PropertyRef Name="WhoPickedAppID" />
+          </Key>
+          <Property Name="WhoPickedAppID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlacePickedID" Type="Int32" Nullable="false" />
+          <Property Name="PersonPickedID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users1" Relationship="HomeAppsModel.FK_WhoPicked_Users" FromRole="WhoPicked" ToRole="User" />
+          <NavigationProperty Name="PlacesToGo" Relationship="HomeAppsModel.FK_WhoPicked_PlacesToGo" FromRole="WhoPicked" ToRole="PlacesToGo" />
+        </EntityType>
+        <Association Name="FK_WhoPicked_Users">
+          <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeAppsModel.WhoPicked" Role="WhoPicked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WhoPicked">
+              <PropertyRef Name="PersonPickedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WhoPicked_PlacesToGo">
+          <End Type="HomeAppsModel.PlacesToGo" Role="PlacesToGo" Multiplicity="1" />
+          <End Type="HomeAppsModel.WhoPicked" Role="WhoPicked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlacesToGo">
+              <PropertyRef Name="PlacesToGoID" />
+            </Principal>
+            <Dependent Role="WhoPicked">
+              <PropertyRef Name="PlacePickedID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2212,6 +2322,7 @@
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="HomeAppsModel.Item">
               <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="KidsStillLike" ColumnName="KidsStillLike" />
                 <ScalarProperty Name="IsMSGFree" ColumnName="IsMSGFree" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
@@ -2312,6 +2423,26 @@
                 <ScalarProperty Name="DateDone" ColumnName="DateDone" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="UsersDoneChoresID" ColumnName="UsersDoneChoresID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlacesToGoes">
+            <EntityTypeMapping TypeName="HomeAppsModel.PlacesToGo">
+              <MappingFragment StoreEntitySet="PlacesToGo">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PlacesToGoID" ColumnName="PlacesToGoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WhoPickeds">
+            <EntityTypeMapping TypeName="HomeAppsModel.WhoPicked">
+              <MappingFragment StoreEntitySet="WhoPicked">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PersonPickedID" ColumnName="PersonPickedID" />
+                <ScalarProperty Name="PlacePickedID" ColumnName="PlacePickedID" />
+                <ScalarProperty Name="WhoPickedAppID" ColumnName="WhoPickedAppID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -398,6 +398,9 @@
     <Compile Include="Model\WeightTrackerViewModel.cs" />
     <Compile Include="MyExceptionHandler.cs" />
     <Compile Include="MyExtensions.cs" />
+    <Compile Include="PlacesToGo.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
     <Compile Include="Price.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
@@ -448,6 +451,9 @@
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
     <Compile Include="WeightTracker.cs">
+      <DependentUpon>HomeApps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhoPicked.cs">
       <DependentUpon>HomeApps.tt</DependentUpon>
     </Compile>
   </ItemGroup>

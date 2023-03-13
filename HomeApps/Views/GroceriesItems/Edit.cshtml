@@ -19,7 +19,7 @@
     @Html.HiddenFor(model => model.ItemID)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ItemName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Items", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.ItemName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
@@ -28,9 +28,16 @@
 
     <div class="form-group">
         @Html.Label("Is MSG Free", htmlAttributes: new { @class = "control-label col-sm-2" })
-        
-            @Html.CheckBoxFor(model => model.IsMSGFree, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.IsMSGFree, "", new { @class = "text-danger" })
+
+        @Html.CheckBoxFor(model => model.IsMSGFree, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.IsMSGFree, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Kids Still Like", htmlAttributes: new { @class = "control-label col-sm-2" })
+
+        @Html.CheckBoxFor(model => model.KidsStillLike, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.KidsStillLike, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
