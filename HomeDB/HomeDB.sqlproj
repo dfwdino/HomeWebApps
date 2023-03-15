@@ -79,6 +79,8 @@
     <Folder Include="dbo\Synonyms\" />
     <Folder Include="ChoreList\" />
     <Folder Include="ChoreList\Tables\" />
+    <Folder Include="LastPersonPicked\" />
+    <Folder Include="LastPersonPicked\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Template.sql" />
@@ -125,7 +127,6 @@
     <Build Include="Security\Gym.sql" />
     <Build Include="HomeApp\Synonyms\FullHomeUser.sql" />
     <Build Include="dbo\Synonyms\HomeAppUsers.sql" />
-    <Build Include="dbo\Tables\UsersCLs.sql" />
     <Build Include="dbo\Tables\__MigrationHistory.sql" />
     <Build Include="ChoreList\Tables\UsersChores.sql" />
     <Build Include="ChoreList\Tables\ChoreTimeType.sql" />
@@ -134,6 +135,9 @@
     <Build Include="ChoreList\Tables\UsersDoneChores.sql" />
     <Build Include="ChoreList\Tables\ChoreDayTimeType.sql" />
     <Build Include="Security\ChoreList.sql" />
+    <Build Include="LastPersonPicked\Tables\PlacesToGo.sql" />
+    <Build Include="LastPersonPicked\Tables\WhoPicked.sql" />
+    <Build Include="Security\LastPersonPicked.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TouchMeToProjectHomeApp.scmp" />
