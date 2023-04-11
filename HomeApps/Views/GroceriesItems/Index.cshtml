@@ -7,9 +7,15 @@
 
 <h2>Index</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")  -  @Html.ActionLink("Grocery List", "Index", "GroceriesItemLists", null,null)
-</p>
+</p>*@
+
+<div>
+    <nav class="floating-menu">
+        @Html.ActionLink("Grocery List", "Index", "GroceriesItemLists", null,null) -   @Html.ActionLink("Add Item", "Create")
+    </nav>
+</div>
 
 <table class="table">
     <tr>
@@ -41,3 +47,20 @@
 }
 
 </table>
+
+
+<style>
+
+    .floating-menu {
+        font-family: sans-serif;
+        background-color: white;
+        padding: 5px;
+        z-index: 100;
+        position: fixed;
+    }
+
+        .floating-menu a,
+        .floating-menu h3 {
+
+        }
+</style>

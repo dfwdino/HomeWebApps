@@ -45,7 +45,7 @@ namespace HomeApps.Infrastructure
         static public string GetUsersSchemasName(User user, IEnumerable<Schema> schemas)
         {
 
-            var userschemaslist = user.UserSchemas.Select(a => a.SchemaID).ToList();
+            var userschemaslist = user.UserSchemas.Where(mm => mm.Deleted == false).Select(a => a.SchemaID).ToList();
 
             var userschemas = schemas.Where(m => m.UserSchemas
                                             .Any(a => userschemaslist.Contains(m.SchemaID))).Select(m => m.SchemaName).ToList();
