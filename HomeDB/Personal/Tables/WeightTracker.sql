@@ -5,9 +5,12 @@
     [UserID]      INT             NULL,
     [Deleted]     BIT             CONSTRAINT [DF_WeightTracker_Deleted] DEFAULT ((0)) NULL,
     [Notes]       NVARCHAR (MAX)  NULL,
+    [WistSize]    DECIMAL (5, 2)  NULL,
     CONSTRAINT [PK_WeightTracker] PRIMARY KEY CLUSTERED ([WeightID] ASC),
     CONSTRAINT [FK_WeightTracker_Users] FOREIGN KEY ([UserID]) REFERENCES [HomeApp].[Users] ([UserID])
 );
+
+
 
 
 

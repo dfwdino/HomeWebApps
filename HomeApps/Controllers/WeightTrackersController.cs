@@ -71,7 +71,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes")] WeightTracker weightTracker)
+        public ActionResult Create([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes,WistSize")] WeightTracker weightTracker)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace HomeApps.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes")] WeightTracker weightTracker)
+        public ActionResult Edit([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes,WistSize")] WeightTracker weightTracker)
         {
             if (ModelState.IsValid)
             {

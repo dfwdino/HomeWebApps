@@ -13,5 +13,7 @@ namespace HomeApps.Model
         public string FirstName { get; set; }
         public int AvgWeight { get; internal set; }
 
+        public Nullable<decimal> WistSize { get; set; }
+
     }
 }
