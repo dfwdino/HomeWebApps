@@ -17,7 +17,6 @@ namespace HomeApps.Controllers
         // GET: Machines
         public ActionResult Index()
         {
-
             User user = ((User)this.Session["_CurrentUser"]);
 
             var machines = db.Machines.Include(m => m.User).Where(m => m.UserID == user.UserID);
@@ -47,15 +46,17 @@ namespace HomeApps.Controllers
         }
 
         // POST: Machines/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MachineID,MachineName,Time,Reps,Weight,ResistanceLevel,WorkedOutDate")] Machine machine)
+        public ActionResult Create(
+            [Bind(Include = "MachineID,MachineName,Time,Reps,Weight,ResistanceLevel,WorkedOutDate")]
+                Machine machine
+        )
         {
             if (ModelState.IsValid)
             {
-
                 User user = ((User)this.Session["_CurrentUser"]);
 
                 machine.UserID = user.UserID;
@@ -86,11 +87,16 @@ namespace HomeApps.Controllers
         }
 
         // POST: Machines/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MachineID,MachineName,Time,Reps,Weight,ResistanceLevel,WorkedOutDate,IsDeleted,UserID")] Machine machine)
+        public ActionResult Edit(
+            [Bind(
+                Include = "MachineID,MachineName,Time,Reps,Weight,ResistanceLevel,WorkedOutDate,IsDeleted,UserID"
+            )]
+                Machine machine
+        )
         {
             if (ModelState.IsValid)
             {

@@ -18,7 +18,10 @@ namespace HomeApps.Controllers
         // GET: Stations
         public ActionResult Index()
         {
-            var stations = db.Stations.Where(m => m.Deleted == false).OrderBy(m => m.Name).Include(s => s.CreateModifyLog);
+            var stations = db.Stations
+                .Where(m => m.Deleted == false)
+                .OrderBy(m => m.Name)
+                .Include(s => s.CreateModifyLog);
             return View(stations.ToList());
         }
 
@@ -32,10 +35,9 @@ namespace HomeApps.Controllers
                 user = ((User)this.Session["_CurrentUser"]);
             }
 
-            if(user == null)
+            if (user == null)
             {
-                return Json(new {IsCreated = false, 
-                    ErrorMessage = "User is not logged in" });
+                return Json(new { IsCreated = false, ErrorMessage = "User is not logged in" });
             }
 
             CreateModifyLog cml = new CreateModifyLog();
@@ -49,8 +51,7 @@ namespace HomeApps.Controllers
             db.Stations.Add(newstation);
             db.SaveChanges();
 
-            return Json(new {IsCreated = true,
-                    NewStationID = newstation.StationID });
+            return Json(new { IsCreated = true, NewStationID = newstation.StationID });
         }
 
         // GET: Stations/Details/5
@@ -71,16 +72,22 @@ namespace HomeApps.Controllers
         // GET: Stations/Create
         public ActionResult Create()
         {
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID");
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID"
+            );
             return View();
         }
 
         // POST: Stations/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "StationID,Deleted,ModfiyID,Name")] Station station)
+        public ActionResult Create(
+            [Bind(Include = "StationID,Deleted,ModfiyID,Name")] Station station
+        )
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +109,12 @@ namespace HomeApps.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", station.ModfiyID);
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID",
+                station.ModfiyID
+            );
             return View(station);
         }
 
@@ -118,16 +130,23 @@ namespace HomeApps.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", station.ModfiyID);
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID",
+                station.ModfiyID
+            );
             return View(station);
         }
 
         // POST: Stations/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StationID,Deleted,ModfiyID,Name")] Station station)
+        public ActionResult Edit(
+            [Bind(Include = "StationID,Deleted,ModfiyID,Name")] Station station
+        )
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +154,12 @@ namespace HomeApps.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", station.ModfiyID);
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID",
+                station.ModfiyID
+            );
             return View(station);
         }
 
@@ -162,7 +186,7 @@ namespace HomeApps.Controllers
             Station station = db.Stations.Find(id);
             station.Deleted = true;
             //db.Stations.Remove(station);
-            
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

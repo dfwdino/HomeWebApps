@@ -16,9 +16,7 @@ namespace HomeApps.Models
 
         public List<EventActionModel> EventActions { get; set; }
 
-        public string Notes { get; set; }  
-
-
+        public string Notes { get; set; }
     }
 
     public class EventActionModel

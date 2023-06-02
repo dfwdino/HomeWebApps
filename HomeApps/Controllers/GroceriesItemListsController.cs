@@ -12,7 +12,6 @@ using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
-
     [Access]
     public class GroceriesItemListsController : Controller
     {
@@ -21,18 +20,31 @@ namespace HomeApps.Controllers
         // GET: GroceriesItemLists
         public ActionResult Index()
         {
-            var itemLists = db.ItemLists.OrderBy(f => f.Item.ItemName).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store);
+            var itemLists = db.ItemLists
+                .OrderBy(f => f.Item.ItemName)
+                .Include(i => i.Item)
+                .Include(i => i.SizeType)
+                .Include(i => i.Store);
             return View(itemLists.Where(f => f.GotItem == false).ToList());
         }
 
         public ActionResult ShowAllItems(bool sortbydate = false)
         {
-            List<ItemList> itemLists = db.ItemLists.OrderByDescending(f => f.DateGot).Include(i => i.Item).Include(i => i.SizeType).Include(i => i.Store).Where(f => f.Item.IsDeleted == false && f.GotItem == true).ToList()
-                .GroupBy(f => f.Item.ItemName).Select(f => f.First()).Select(f => f).Distinct().ToList();
+            List<ItemList> itemLists = db.ItemLists
+                .OrderByDescending(f => f.DateGot)
+                .Include(i => i.Item)
+                .Include(i => i.SizeType)
+                .Include(i => i.Store)
+                .Where(f => f.Item.IsDeleted == false && f.GotItem == true)
+                .ToList()
+                .GroupBy(f => f.Item.ItemName)
+                .Select(f => f.First())
+                .Select(f => f)
+                .Distinct()
+                .ToList();
 
             return View(itemLists.ToList());
         }
-
 
         // GET: GroceriesItemLists/Details/5
         public ActionResult Details(int? id)
@@ -59,7 +71,7 @@ namespace HomeApps.Controllers
         }
 
         // POST: GroceriesItemLists/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -67,7 +79,9 @@ namespace HomeApps.Controllers
         {
             try
             {
-                var FoundItem = db.Items.Where(f => f.ItemName == itemList.Item.ItemName).FirstOrDefault();
+                var FoundItem = db.Items
+                    .Where(f => f.ItemName == itemList.Item.ItemName)
+                    .FirstOrDefault();
 
                 if (FoundItem == null)
                 {
@@ -79,7 +93,7 @@ namespace HomeApps.Controllers
                 }
 
                 itemList.DateAdded = DateTime.Now;
-                itemList.Item.KidsStillLike= true;
+                itemList.Item.KidsStillLike = true;
 
                 db.ItemLists.Add(itemList);
                 db.SaveChanges();
@@ -87,10 +101,19 @@ namespace HomeApps.Controllers
             }
             catch (Exception ex)
             {
-
                 ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", itemList.ItemID);
-                ViewBag.SizeTypeID = new SelectList(db.SizeTypes.OrderByDescending(f => f.SizeTypeName), "SizeTypeID", "SizeTypeName", itemList.SizeTypeID);
-                ViewBag.StoreID = new SelectList(db.Stores.OrderByDescending(f => f.StoreName), "StoreID", "StoreName", itemList.StoreID);
+                ViewBag.SizeTypeID = new SelectList(
+                    db.SizeTypes.OrderByDescending(f => f.SizeTypeName),
+                    "SizeTypeID",
+                    "SizeTypeName",
+                    itemList.SizeTypeID
+                );
+                ViewBag.StoreID = new SelectList(
+                    db.Stores.OrderByDescending(f => f.StoreName),
+                    "StoreID",
+                    "StoreName",
+                    itemList.StoreID
+                );
                 return View(itemList);
             }
         }
@@ -108,17 +131,27 @@ namespace HomeApps.Controllers
                 return HttpNotFound();
             }
             ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", itemList.ItemID);
-            ViewBag.SizeTypeID = new SelectList(db.SizeTypes, "SizeTypeID", "SizeTypeName", itemList.SizeTypeID);
+            ViewBag.SizeTypeID = new SelectList(
+                db.SizeTypes,
+                "SizeTypeID",
+                "SizeTypeName",
+                itemList.SizeTypeID
+            );
             ViewBag.StoreID = new SelectList(db.Stores, "StoreID", "StoreName", itemList.StoreID);
             return View(itemList);
         }
 
         // POST: GroceriesItemLists/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemListID,ItemID,StoreID,GotItem,NumberOfItems,SizeTypeID,DateAdded,DateGot")] ItemList itemList)
+        public ActionResult Edit(
+            [Bind(
+                Include = "ItemListID,ItemID,StoreID,GotItem,NumberOfItems,SizeTypeID,DateAdded,DateGot"
+            )]
+                ItemList itemList
+        )
         {
             if (ModelState.IsValid)
             {
@@ -127,8 +160,18 @@ namespace HomeApps.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName", itemList.ItemID);
-            ViewBag.SizeTypeID = new SelectList(db.SizeTypes.OrderByDescending(f => f.SizeTypeName), "SizeTypeID", "SizeTypeName", itemList.SizeTypeID);
-            ViewBag.StoreID = new SelectList(db.Stores.OrderByDescending(f => f.StoreName), "StoreID", "StoreName", itemList.StoreID);
+            ViewBag.SizeTypeID = new SelectList(
+                db.SizeTypes.OrderByDescending(f => f.SizeTypeName),
+                "SizeTypeID",
+                "SizeTypeName",
+                itemList.SizeTypeID
+            );
+            ViewBag.StoreID = new SelectList(
+                db.Stores.OrderByDescending(f => f.StoreName),
+                "StoreID",
+                "StoreName",
+                itemList.StoreID
+            );
             return View(itemList);
         }
 
@@ -166,9 +209,5 @@ namespace HomeApps.Controllers
             }
             base.Dispose(disposing);
         }
-
-        
-
-
     }
 }

@@ -47,13 +47,11 @@ namespace HomeApps.Controllers
             //ViewBag.UserID = new SelectList(db.Users.Where(m => m.FirstName.Contains(userViewModel.FirstName)).ToList(), "UserID", "FirstName");
             ViewBag.PersonGenderID = new SelectList(db.Genders, "GenderID", "Gender1");
 
-            
-
             return View(createUser);
         }
 
         // POST: UsersPeoples/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -67,7 +65,12 @@ namespace HomeApps.Controllers
             }
 
             //ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName", usersPeople.UserID);
-            ViewBag.PersonGenderID = new SelectList(db.Genders, "GenderID", "Gender1", usersPeople.PersonGenderID);
+            ViewBag.PersonGenderID = new SelectList(
+                db.Genders,
+                "GenderID",
+                "Gender1",
+                usersPeople.PersonGenderID
+            );
             return View(usersPeople);
         }
 
@@ -86,17 +89,29 @@ namespace HomeApps.Controllers
 
             UserViewModel userViewModel = Session["_CurrentUser"] as UserViewModel;
 
-            ViewBag.UserID = new SelectList(db.Users.Where(m => m.FirstName.Contains(userViewModel.FirstName)), "UserID", "FirstName");
-            ViewBag.PersonGenderID = new SelectList(db.Genders, "GenderID", "Gender1", usersPeople.PersonGenderID);
+            ViewBag.UserID = new SelectList(
+                db.Users.Where(m => m.FirstName.Contains(userViewModel.FirstName)),
+                "UserID",
+                "FirstName"
+            );
+            ViewBag.PersonGenderID = new SelectList(
+                db.Genders,
+                "GenderID",
+                "Gender1",
+                usersPeople.PersonGenderID
+            );
             return View(usersPeople);
         }
 
         // POST: UsersPeoples/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UsersPersonID,PersonName,PersonGenderID,UserID,Notes")] UsersPeople usersPeople)
+        public ActionResult Edit(
+            [Bind(Include = "UsersPersonID,PersonName,PersonGenderID,UserID,Notes")]
+                UsersPeople usersPeople
+        )
         {
             if (ModelState.IsValid)
             {
@@ -107,8 +122,17 @@ namespace HomeApps.Controllers
 
             UserViewModel userViewModel = Session["_CurrentUser"] as UserViewModel;
 
-            ViewBag.UserID = new SelectList(db.Users.Where(m => m.FirstName.Contains(userViewModel.FirstName)), "UserID", "FirstName");
-            ViewBag.PersonGenderID = new SelectList(db.Genders, "GenderID", "Gender1", usersPeople.PersonGenderID);
+            ViewBag.UserID = new SelectList(
+                db.Users.Where(m => m.FirstName.Contains(userViewModel.FirstName)),
+                "UserID",
+                "FirstName"
+            );
+            ViewBag.PersonGenderID = new SelectList(
+                db.Genders,
+                "GenderID",
+                "Gender1",
+                usersPeople.PersonGenderID
+            );
             return View(usersPeople);
         }
 

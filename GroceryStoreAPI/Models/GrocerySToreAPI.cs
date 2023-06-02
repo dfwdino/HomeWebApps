@@ -8,14 +8,10 @@ namespace GroceryStoreAPI.Models
 {
     public partial class GrocerySToreAPI : DbContext
     {
-        public GrocerySToreAPI()
-        {
-        }
+        public GrocerySToreAPI() { }
 
         public GrocerySToreAPI(DbContextOptions<GrocerySToreAPI> options)
-            : base(options)
-        {
-        }
+            : base(options) { }
 
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<List> Lists { get; set; }
@@ -26,7 +22,9 @@ namespace GroceryStoreAPI.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("data source=CHANGEISBAD\\SQLEXPRESS;initial catalog=HomeApps;integrated security=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer(
+                    "data source=CHANGEISBAD\\SQLEXPRESS;initial catalog=HomeApps;integrated security=True;MultipleActiveResultSets=True;"
+                );
             }
         }
 
@@ -57,13 +55,15 @@ namespace GroceryStoreAPI.Models
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
-                entity.HasOne(d => d.FoodItem)
+                entity
+                    .HasOne(d => d.FoodItem)
                     .WithMany(p => p.Lists)
                     .HasForeignKey(d => d.FoodItemId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Lists_Items");
 
-                entity.HasOne(d => d.Store)
+                entity
+                    .HasOne(d => d.Store)
                     .WithMany(p => p.Lists)
                     .HasForeignKey(d => d.StoreId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -74,29 +74,31 @@ namespace GroceryStoreAPI.Models
             {
                 entity.ToTable("Prices", "Grocery");
 
-                entity.Property(e => e.PriceId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("PriceID");
+                entity.Property(e => e.PriceId).ValueGeneratedNever().HasColumnName("PriceID");
 
                 entity.Property(e => e.FoodItemId).HasColumnName("FoodItemID");
 
-                entity.Property(e => e.Price1)
+                entity
+                    .Property(e => e.Price1)
                     .HasColumnType("decimal(8, 2)")
                     .HasColumnName("Price");
 
-                entity.Property(e => e.PriceDate)
+                entity
+                    .Property(e => e.PriceDate)
                     .HasColumnType("date")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
-                entity.HasOne(d => d.FoodItem)
+                entity
+                    .HasOne(d => d.FoodItem)
                     .WithMany(p => p.Prices)
                     .HasForeignKey(d => d.FoodItemId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Prices_Items");
 
-                entity.HasOne(d => d.Store)
+                entity
+                    .HasOne(d => d.Store)
                     .WithMany(p => p.Prices)
                     .HasForeignKey(d => d.StoreId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -109,9 +111,7 @@ namespace GroceryStoreAPI.Models
 
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

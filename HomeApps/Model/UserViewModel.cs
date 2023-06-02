@@ -7,9 +7,7 @@ namespace HomeApps.Models
 {
     public class UserViewModel : User
     {
-        public UserViewModel() {
-          
-        }
+        public UserViewModel() { }
 
         public string UsersRoles = string.Empty;
 

@@ -37,24 +37,31 @@ namespace HomeApps.Controllers
                 return HttpNotFound();
             }
 
-
-            TheEventDetails eventDetails = new TheEventDetails() {DateOfEvent = theEvent.DateOfEvent.ToShortDateString(), EventName = theEvent.EventName };
+            TheEventDetails eventDetails = new TheEventDetails()
+            {
+                DateOfEvent = theEvent.DateOfEvent.ToShortDateString(),
+                EventName = theEvent.EventName
+            };
 
             UserViewModel user = (UserViewModel)this.Session["_CurrentUser"];
 
-             List<EventAction> eventactions = db.EventActions.Where(m => m.EventID == id)
-                                                            .OrderBy(m => new { m.GivingPersonID, m.ReveivingPersonID })
-                                                        .ToList();
+            List<EventAction> eventactions = db.EventActions
+                .Where(m => m.EventID == id)
+                .OrderBy(m => new { m.GivingPersonID, m.ReveivingPersonID })
+                .ToList();
             GroupAction tempEA = new GroupAction();
             foreach (var item in eventactions)
             {
-                if(tempEA.Giving == null)
+                if (tempEA.Giving == null)
                 {
                     tempEA.Giving = item.UsersPeople.PersonName;
                     tempEA.Recving = item.UsersPeople1.PersonName;
                     tempEA.Action = item.Action.Name;
                 }
-                else if(tempEA.Giving == item.UsersPeople.PersonName && tempEA.Recving == item.UsersPeople1.PersonName)
+                else if (
+                    tempEA.Giving == item.UsersPeople.PersonName
+                    && tempEA.Recving == item.UsersPeople1.PersonName
+                )
                 {
                     tempEA.Action += ", " + item.Action.Name;
                 }
@@ -65,10 +72,7 @@ namespace HomeApps.Controllers
                     tempEA.Giving = item.UsersPeople.PersonName;
                     tempEA.Recving = item.UsersPeople1.PersonName;
                     tempEA.Action = item.Action.Name;
-
                 }
-                
-
             }
             eventDetails.Actions.Add(tempEA);
 
@@ -80,23 +84,28 @@ namespace HomeApps.Controllers
         {
             UserViewModel userViewModel = Session["_CurrentUser"] as UserViewModel;
 
-            ViewBag.People = new SelectList(db.UsersPeoples.OrderBy(m => m.PersonName), "UsersPersonID", "PersonName");
+            ViewBag.People = new SelectList(
+                db.UsersPeoples.OrderBy(m => m.PersonName),
+                "UsersPersonID",
+                "PersonName"
+            );
             ViewBag.ActionsDone = this.db.Actions.OrderBy(m => m.Name).ToList();
-            ViewBag.GivingPersonID = new SelectList(db.UsersPeoples.OrderBy(m => m.PersonName), "UsersPersonID", "PersonName");
-
-
+            ViewBag.GivingPersonID = new SelectList(
+                db.UsersPeoples.OrderBy(m => m.PersonName),
+                "UsersPersonID",
+                "PersonName"
+            );
 
             return View(new EventCreateModel());
         }
 
         // POST: TheEvents/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EventCreateModel theEvent)
         {
-
             if (ModelState.IsValid)
             {
                 UserViewModel user = null;
@@ -105,8 +114,12 @@ namespace HomeApps.Controllers
                     user = ((UserViewModel)this.Session["_CurrentUser"]);
                 }
 
-
-                TheEvent currentEvent = new TheEvent { EventName = theEvent.EventName, DateOfEvent = Convert.ToDateTime(theEvent.DateOfEvent), Notes = theEvent.Notes };
+                TheEvent currentEvent = new TheEvent
+                {
+                    EventName = theEvent.EventName,
+                    DateOfEvent = Convert.ToDateTime(theEvent.DateOfEvent),
+                    Notes = theEvent.Notes
+                };
 
                 db.TheEvents.Add(currentEvent);
                 db.SaveChanges();
@@ -125,10 +138,7 @@ namespace HomeApps.Controllers
 
                         db.EventActions.Add(ac);
                     }
-
-                    
                 }
-
 
                 db.SaveChanges();
 
@@ -154,11 +164,14 @@ namespace HomeApps.Controllers
         }
 
         // POST: TheEvents/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventID,DateOfEvent,DateofEventOffSet,IsDeleted,EventName")] TheEvent theEvent)
+        public ActionResult Edit(
+            [Bind(Include = "EventID,DateOfEvent,DateofEventOffSet,IsDeleted,EventName")]
+                TheEvent theEvent
+        )
         {
             if (ModelState.IsValid)
             {

@@ -42,11 +42,13 @@ namespace HomeApps.Controllers
         }
 
         // POST: SizeTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SizeTypeID,SizeTypeName,IsDeleted")] SizeType sizeType)
+        public ActionResult Create(
+            [Bind(Include = "SizeTypeID,SizeTypeName,IsDeleted")] SizeType sizeType
+        )
         {
             if (ModelState.IsValid)
             {
@@ -74,11 +76,13 @@ namespace HomeApps.Controllers
         }
 
         // POST: SizeTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SizeTypeID,SizeTypeName,IsDeleted")] SizeType sizeType)
+        public ActionResult Edit(
+            [Bind(Include = "SizeTypeID,SizeTypeName,IsDeleted")] SizeType sizeType
+        )
         {
             if (ModelState.IsValid)
             {

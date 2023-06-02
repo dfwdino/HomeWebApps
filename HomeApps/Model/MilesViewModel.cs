@@ -24,10 +24,8 @@ namespace HomeApps.Models
         public decimal TotalMPG { get; set; }
         public decimal Day30TotalMPG { get; set; }
 
-        public string AutoName { get;set; }
-
+        public string AutoName { get; set; }
     }
-
 
     public class MilesModel
     {
@@ -52,5 +50,4 @@ namespace HomeApps.Models
 
         public int MPG { get; set; }
     }
-
 }

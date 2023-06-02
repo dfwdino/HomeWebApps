@@ -8,12 +8,11 @@ namespace HomeApps.Model
     public class WeightTrackerViewModel
     {
         public List<WeightTracker> BodyWeights { get; set; }
-        public Nullable<decimal> MaxWeight { get; set; } 
+        public Nullable<decimal> MaxWeight { get; set; }
         public Nullable<decimal> MiniWeight { get; set; }
         public string FirstName { get; set; }
         public int AvgWeight { get; internal set; }
 
         public Nullable<decimal> WistSize { get; set; }
-
     }
 }

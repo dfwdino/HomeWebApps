@@ -14,11 +14,14 @@ namespace HomeApps.Models
         [DisplayName("Date Of Event")]
         public new DateTime DateOfEvent { get; set; }
 
-        public new System.DateTimeOffset DateofEventOffSet { get => dateofEventOffSet; set => dateofEventOffSet = value; }
+        public new System.DateTimeOffset DateofEventOffSet
+        {
+            get => dateofEventOffSet;
+            set => dateofEventOffSet = value;
+        }
 
         [DisplayName("Event Name?")]
         public new string EventName { get; set; }
-
 
         public IList<EventAction> EventActions { get; set; }
 

@@ -14,7 +14,12 @@ namespace HomeApps.Models
 
         [Required]
         [DisplayName("Gas Date")]
-        public System.DateTime GasDate { get; set; } = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
+        public System.DateTime GasDate { get; set; } =
+            TimeZoneInfo.ConvertTime(
+                DateTime.Now,
+                TimeZoneInfo.Local,
+                TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time")
+            );
 
         [Required]
         [DisplayName("Total Gallons")]
@@ -27,7 +32,6 @@ namespace HomeApps.Models
         [Required]
         [DisplayName("Total Miles Driven")]
         public Nullable<decimal> TotalMilesDriven { get; set; }
-
 
         [DisplayName("Engine Run Time")]
         public Nullable<System.TimeSpan> EngineRunTime { get; set; }
@@ -42,7 +46,5 @@ namespace HomeApps.Models
         [DisplayName("Gas Type")]
         public int GasTypeID { get; set; }
         public virtual Type Type { get; set; }
-    
-
     }
 }

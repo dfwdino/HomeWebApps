@@ -14,15 +14,12 @@ namespace HomeApps.Controllers
     {
         private readonly HomeAppsEntities _db = new HomeAppsEntities();
 
-        public AdminController()
-        {
-        }
+        public AdminController() { }
 
         public ActionResult CreateUser()
         {
             return View();
         }
-
 
         // GET: Admin
         public ActionResult Index()
@@ -31,12 +28,19 @@ namespace HomeApps.Controllers
 
             List<UserViewModel> allusers = new List<UserViewModel>();
 
-            allusers = _db.Users.Where(m => m.FirstName != "System").ToList().Select(m => new UserViewModel
-            {
-                FirstName = m.FirstName,
-                IsAdmin = m.Role.RoleName.Equals("Admin"),
-                UsersSchema = Infrastructure.Helper.GetUsersSchemasName(m, _db.Schemas)
-            }).ToList();
+            allusers = _db.Users
+                .Where(m => m.FirstName != "System")
+                .ToList()
+                .Select(
+                    m =>
+                        new UserViewModel
+                        {
+                            FirstName = m.FirstName,
+                            IsAdmin = m.Role.RoleName.Equals("Admin"),
+                            UsersSchema = Infrastructure.Helper.GetUsersSchemasName(m, _db.Schemas)
+                        }
+                )
+                .ToList();
 
             return View(allusers);
         }
@@ -50,7 +54,10 @@ namespace HomeApps.Controllers
 
         public ActionResult Schemas()
         {
-            List<Schema> schema = _db.Schemas.Include(m => m.UserSchema).Include(m => m.UserSchema.User).ToList();
+            List<Schema> schema = _db.Schemas
+                .Include(m => m.UserSchema)
+                .Include(m => m.UserSchema.User)
+                .ToList();
 
             return View(schema);
         }
@@ -61,8 +68,20 @@ namespace HomeApps.Controllers
 
             var controlleractionlist = asm.GetTypes()
                 .Where(type => typeof(System.Web.Mvc.Controller).IsAssignableFrom(type))
-                .SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
-                .Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
+                .SelectMany(
+                    type =>
+                        type.GetMethods(
+                            BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public
+                        )
+                )
+                .Where(
+                    m =>
+                        !m.GetCustomAttributes(
+                                typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute),
+                                true
+                            )
+                            .Any()
+                )
                 .Select(x => new { Controller = x.DeclaringType.Name })
                 .GroupBy(m => m.Controller)
                 .Select(m => new { Schema = m.Key.Replace("Controller", "") })
@@ -74,7 +93,11 @@ namespace HomeApps.Controllers
         public ActionResult AddSchema()
         {
             ViewBag.Schema = new SelectList(GetAllControllers(), "Schema", "Schema");
-            ViewBag.People = new SelectList(_db.Users.OrderBy(m => m.FirstName), "UserID", "FirstName");
+            ViewBag.People = new SelectList(
+                _db.Users.OrderBy(m => m.FirstName),
+                "UserID",
+                "FirstName"
+            );
 
             return View();
         }
@@ -82,8 +105,11 @@ namespace HomeApps.Controllers
         [HttpPost]
         public ActionResult AddSchema([Bind(Include = "Schema,UserID")] int UserID, string Schema)
         {
-            Schema FoundSchema = _db.Schemas.ToList().Where(m => m.SchemaName.Contains(Schema)).FirstOrDefault();
-            
+            Schema FoundSchema = _db.Schemas
+                .ToList()
+                .Where(m => m.SchemaName.Contains(Schema))
+                .FirstOrDefault();
+
             User user = ((User)this.Session["_CurrentUser"]);
 
             if (FoundSchema == null)
@@ -91,20 +117,31 @@ namespace HomeApps.Controllers
                 _db.Schemas.Add(new Schema { SchemaName = Schema, ModfiyID = user.UserID });
                 _db.SaveChanges();
 
-                FoundSchema = _db.Schemas.ToList().Where(m => m.SchemaName.Contains(Schema)).FirstOrDefault();
+                FoundSchema = _db.Schemas
+                    .ToList()
+                    .Where(m => m.SchemaName.Contains(Schema))
+                    .FirstOrDefault();
             }
 
-            UserSchema FoundUserSchema = _db.UserSchemas.FirstOrDefault(m => m.SchemaID == FoundSchema.SchemaID);
+            UserSchema FoundUserSchema = _db.UserSchemas.FirstOrDefault(
+                m => m.SchemaID == FoundSchema.SchemaID
+            );
 
             if (FoundSchema != null && FoundUserSchema != null)
             {
                 UserViewModel currentuser = (UserViewModel)this.Session["_CurrentUser"];
 
-                _db.UserSchemas.Add(new UserSchema { SchemaID = FoundSchema.SchemaID, UsersID = UserID, ModfiyID = currentuser.UserID, Deleted = false });
+                _db.UserSchemas.Add(
+                    new UserSchema
+                    {
+                        SchemaID = FoundSchema.SchemaID,
+                        UsersID = UserID,
+                        ModfiyID = currentuser.UserID,
+                        Deleted = false
+                    }
+                );
                 _db.SaveChanges();
             }
-
-            
 
             return RedirectToAction("Index");
         }

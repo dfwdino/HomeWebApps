@@ -7,9 +7,34 @@
 @if (currentuser != null)
 {
 
+    if (currentuser.IsAdmin)
+    {
+        <div>@Html.ActionLink("Admin", "Index", "Admin", null, new { })</div>
+        <br />
+    }
+
     if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Auto").Equals(true))
     {
         <div>@Html.ActionLink("Auto", "Index", "Autos", null, new { })</div>
+        <br />
+    }
+
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Chores").Equals(true))
+    {
+        <div>@Html.ActionLink("Chores", "Index", "UserSChores", null, new { })</div>
+        <br />
+    }
+
+
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
+    {
+        <div>@Html.ActionLink("Groceries", "Index", "GroceriesItemLists", null, new { })</div>
+        <br />
+    }
+
+    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Machines").Equals(true))
+    {
+        <div>@Html.ActionLink("Machines", "Index", "Machines", null, new { })</div>
         <br />
     }
 
@@ -25,37 +50,12 @@
         <br />
     }
 
-    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Groceries").Equals(true))
-    {
-        <div>@Html.ActionLink("Groceries", "Index", "GroceriesItemLists", null, new { })</div>
-        <br />
-    }
-
-
     if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("WeightTrackers").Equals(true))
     {
         <div>@Html.ActionLink("Weight", "Index", "WeightTrackers", null, new { })</div>
         <br />
     }
 
-    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Machines").Equals(true))
-    {
-        <div>@Html.ActionLink("Machines", "Index", "Machines", null, new { })</div>
-        <br />
-    }
-
-    if (currentuser.IsAdmin || currentuser.UsersSchema.Contains("Chores").Equals(true))
-    {
-        <div>@Html.ActionLink("Chores", "Index", "UserSChores", null, new { })</div>
-        <br />
-    }
-
-
-    if (currentuser.IsAdmin)
-    {
-        <div>@Html.ActionLink("Admin", "Index", "Admin", null, new { })</div>
-        <br />
-    }
 
 }
 <br />

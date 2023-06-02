@@ -12,7 +12,6 @@ using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
-
     [Access]
     public class GroceriesItemsController : Controller
     {
@@ -21,7 +20,9 @@ namespace HomeApps.Controllers
         // GET: GroceriesItems
         public ActionResult Index()
         {
-            return View(db.Items.Where(f => f.IsDeleted == false).OrderBy(f => f.ItemName).ToList());
+            return View(
+                db.Items.Where(f => f.IsDeleted == false).OrderBy(f => f.ItemName).ToList()
+            );
         }
 
         // GET: GroceriesItems/Details/5
@@ -46,11 +47,13 @@ namespace HomeApps.Controllers
         }
 
         // POST: GroceriesItems/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,ItemName,IsDeleted,Notes,IsMSGFree,KidsStillLike")] Item item)
+        public ActionResult Create(
+            [Bind(Include = "ItemID,ItemName,IsDeleted,Notes,IsMSGFree,KidsStillLike")] Item item
+        )
         {
             if (ModelState.IsValid)
             {
@@ -81,11 +84,13 @@ namespace HomeApps.Controllers
         }
 
         // POST: GroceriesItems/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemID,ItemName,IsDeleted,IsMSGFree,KidsStillLike")] Item item)
+        public ActionResult Edit(
+            [Bind(Include = "ItemID,ItemName,IsDeleted,IsMSGFree,KidsStillLike")] Item item
+        )
         {
             if (ModelState.IsValid)
             {
@@ -132,19 +137,25 @@ namespace HomeApps.Controllers
             base.Dispose(disposing);
         }
 
-
         public JsonResult LookUpFoodItem(string term)
         {
-            return Json(db.Items.Where(m => m.ItemName.Contains(term)).Select(m => new { value = m.ItemName, m.ItemID }).OrderBy(m => m.value),
-                   JsonRequestBehavior.AllowGet);
-
+            return Json(
+                db.Items
+                    .Where(m => m.ItemName.Contains(term))
+                    .Select(m => new { value = m.ItemName, m.ItemID })
+                    .OrderBy(m => m.value),
+                JsonRequestBehavior.AllowGet
+            );
         }
 
         public void GotItem(int ItemListID)
         {
-            var gotitem = db.ItemLists.Where(f => f.ItemListID == ItemListID).OrderByDescending(f => f.DateGot).First();
+            var gotitem = db.ItemLists
+                .Where(f => f.ItemListID == ItemListID)
+                .OrderByDescending(f => f.DateGot)
+                .First();
 
-            if(gotitem.DateGot != null)
+            if (gotitem.DateGot != null)
             {
                 DateTime dateTime = DateTime.Now;
 
@@ -156,9 +167,7 @@ namespace HomeApps.Controllers
                 gotitem.DateGot = DateTime.Now;
             }
 
-           
             db.SaveChanges();
         }
-
     }
 }

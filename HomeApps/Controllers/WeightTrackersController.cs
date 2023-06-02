@@ -27,19 +27,32 @@ namespace HomeApps.Controllers
             WeightTrackerViewModel weightTrackerViewModel = new WeightTrackerViewModel();
 
             DateTime dt30days = DateTime.Now.AddDays(-30);
-            
-            weightTrackerViewModel.BodyWeights = db.WeightTrackers.Include(w => w.User).Where(m => m.UserID == user.UserID).OrderByDescending(m => m.WeightData).ToList();
+
+            weightTrackerViewModel.BodyWeights = db.WeightTrackers
+                .Include(w => w.User)
+                .Where(m => m.UserID == user.UserID)
+                .OrderByDescending(m => m.WeightData)
+                .ToList();
 
             if (weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Count() > 0)
             {
-                weightTrackerViewModel.MiniWeight = weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Min(m => m.WeightAmout);
+                weightTrackerViewModel.MiniWeight = weightTrackerViewModel.BodyWeights
+                    .Where(m => m.WeightData >= dt30days)
+                    .Min(m => m.WeightAmout);
 
-                weightTrackerViewModel.MaxWeight = weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Max(m => m.WeightAmout);
+                weightTrackerViewModel.MaxWeight = weightTrackerViewModel.BodyWeights
+                    .Where(m => m.WeightData >= dt30days)
+                    .Max(m => m.WeightAmout);
 
-                weightTrackerViewModel.AvgWeight = (int)weightTrackerViewModel.BodyWeights.Where(m => m.WeightData >= dt30days).Average(m => m.WeightAmout);
+                weightTrackerViewModel.AvgWeight = (int)
+                    weightTrackerViewModel.BodyWeights
+                        .Where(m => m.WeightData >= dt30days)
+                        .Average(m => m.WeightAmout);
             }
 
-            weightTrackerViewModel.FirstName = weightTrackerViewModel.BodyWeights.FirstOrDefault()?.User.FirstName;
+            weightTrackerViewModel.FirstName = weightTrackerViewModel.BodyWeights
+                .FirstOrDefault()
+                ?.User.FirstName;
 
             return View(weightTrackerViewModel);
         }
@@ -62,16 +75,18 @@ namespace HomeApps.Controllers
         // GET: WeightTrackers/Create
         public ActionResult Create()
         {
-            
             return View();
         }
 
         // POST: WeightTrackers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes,WistSize")] WeightTracker weightTracker)
+        public ActionResult Create(
+            [Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes,WistSize")]
+                WeightTracker weightTracker
+        )
         {
             if (ModelState.IsValid)
             {
@@ -105,11 +120,14 @@ namespace HomeApps.Controllers
         }
 
         // POST: WeightTrackers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes,WistSize")] WeightTracker weightTracker)
+        public ActionResult Edit(
+            [Bind(Include = "WeightID,WeightAmout,WeightData,UserID,Deleted,Notes,WistSize")]
+                WeightTracker weightTracker
+        )
         {
             if (ModelState.IsValid)
             {

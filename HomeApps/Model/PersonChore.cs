@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 
 namespace HomeApps.Model
 {
@@ -22,4 +20,3 @@ namespace HomeApps.Model
         public int UserChoreID { get; set; }
     }
 }
-

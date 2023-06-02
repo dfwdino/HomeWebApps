@@ -25,7 +25,6 @@ namespace HomeApps.Models
         {
             Actions = new List<GroupAction>();
         }
-
     }
 
     public class GroupAction
@@ -34,6 +33,4 @@ namespace HomeApps.Models
         public string Recving { get; set; }
         public string Action { get; set; }
     }
-
-
 }

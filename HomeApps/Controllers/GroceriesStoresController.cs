@@ -11,7 +11,6 @@ using HomeApps.Infrastructure;
 
 namespace HomeApps.Controllers
 {
-
     [Access]
     public class GroceriesStoresController : Controller
     {
@@ -45,11 +44,13 @@ namespace HomeApps.Controllers
         }
 
         // POST: GroceriesStores/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "StoreID,StoreName,StoreAddress,Deleted")] Store store)
+        public ActionResult Create(
+            [Bind(Include = "StoreID,StoreName,StoreAddress,Deleted")] Store store
+        )
         {
             if (ModelState.IsValid)
             {
@@ -77,11 +78,13 @@ namespace HomeApps.Controllers
         }
 
         // POST: GroceriesStores/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StoreID,StoreName,StoreAddress,Deleted")] Store store)
+        public ActionResult Edit(
+            [Bind(Include = "StoreID,StoreName,StoreAddress,Deleted")] Store store
+        )
         {
             if (ModelState.IsValid)
             {

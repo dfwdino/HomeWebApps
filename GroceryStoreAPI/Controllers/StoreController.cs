@@ -12,7 +12,8 @@
     [ApiController]
     public class StoreController : ControllerBase, IDisposable
     {
-        private readonly GroceryStoreAPI.Models.GrocerySToreAPI groceryStoreAPI = new Models.GrocerySToreAPI();
+        private readonly GroceryStoreAPI.Models.GrocerySToreAPI groceryStoreAPI =
+            new Models.GrocerySToreAPI();
 
         // GET: api/<StoreController>
         [HttpGet]
@@ -38,10 +39,7 @@
         {
             if (this.CheckForStore(value).Equals(false))
             {
-                this.groceryStoreAPI.Add(new Models.Store
-                {
-                    Name = value
-                });
+                this.groceryStoreAPI.Add(new Models.Store { Name = value });
 
                 this.groceryStoreAPI.SaveChanges();
             }
@@ -49,9 +47,7 @@
 
         // PUT api/<StoreController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        public void Put(int id, [FromBody] string value) { }
 
         // DELETE api/<StoreController>/5
         [HttpDelete("{id}")]
@@ -61,20 +57,21 @@
 
             if (store == null)
             {
-                return new Models.JsonErrorResult(new { message = "No Store Found." }, HttpStatusCode.NotFound);
+                return new Models.JsonErrorResult(
+                    new { message = "No Store Found." },
+                    HttpStatusCode.NotFound
+                );
             }
             else
             {
                 store.Deleted = true;
                 groceryStoreAPI.SaveChanges();
 
-                return new JsonResult( new {StatusCode = HttpStatusCode.OK});
+                return new JsonResult(new { StatusCode = HttpStatusCode.OK });
             }
         }
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
 
         private Models.Store GetStore<T>(T storeinfo)
         {
@@ -106,7 +103,7 @@
             }
             else
             {
-                return groceryStoreAPI.Stores.Any(m => m.Name == StoreName); 
+                return groceryStoreAPI.Stores.Any(m => m.Name == StoreName);
             }
         }
     }

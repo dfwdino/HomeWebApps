@@ -12,7 +12,6 @@ namespace HomeApps.Models
             this.ModelSocialSites = new List<ModelSocialSite>();
         }
 
-
         public int ModelID { get; set; }
         public bool Deleted { get; set; }
         public Nullable<int> ModfiyID { get; set; }

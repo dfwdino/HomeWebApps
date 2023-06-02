@@ -14,12 +14,10 @@ namespace HomeApps
             //GlobalFilters.Filters.Add(new MyExceptionHandler());
             RegisterGlobalFilters(GlobalFilters.Filters);
 
-            Bootstrapper.Initialise();
+            //Bootstrapper.Initialise();
         }
 
-        protected void Session_Start(Object sender, EventArgs e)
-        {
-        }
+        protected void Session_Start(Object sender, EventArgs e) { }
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {

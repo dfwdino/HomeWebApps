@@ -7,33 +7,29 @@ using System.Configuration;
 
 namespace HomeApps.Controllers
 {
-    
     public class HomeController : Controller
     {
-
         HomeAppsEntities db;
 
-        public ActionResult Index() => Session["_CurrentUser"] == null ? View() : (ActionResult)RedirectToAction("AppList");
+        public ActionResult Index() =>
+            Session["_CurrentUser"] == null ? View() : (ActionResult)RedirectToAction("AppList");
 
         public ActionResult Login()
         {
-            
             return View();
         }
 
-       
         public HomeController()
         {
             db = new HomeAppsEntities();
-            
         }
-
-        
 
         [HttpPost]
         public ActionResult Login(User user)
         {
-            User foundUser = db.Users.Where(m => m.UserName == user.UserName && m.Password == user.Password).FirstOrDefault();
+            User foundUser = db.Users
+                .Where(m => m.UserName == user.UserName && m.Password == user.Password)
+                .FirstOrDefault();
 
             if (foundUser == null)
             {
@@ -47,21 +43,14 @@ namespace HomeApps.Controllers
 
             Helper.DuckCopyShallow(userViewModel, foundUser);
 
-
             this.Session["_CurrentUser"] = userViewModel;
 
             return RedirectToAction("AppList");
         }
 
-        
-
-
         public ActionResult AppList()
         {
             return View();
         }
-
-
-
     }
 }

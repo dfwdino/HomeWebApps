@@ -20,28 +20,33 @@ namespace HomeApps.Infrastructure
 
             if (session["_CurrentUser"] == null)
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
-                {
-                    controller = "Home",
-                    action = "Login",
-                    area = "Login"
-                }));
+                filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary(
+                        new
+                        {
+                            controller = "Home",
+                            action = "Login",
+                            area = "Login"
+                        }
+                    )
+                );
             }
             else
             {
-                
                 UserViewModel currentuser = session["_CurrentUser"] as UserViewModel;
 
-                var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+                var controller = HttpContext.Current.Request.RequestContext.RouteData.Values[
+                    "controller"
+                ].ToString();
 
-                if (currentuser.UsersSchema.Contains(controller).Equals(false) && !currentuser.IsAdmin)
+                if (
+                    currentuser.UsersSchema.Contains(controller).Equals(false)
+                    && !currentuser.IsAdmin
+                )
                 {
                     throw new Exception("Dont have access to this page.");
                 }
-
-
             }
-
         }
 
         public static HttpRequest GetHttpRequest()

@@ -11,11 +11,11 @@ namespace GroceryStoreAPI.Models
     {
         private readonly HttpStatusCode _statusCode;
 
-        public JsonErrorResult(object json) : this(json, HttpStatusCode.InternalServerError)
-        {
-        }
+        public JsonErrorResult(object json)
+            : this(json, HttpStatusCode.InternalServerError) { }
 
-        public JsonErrorResult(object json, HttpStatusCode statusCode) : base(json)
+        public JsonErrorResult(object json, HttpStatusCode statusCode)
+            : base(json)
         {
             _statusCode = statusCode;
         }

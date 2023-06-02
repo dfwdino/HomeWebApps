@@ -19,7 +19,9 @@ namespace HomeApps.Controllers
         {
             user = ((UserViewModel)this.Session["_CurrentUser"]);
 
-            var autoes = db.Autos.Where(m => m.Deleted == false).Where(m => m.UserID == user.UserID);
+            var autoes = db.Autos
+                .Where(m => m.Deleted == false)
+                .Where(m => m.UserID == user.UserID);
             return View(autoes.ToList());
         }
 
@@ -41,7 +43,6 @@ namespace HomeApps.Controllers
         // GET: Autoes/Create
         public ActionResult Create()
         {
-
             if (user == null)
             {
                 user = ((UserViewModel)this.Session["_CurrentUser"]);
@@ -51,11 +52,13 @@ namespace HomeApps.Controllers
         }
 
         // POST: Autoes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AutoID,Deleted,ModfiyID,AutoName,UserID")] Auto auto)
+        public ActionResult Create(
+            [Bind(Include = "AutoID,Deleted,ModfiyID,AutoName,UserID")] Auto auto
+        )
         {
             if (ModelState.IsValid)
             {
@@ -71,14 +74,19 @@ namespace HomeApps.Controllers
                 db.CreateModifyLogs.Add(cml);
                 db.SaveChanges();
                 auto.CreateModifyLog = cml;
-                                
+
                 auto.UserID = user.UserID;
                 db.Autos.Add(auto);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", auto.ModfiyID);
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID",
+                auto.ModfiyID
+            );
             ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName", auto.UserID);
             return View(auto);
         }
@@ -95,17 +103,24 @@ namespace HomeApps.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", auto.ModfiyID);
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID",
+                auto.ModfiyID
+            );
             ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName", auto.UserID);
             return View(auto);
         }
 
         // POST: Autoes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AutoID,Deleted,ModfiyID,AutoName,UserID")] Auto auto)
+        public ActionResult Edit(
+            [Bind(Include = "AutoID,Deleted,ModfiyID,AutoName,UserID")] Auto auto
+        )
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +128,12 @@ namespace HomeApps.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", auto.ModfiyID);
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID",
+                auto.ModfiyID
+            );
             ViewBag.UserID = new SelectList(db.Users, "UserID", "FirstName", auto.UserID);
             return View(auto);
         }

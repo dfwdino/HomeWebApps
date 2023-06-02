@@ -17,22 +17,19 @@ namespace HomeApps.Controllers
 
         // GET: Miles
         public ActionResult Index(int id)
-        {   
+        {
             MilesViewModel Miles = new MilesViewModel();
 
-            var tempmils = db.Miles.OrderBy(m => m.GasDate).Where(m => m.AutoID == id).ToList();//.Include(m => m.Station).Include(m => m.Auto).ToList();
+            var tempmils = db.Miles.OrderBy(m => m.GasDate).Where(m => m.AutoID == id).ToList(); //.Include(m => m.Station).Include(m => m.Auto).ToList();
             Miles.AutoName = db.Autos.Where(s => s.AutoID == id).FirstOrDefault()?.AutoName;
 
             foreach (Mile item in tempmils)
             {
-
                 MilesModel test = new MilesModel();
 
                 DuckCopyShallow(test, item);
-                
 
                 Miles.Miles.Add(test);
-
             }
 
             if (Miles.Miles.Count().Equals(0))
@@ -50,34 +47,37 @@ namespace HomeApps.Controllers
                 else
                 {
                     item.MilesDrove = item.TotalMilesDriven - LastMiles;
-                    item.MPG =  Convert.ToInt32(item.MilesDrove / item.TotalGallons);
+                    item.MPG = Convert.ToInt32(item.MilesDrove / item.TotalGallons);
                     LastMiles = item.TotalMilesDriven;
-
                 }
             }
 
-
-
             Miles.MPG = 0;
             Miles.LastMiles = 0;
-            
+
             Miles.MaxMiles = Miles.Miles.Max(m => m.TotalMilesDriven);
             Miles.MinMiles = Miles.Miles.Min(m => m.TotalMilesDriven);
             Miles.TotalGallons = Miles.Miles.Sum(m => m.TotalGallons);
-            
+
             Miles.TotalMiles = Miles.MaxMiles - Miles.MinMiles;
-            
+
             Miles.Date30 = DateTime.Now.AddDays(-30);
 
-            if(Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Count().Equals(0))
+            if (Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Count().Equals(0))
             {
                 return View(Miles);
             }
 
-            Miles.Day30MaxMiles = Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Max(m => m.TotalMilesDriven);
-            Miles.Day30MaxMinMiles = Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Min(m => m.TotalMilesDriven);
-            Miles.Day30MaxTotalGallons = Miles.Miles.Where(m => m.GasDate >= Miles.Date30).Sum(m => m.TotalGallons);
-            
+            Miles.Day30MaxMiles = Miles.Miles
+                .Where(m => m.GasDate >= Miles.Date30)
+                .Max(m => m.TotalMilesDriven);
+            Miles.Day30MaxMinMiles = Miles.Miles
+                .Where(m => m.GasDate >= Miles.Date30)
+                .Min(m => m.TotalMilesDriven);
+            Miles.Day30MaxTotalGallons = Miles.Miles
+                .Where(m => m.GasDate >= Miles.Date30)
+                .Sum(m => m.TotalGallons);
+
             Miles.Day30MaxTotalMiles = Miles.Day30MaxMiles - Miles.Day30MaxMinMiles;
 
             Miles.TotalMPG = Miles.TotalMiles / Miles.TotalGallons;
@@ -102,7 +102,6 @@ namespace HomeApps.Controllers
             return View(mile);
         }
 
-
         public void DuckCopyShallow<T1, T2>(T1 dst, T2 src)
         {
             var srcT = src.GetType();
@@ -126,31 +125,55 @@ namespace HomeApps.Controllers
                     dstF.SetValue(dst, f.GetValue(src, null), null);
                 }
                 ///Really need to write this error out.
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     var errormessage = ex.Message;
                 }
-                
             }
 
             //return dst;
         }
 
-
         // GET: Miles/Create
         public ActionResult Create(int id)
         {
+            ViewBag.StationID = new SelectList(
+                db.Stations.Where(m => m.Deleted == false).AsEnumerable(),
+                "StationID",
+                "Name"
+            ).Append(
+                new SelectListItem()
+                {
+                    Text = "Select Station",
+                    Selected = true,
+                    Value = "0"
+                }
+            );
 
-            ViewBag.StationID = new SelectList(db.Stations.Where(m => m.Deleted == false).AsEnumerable(), "StationID", "Name").Append(new SelectListItem() { Text = "Select Station", Selected = true, Value = "0" });
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID"
+            );
 
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID");
-
-            ViewBag.GasTypeID = new SelectList(items: db.Types.Where(m => m.Deleted == false).AsEnumerable(), "GasTypeID", "TypeName").Append(new SelectListItem() { Text = "Select Gas Type", Selected = true, Value = "0" });
+            ViewBag.GasTypeID = new SelectList(
+                items: db.Types.Where(m => m.Deleted == false).AsEnumerable(),
+                "GasTypeID",
+                "TypeName"
+            ).Append(
+                new SelectListItem()
+                {
+                    Text = "Select Gas Type",
+                    Selected = true,
+                    Value = "0"
+                }
+            );
 
             return View(new Models.MilesAddModel() { AutoID = id });
         }
 
         // POST: Miles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -173,16 +196,29 @@ namespace HomeApps.Controllers
                 //tempmile.Station = db.Stations.Where(m => m.StationID == tempmile.StationID).First();
                 db.Miles.Add(tempmile);
                 db.SaveChanges();
-                return RedirectToAction("Index",new { id = tempmile.AutoID});
+                return RedirectToAction("Index", new { id = tempmile.AutoID });
             }
 
-           
+            ViewBag.StationID = new SelectList(
+                db.Stations,
+                "StationID",
+                "Name",
+                mile.StationID
+            ).Append(new SelectListItem() { Text = "Select Station", Value = "0" });
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID",
+                mile.ModfiyID
+            );
+            ViewBag.GasTypeID = new SelectList(
+                db.CreateModifyLogs,
+                "GasTypeID",
+                "TypeName",
+                mile.GasTypeID
+            ).Append(new SelectListItem() { Text = "Select Gas Type", Value = "0" });
+            ;
 
-
-            ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID).Append(new SelectListItem() { Text = "Select Station", Value = "0" });
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", mile.ModfiyID);
-            ViewBag.GasTypeID = new SelectList(db.CreateModifyLogs, "GasTypeID", "TypeName", mile.GasTypeID).Append(new SelectListItem() { Text = "Select Gas Type", Value = "0" }); ;
-            
             return View(mile);
         }
 
@@ -199,28 +235,53 @@ namespace HomeApps.Controllers
                 return HttpNotFound();
             }
             ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID);
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", mile.ModfiyID);
-            ViewBag.GasTypeID = new SelectList(db.CreateModifyLogs, "GasTypeID", "TypeName", mile.GasTypeID);
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID",
+                mile.ModfiyID
+            );
+            ViewBag.GasTypeID = new SelectList(
+                db.CreateModifyLogs,
+                "GasTypeID",
+                "TypeName",
+                mile.GasTypeID
+            );
             return View(mile);
         }
 
         // POST: Miles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Mile mile)
         {
-            
             if (ModelState.IsValid)
             {
                 db.Entry(mile).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", "Miles", new { id = mile.AutoID });
-                
             }
-            ViewBag.StationID = new SelectList(db.Stations, "StationID", "Name", mile.StationID).Append(new SelectListItem() { Text = "Select Station", Selected = true, Value = "0" });
-            ViewBag.ModfiyID = new SelectList(db.CreateModifyLogs, "CreateModifyID", "CreateModifyID", mile.ModfiyID);
+            ViewBag.StationID = new SelectList(
+                db.Stations,
+                "StationID",
+                "Name",
+                mile.StationID
+            ).Append(
+                new SelectListItem()
+                {
+                    Text = "Select Station",
+                    Selected = true,
+                    Value = "0"
+                }
+            );
+            ViewBag.ModfiyID = new SelectList(
+                db.CreateModifyLogs,
+                "CreateModifyID",
+                "CreateModifyID",
+                mile.ModfiyID
+            );
             return RedirectToAction("Index");
         }
 
@@ -259,19 +320,17 @@ namespace HomeApps.Controllers
             base.Dispose(disposing);
         }
 
-
         protected CreateModifyLog CreateModLog()
-        {  
+        {
             User user = ((User)this.Session["_CurrentUser"]);
-         
+
             CreateModifyLog cml = new CreateModifyLog();
             cml.CreatedBy = user.UserID;
             cml.CreatedOn = DateTime.Now;
 
             db.CreateModifyLogs.Add(cml);
             db.SaveChanges();
-           return cml;
+            return cml;
         }
-
     }
 }

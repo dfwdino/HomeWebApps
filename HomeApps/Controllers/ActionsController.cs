@@ -13,7 +13,6 @@ using HomeApps.Model;
 
 namespace HomeApps.Controllers
 {
-
     public class ActionsController : Controller
     {
         private readonly HomeAppsEntities db = new HomeAppsEntities();
@@ -42,12 +41,12 @@ namespace HomeApps.Controllers
 
         // GET: Actions/Create
         public ActionResult Create()
-        {   
+        {
             return View();
         }
 
         // POST: Actions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -79,21 +78,30 @@ namespace HomeApps.Controllers
 
             Action action = db.Actions.Find(id);
 
-            TheEventAction theEventAction = new TheEventAction {ActionID = action.ActionID, ActionName = action.Name };
+            TheEventAction theEventAction = new TheEventAction
+            {
+                ActionID = action.ActionID,
+                ActionName = action.Name
+            };
 
             if (action == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", action.ActionID);
+            ViewBag.ActionID = new SelectList(
+                db.EventActions,
+                "EventActionsID",
+                "EventActionsID",
+                action.ActionID
+            );
             return View(theEventAction);
         }
 
         // POST: Actions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        
+
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Edit(TheEventAction theeventaction)
@@ -111,7 +119,12 @@ namespace HomeApps.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ActionID = new SelectList(db.EventActions, "EventActionsID", "EventActionsID", theeventaction.ActionID);
+            ViewBag.ActionID = new SelectList(
+                db.EventActions,
+                "EventActionsID",
+                "EventActionsID",
+                theeventaction.ActionID
+            );
             return View(theeventaction);
         }
 

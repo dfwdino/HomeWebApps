@@ -45,34 +45,44 @@ namespace HomeApps.Controllers
 
         public ActionResult CreateModelNotes()
         {
-            ViewBag.CameraModelID = new SelectList(db.CameraModels, "CameraModelID", "CameraModelName");
+            ViewBag.CameraModelID = new SelectList(
+                db.CameraModels,
+                "CameraModelID",
+                "CameraModelName"
+            );
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateModelNotes(CameraModelNote cameraModelNote)
         {
-            var asdf = new CameraModelNote { DateOfNotes = cameraModelNote.DateOfNotes, Notes = cameraModelNote.Notes, CameraModelID = cameraModelNote.CameraModelID };
+            var asdf = new CameraModelNote
+            {
+                DateOfNotes = cameraModelNote.DateOfNotes,
+                Notes = cameraModelNote.Notes,
+                CameraModelID = cameraModelNote.CameraModelID
+            };
             db.CameraModelNotes.Add(cameraModelNote);
             db.SaveChanges();
             return RedirectToAction("GetModelNotes");
-            
-            
         }
 
         public ActionResult GetModelNotes()
         {
-            
             return View(db.CameraModelNotes.OrderByDescending(mm => mm.DateOfNotes));
         }
 
-
         // POST: CameraModels/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CameraModelID,CameraModelName,CameraModelGender,Deleted,AllNudes,AllBonjour,AllTFP")] CameraModel cameraModel)
+        public ActionResult Create(
+            [Bind(
+                Include = "CameraModelID,CameraModelName,CameraModelGender,Deleted,AllNudes,AllBonjour,AllTFP"
+            )]
+                CameraModel cameraModel
+        )
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +91,12 @@ namespace HomeApps.Controllers
                 return RedirectToAction("/Index");
             }
 
-            ViewBag.CameraModelGender = new SelectList(db.GenderTypes, "GenderID", "GenderType1", cameraModel.CameraModelGender);
+            ViewBag.CameraModelGender = new SelectList(
+                db.GenderTypes,
+                "GenderID",
+                "GenderType1",
+                cameraModel.CameraModelGender
+            );
             return View(cameraModel);
         }
 
@@ -97,16 +112,26 @@ namespace HomeApps.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CameraModelGender = new SelectList(db.GenderTypes, "GenderID", "GenderType1", cameraModel.CameraModelGender);
+            ViewBag.CameraModelGender = new SelectList(
+                db.GenderTypes,
+                "GenderID",
+                "GenderType1",
+                cameraModel.CameraModelGender
+            );
             return View(cameraModel);
         }
 
         // POST: CameraModels/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CameraModelID,CameraModelName,CameraModelGender,Deleted,AllNudes,AllBonjour,AllTFP")] CameraModel cameraModel)
+        public ActionResult Edit(
+            [Bind(
+                Include = "CameraModelID,CameraModelName,CameraModelGender,Deleted,AllNudes,AllBonjour,AllTFP"
+            )]
+                CameraModel cameraModel
+        )
         {
             if (ModelState.IsValid)
             {
@@ -114,7 +139,12 @@ namespace HomeApps.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CameraModelGender = new SelectList(db.GenderTypes, "GenderID", "GenderType1", cameraModel.CameraModelGender);
+            ViewBag.CameraModelGender = new SelectList(
+                db.GenderTypes,
+                "GenderID",
+                "GenderType1",
+                cameraModel.CameraModelGender
+            );
             return View(cameraModel);
         }
 
@@ -144,7 +174,6 @@ namespace HomeApps.Controllers
             return RedirectToAction("Index");
         }
 
-
         public ActionResult CreateGenderType()
         {
             return View();
@@ -153,21 +182,23 @@ namespace HomeApps.Controllers
         [HttpPost]
         public ActionResult CreateGenderType(GenderType genderType)
         {
-            if(!genderType.Equals(db.GenderTypes.Any(m => m.GenderType1 == genderType.GenderType1.Trim())))
+            if (
+                !genderType.Equals(
+                    db.GenderTypes.Any(m => m.GenderType1 == genderType.GenderType1.Trim())
+                )
+            )
             {
                 db.GenderTypes.Add(new GenderType { GenderType1 = genderType.GenderType1 });
                 db.SaveChanges();
             }
-           
+
             return RedirectToAction("GetGenderTypes");
         }
 
         public ActionResult GetGenderTypes()
         {
-
             return View(db.GenderTypes);
         }
-        
 
         public ActionResult CreateWebSite()
         {
@@ -190,7 +221,6 @@ namespace HomeApps.Controllers
         {
             return View(db.Websites);
         }
-
 
         protected override void Dispose(bool disposing)
         {
