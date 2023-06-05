@@ -12,13 +12,15 @@
 </p>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>Item</h4>
     <hr />
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     @if (ViewBag.CreatedItem == true)
     {
@@ -26,44 +28,57 @@
         Model.ItemName = string.Empty;
     }
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.Label("Item Name", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ItemName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+    <div style="padding-top:10px"></div>
+
+    <div class="row">
+        <div class="col-lg-11">  @Html.Label("Item Name", htmlAttributes: new { @class = "control-label" }):    @Html.EditorFor(model => model.ItemName, new { htmlAttributes = new { @class = "form-control" } })</div>
+        <div class="col-md-1">
+
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.Label("Is MSG Free", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.CheckBoxFor(model => model.IsMSGFree, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.IsMSGFree, "", new { @class = "text-danger" })
-        </div>
+    @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+
+    <div style="padding-top:20px"></div>
+
+    <div class="row">
+        <div class="col-md-11">   @Html.Label("Is MSG Free", htmlAttributes: new { @class = "control-label col-md-2" })  @Html.CheckBoxFor(model => model.IsMSGFree, new { htmlAttributes = new { @class = "form-control" } })</div>
+
     </div>
 
-    <div class="form-group">
-        @Html.Label("Kids Still Like", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+
+    @Html.ValidationMessageFor(model => model.IsMSGFree, "", new { @class = "text-danger" })
+
+    <div style="padding-top:20px"></div>
+
+    <div class="row">
+        <div class="col-md-11">
+            @Html.Label("Kids Still Like", htmlAttributes: new { @class = "control-label col-md-2" }):
             @Html.CheckBoxFor(model => model.KidsStillLike, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.KidsStillLike, "", new { @class = "text-danger" })
         </div>
+
+
+
     </div>
+    @Html.ValidationMessageFor(model => model.KidsStillLike, "", new { @class = "text-danger" })
+    <div style="padding-top:30px"></div>
 
-
-    <div class="form-group">
+    <div class="row">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-primary" />
         </div>
     </div>
 </div>
 }
-
+<div style="padding-top:30px"></div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery-3.7.0.min.js"></script>
+
+
+<script src="~/Scripts/bootstrap.bundle.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
