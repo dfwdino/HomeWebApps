@@ -23,8 +23,8 @@ namespace HomeApps
     
         public virtual User User { get; set; }
         public virtual Action Action { get; set; }
+        public virtual TheEvent TheEvent { get; set; }
         public virtual UsersPeople UsersPeople { get; set; }
         public virtual UsersPeople UsersPeople1 { get; set; }
-        public virtual TheEvent TheEvent { get; set; }
     }
 }

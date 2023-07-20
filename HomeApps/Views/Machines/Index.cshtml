@@ -27,35 +27,27 @@
         <th>
             @Html.DisplayNameFor(model => model.ResistanceLevel)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.FirstName)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.MachineName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Reps)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Weight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResistanceLevel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.FirstName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink(@item.MachineName, "Edit", new { /* id=item.PrimaryKey */ } ) @item.WorkedOutDate.ToShortDateString()
+         </td>
+         <td>
+             @Html.DisplayFor(modelItem => item.Time)
+         </td>
+         <td>
+             @Html.DisplayFor(modelItem => item.Reps)
+         </td>
+         <td>
+             @Html.DisplayFor(modelItem => item.Weight)
+         </td>
+         <td>
+             @Html.DisplayFor(modelItem => item.ResistanceLevel)
+         </td>
+         <td>
             @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>

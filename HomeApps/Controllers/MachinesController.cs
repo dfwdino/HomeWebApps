@@ -19,7 +19,7 @@ namespace HomeApps.Controllers
         {
             User user = ((User)this.Session["_CurrentUser"]);
 
-            var machines = db.Machines.Include(m => m.User).Where(m => m.UserID == user.UserID);
+            var machines = db.Machines.Include(m => m.User).Where(m => m.UserID == user.UserID).OrderByDescending(m => m.WorkedOutDate);
             return View(machines.ToList());
         }
 

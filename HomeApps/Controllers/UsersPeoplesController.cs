@@ -18,7 +18,7 @@ namespace HomeApps.Controllers
         // GET: UsersPeoples
         public ActionResult Index()
         {
-            var usersPeoples = db.UsersPeoples.Include(u => u.User).Include(u => u.Gender);
+            var usersPeoples = db.UsersPeoples.Include(u => u.Gender);
             return View(usersPeoples.ToList());
         }
 

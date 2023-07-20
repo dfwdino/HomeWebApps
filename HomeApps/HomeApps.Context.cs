@@ -38,7 +38,6 @@ namespace HomeApps
         public virtual DbSet<Logging> Loggings { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<TheEvent> TheEvents { get; set; }
-        public virtual DbSet<UsersPeople> UsersPeoples { get; set; }
         public virtual DbSet<Action> Actions { get; set; }
         public virtual DbSet<EventAction> EventActions { get; set; }
         public virtual DbSet<WeightTracker> WeightTrackers { get; set; }
@@ -61,5 +60,6 @@ namespace HomeApps
         public virtual DbSet<UsersDoneChore> UsersDoneChores { get; set; }
         public virtual DbSet<PlacesToGo> PlacesToGoes { get; set; }
         public virtual DbSet<WhoPicked> WhoPickeds { get; set; }
+        public virtual DbSet<UsersPeople> UsersPeoples { get; set; }
     }
 }

@@ -20,11 +20,11 @@ namespace HomeApps
             this.Autos = new HashSet<Auto>();
             this.UserRoles = new HashSet<UserRole>();
             this.UserSchemas = new HashSet<UserSchema>();
-            this.UsersPeoples = new HashSet<UsersPeople>();
             this.EventActions = new HashSet<EventAction>();
             this.WeightTrackers = new HashSet<WeightTracker>();
             this.Machines = new HashSet<Machine>();
             this.WhoPickeds = new HashSet<WhoPicked>();
+            this.UsersPeoples = new HashSet<UsersPeople>();
         }
     
         public int UserID { get; set; }
@@ -45,8 +45,6 @@ namespace HomeApps
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSchema> UserSchemas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersPeople> UsersPeoples { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventAction> EventActions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WeightTracker> WeightTrackers { get; set; }
@@ -54,5 +52,7 @@ namespace HomeApps
         public virtual ICollection<Machine> Machines { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WhoPicked> WhoPickeds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsersPeople> UsersPeoples { get; set; }
     }
 }

@@ -31,15 +31,10 @@
         <EntityTypeShape EntityType="HomeAppsModel.Logging" Width="1.5" PointX="17.125" PointY="1.875" />
         <EntityTypeShape EntityType="HomeAppsModel.Gender" Width="1.5" PointX="11" PointY="14.875" />
         <EntityTypeShape EntityType="HomeAppsModel.TheEvent" Width="1.5" PointX="0.75" PointY="8.75" />
-        <EntityTypeShape EntityType="HomeAppsModel.UsersPeople" Width="1.5" PointX="13.25" PointY="14.25" />
-        <AssociationConnector Association="HomeAppsModel.FK_UsersPeople_Users" />
-        <AssociationConnector Association="HomeAppsModel.FK_UsersPeople_Genders" />
         <EntityTypeShape EntityType="HomeAppsModel.Action" Width="1.5" PointX="13.25" PointY="10.375" />
         <EntityTypeShape EntityType="HomeAppsModel.EventAction" Width="1.5" PointX="15.5" PointY="10" />
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_Users" />
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_Actions" />
-        <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople" />
-        <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople1" />
         <AssociationConnector Association="HomeAppsModel.FK_UserSchemas_Schemas" />
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_TheEvent" />
         <EntityTypeShape EntityType="HomeAppsModel.WeightTracker" Width="1.5" PointX="7.875" PointY="21.625" />
@@ -78,6 +73,11 @@
         <EntityTypeShape EntityType="HomeAppsModel.WhoPicked" Width="1.5" PointX="15.5" PointY="0.75" />
         <AssociationConnector Association="HomeAppsModel.FK_WhoPicked_Users" />
         <AssociationConnector Association="HomeAppsModel.FK_WhoPicked_PlacesToGo" />
+        <EntityTypeShape EntityType="HomeAppsModel.UsersPeople" Width="1.5" PointX="13.25" PointY="13.75" />
+        <AssociationConnector Association="HomeAppsModel.FK_UsersPeople_Users" />
+        <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople" />
+        <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople1" />
+        <AssociationConnector Association="HomeAppsModel.FK_UsersPeople_Genders" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
