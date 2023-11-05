@@ -141,7 +141,7 @@ namespace HomeApps.Controllers
         {
             return Json(
                 db.Items
-                    .Where(m => m.ItemName.Contains(term))
+                    .Where(m => m.ItemName.Contains(term) && m.IsDeleted == false)
                     .Select(m => new { value = m.ItemName, m.ItemID })
                     .OrderBy(m => m.value),
                 JsonRequestBehavior.AllowGet
@@ -155,13 +155,16 @@ namespace HomeApps.Controllers
                 .OrderByDescending(f => f.DateGot)
                 .First();
 
-            if (gotitem.DateGot != null)
+            bool IsOnList = db.ItemLists.Where(f => f.ItemID == gotitem.ItemID && f.GotItem == false).Count() > 0;
+
+          
+            if (gotitem.DateGot != null && IsOnList.Equals(false))
             {
                 DateTime dateTime = DateTime.Now;
 
                 db.ItemLists.Add(new ItemList { ItemID = gotitem.ItemID, DateAdded = dateTime });
             }
-            else
+            else if(IsOnList.Equals(true))
             {
                 gotitem.GotItem = true;
                 gotitem.DateGot = DateTime.Now;

@@ -67,6 +67,7 @@ namespace HomeApps.Controllers
             ViewBag.ItemID = new SelectList(db.Items, "ItemID", "ItemName");
             ViewBag.SizeTypeID = new SelectList(db.SizeTypes, "SizeTypeID", "SizeTypeName");
             ViewBag.StoreID = new SelectList(db.Stores, "StoreID", "StoreName");
+        
             return View();
         }
 
@@ -83,21 +84,37 @@ namespace HomeApps.Controllers
                     .Where(f => f.ItemName == itemList.Item.ItemName)
                     .FirstOrDefault();
 
-                if (FoundItem == null)
+                bool IsOnList = false;
+
+                if (FoundItem.Equals(null))
                 {
                     itemList.Item.ItemName = itemList.Item.ItemName.ToTileCase();
+                }
+                else
+                {
+                    IsOnList = db.ItemLists.Where(f => f.ItemID == FoundItem.ItemID && f.GotItem == false).Count() > 0;
+                   
+                }
+
+                if (IsOnList)
+                {
+                    ViewBag.CreatedItem = true;
+                    ViewData["CreatedItem"] = "true" ;
+                    return RedirectToAction("Create");
                 }
                 else
                 {
                     itemList.Item = FoundItem;
                 }
 
+                
                 itemList.DateAdded = DateTime.Now;
                 itemList.Item.KidsStillLike = true;
 
                 db.ItemLists.Add(itemList);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.CreatedItem = true;
+                return RedirectToAction("Create");
             }
             catch (Exception ex)
             {
