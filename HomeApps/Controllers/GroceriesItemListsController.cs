@@ -86,7 +86,7 @@ namespace HomeApps.Controllers
 
                 bool IsOnList = false;
 
-                if (FoundItem.Equals(null))
+                if (FoundItem == null)
                 {
                     itemList.Item.ItemName = itemList.Item.ItemName.ToTileCase();
                 }
@@ -102,11 +102,7 @@ namespace HomeApps.Controllers
                     ViewData["CreatedItem"] = "true" ;
                     return RedirectToAction("Create");
                 }
-                else
-                {
-                    itemList.Item = FoundItem;
-                }
-
+                
                 
                 itemList.DateAdded = DateTime.Now;
                 itemList.Item.KidsStillLike = true;
