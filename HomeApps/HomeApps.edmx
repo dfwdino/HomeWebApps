@@ -134,9 +134,11 @@
             <PropertyRef Name="PriceID" />
           </Key>
           <Property Name="PriceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemPrice" Type="money" />
-          <Property Name="PriceDate" Type="date" />
-          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ItemPrice" Type="money" Nullable="false" />
+          <Property Name="PriceDate" Type="date" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="StoreID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SizeType">
           <Key>
@@ -168,6 +170,8 @@
           <Property Name="WorkedOutDate" Type="date" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Calories" Type="int" />
         </EntityType>
         <EntityType Name="CreateModifyLog">
           <Key>
@@ -593,6 +597,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Prices_Stores">
+          <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stores">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Roles_CreateModifyLog">
           <End Role="CreateModifyLog" Type="Self.CreateModifyLog" Multiplicity="1" />
           <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
@@ -910,6 +926,10 @@
             <End Role="Websites" EntitySet="Websites" />
             <End Role="ModelWebsites" EntitySet="ModelWebsites" />
           </AssociationSet>
+          <AssociationSet Name="FK_Prices_Stores" Association="Self.FK_Prices_Stores">
+            <End Role="Stores" EntitySet="Stores" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
           <AssociationSet Name="FK_Roles_CreateModifyLog" Association="Self.FK_Roles_CreateModifyLog">
             <End Role="CreateModifyLog" EntitySet="CreateModifyLog" />
             <End Role="Roles" EntitySet="Roles" />
@@ -1167,6 +1187,10 @@
           <AssociationSet Name="FK_UsersPeople_Genders" Association="HomeAppsModel.FK_UsersPeople_Genders">
             <End Role="Gender" EntitySet="Genders" />
             <End Role="UsersPeople" EntitySet="UsersPeoples" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prices_Stores" Association="HomeAppsModel.FK_Prices_Stores">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Price" EntitySet="Prices" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Auto">
@@ -1700,9 +1724,12 @@
             <PropertyRef Name="PriceID" />
           </Key>
           <Property Name="PriceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="PriceDate" Type="DateTime" Precision="0" />
-          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ItemPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PriceDate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="StoreID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Store" Relationship="HomeAppsModel.FK_Prices_Stores" FromRole="Price" ToRole="Store" />
         </EntityType>
         <EntityType Name="ItemList">
           <Key>
@@ -1750,6 +1777,7 @@
           <Property Name="StoreAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ItemLists" Relationship="HomeAppsModel.FK_ItemList_Stores" FromRole="Store" ToRole="ItemList" />
+          <NavigationProperty Name="Prices" Relationship="HomeAppsModel.FK_Prices_Stores" FromRole="Store" ToRole="Price" />
         </EntityType>
         <Association Name="FK_ItemList_Items">
           <End Type="HomeAppsModel.Item" Role="Item" Multiplicity="1" />
@@ -1801,6 +1829,8 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="HomeAppsModel.FK_Machines_Users" FromRole="Machine" ToRole="User" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Calories" Type="Int32" />
         </EntityType>
         <Association Name="FK_Machines_Users">
           <End Type="HomeAppsModel.User" Role="User" Multiplicity="1" />
@@ -2047,6 +2077,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Prices_Stores">
+          <End Type="HomeAppsModel.Store" Role="Store" Multiplicity="1" />
+          <End Type="HomeAppsModel.Price" Role="Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreID" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="StoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2289,6 +2331,8 @@
           <EntitySetMapping Name="Prices">
             <EntityTypeMapping TypeName="HomeAppsModel.Price">
               <MappingFragment StoreEntitySet="Prices">
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="PriceDate" ColumnName="PriceDate" />
                 <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
@@ -2344,6 +2388,8 @@
           <EntitySetMapping Name="Machines">
             <EntityTypeMapping TypeName="HomeAppsModel.Machine">
               <MappingFragment StoreEntitySet="Machines">
+                <ScalarProperty Name="Calories" ColumnName="Calories" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="WorkedOutDate" ColumnName="WorkedOutDate" />

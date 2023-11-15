@@ -23,6 +23,8 @@ namespace HomeApps
         public System.DateTime WorkedOutDate { get; set; }
         public bool IsDeleted { get; set; }
         public int UserID { get; set; }
+        public string Notes { get; set; }
+        public Nullable<int> Calories { get; set; }
     
         public virtual User User { get; set; }
     }

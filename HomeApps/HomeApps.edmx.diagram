@@ -78,6 +78,7 @@
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople" />
         <AssociationConnector Association="HomeAppsModel.FK_EventActions_UsersPeople1" />
         <AssociationConnector Association="HomeAppsModel.FK_UsersPeople_Genders" />
+        <AssociationConnector Association="HomeAppsModel.FK_Prices_Stores" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

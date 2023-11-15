@@ -51,7 +51,7 @@ namespace HomeApps.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "MachineID,MachineName,Time,Reps,Weight,ResistanceLevel,WorkedOutDate")]
+            [Bind(Include = "MachineID,MachineName,Time,Reps,Weight,ResistanceLevel,WorkedOutDate,Notes,Calories")]
                 Machine machine
         )
         {

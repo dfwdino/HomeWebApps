@@ -18,6 +18,7 @@ namespace HomeApps
         public Store()
         {
             this.ItemLists = new HashSet<ItemList>();
+            this.Prices = new HashSet<Price>();
         }
     
         public int StoreID { get; set; }
@@ -27,5 +28,7 @@ namespace HomeApps
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemList> ItemLists { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Price> Prices { get; set; }
     }
 }

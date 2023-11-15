@@ -33,7 +33,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(@item.MachineName, "Edit", new { /* id=item.PrimaryKey */ } ) @item.WorkedOutDate.ToShortDateString()
+            @Html.ActionLink(@item.MachineName, "Edit", new {  id=item.MachineID } ) @item.WorkedOutDate.ToShortDateString()
          </td>
          <td>
              @Html.DisplayFor(modelItem => item.Time)
@@ -48,7 +48,7 @@
              @Html.DisplayFor(modelItem => item.ResistanceLevel)
          </td>
          <td>
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Delete", "Delete", new {  id=item.MachineID })
         </td>
     </tr>
 }

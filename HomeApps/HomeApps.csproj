@@ -216,8 +216,6 @@
     </Content>
     <Content Include="Content\Website\HomeApps.Default.css" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\sdnhomeapps - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\sdnhomeapps - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />

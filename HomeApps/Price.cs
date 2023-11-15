@@ -15,8 +15,12 @@ namespace HomeApps
     public partial class Price
     {
         public int PriceID { get; set; }
-        public Nullable<decimal> ItemPrice { get; set; }
-        public Nullable<System.DateTime> PriceDate { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
+        public decimal ItemPrice { get; set; }
+        public System.DateTime PriceDate { get; set; }
+        public bool IsDeleted { get; set; }
+        public int ItemID { get; set; }
+        public int StoreID { get; set; }
+    
+        public virtual Store Store { get; set; }
     }
 }
