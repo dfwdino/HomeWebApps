@@ -31,6 +31,7 @@ namespace HomeApps.Controllers
             }
             UsersPeople usersPeople = db.UsersPeoples.Find(id);
             if (usersPeople == null)
+
             {
                 return HttpNotFound();
             }
@@ -157,7 +158,8 @@ namespace HomeApps.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             UsersPeople usersPeople = db.UsersPeoples.Find(id);
-            db.UsersPeoples.Remove(usersPeople);
+            
+            //db.UsersPeoples.Remove(usersPeople);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

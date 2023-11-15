@@ -33,7 +33,17 @@
             @Html.ActionLink(item.DateOfEvent.ToShortDateString(), "Details", new { id = item.EventID })
         </td>
         <td>
-            @Html.ActionLink(item.EventName, "Edit", new { id = item.EventID }) -  @string.Join(",", people.Distinct()) - @item.Notes
+            <div style="padding-bottom:5px">
+                @Html.ActionLink(item.EventName, "Edit", new { id = item.EventID }) -  @string.Join(",", people.Distinct()) - @item.Notes
+                </div>
+
+                <div style="border-top: 1px solid black;padding-top:5px">
+                    <span style="font-weight:bold">Actions:</span>
+                    @foreach (var eventAction in item.EventActions)
+                    {
+                        <span>@eventAction.Action.Name, </span>
+                    }
+                </div>
         </td>
         <td>
             @Html.ActionLink("Delete", "Delete", new { id=item.EventID })
